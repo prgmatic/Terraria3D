@@ -1,0 +1,4 @@
+author = Matt Thompson - chatrat12
+version = 0.1
+displayName = Terraria3D
+includePDB = true
