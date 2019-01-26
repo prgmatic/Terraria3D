@@ -38,10 +38,18 @@
     <Compile Include="3DUtils\MathUtils.cs" />
     <Compile Include="3DUtils\Screen.cs" />
     <Compile Include="3DUtils\Transfrom.cs" />
+    <Compile Include="Rendering\CapRenderer.cs" />
     <Compile Include="ExtrudeTest.cs" />
     <Compile Include="Geometry\PixelGrid.cs" />
     <Compile Include="Geometry\Quad.cs" />
+    <Compile Include="Rendering\GridRenderer.cs" />
+    <Compile Include="Layer3D.cs" />
+    <Compile Include="Reflection.cs" />
+    <Compile Include="Rendering\Renderers.cs" />
+    <Compile Include="Rendering\Rendering.cs" />
+    <Compile Include="Scene3D.cs" />
     <Compile Include="Terraria3D.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
@@ -76,6 +84,7 @@
   <ItemGroup>
     <None Include="Effects\Grid.xnb" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"E:\Program Files\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>

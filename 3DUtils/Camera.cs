@@ -6,7 +6,7 @@ namespace Terraria3D
     {
         public Transfrom Transfrom { get; private set; } = new Transfrom();
         public float FieldOfView { get; private set; } = 60;
-        public float NearClipPlane { get; private set; } = 0.3f;
+        public float NearClipPlane { get; private set; } = 0.001f;
         public float FarClipPlane { get; private set; } = 200f;
         
 

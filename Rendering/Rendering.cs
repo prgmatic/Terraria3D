@@ -11,6 +11,8 @@ namespace Terraria3D
 {
     public static class Rendering
     {
+        private static SB _sb = new SB(Main.spriteBatch);
+
         public static void UpdateState()
         {
             if (Main.magmaBGFrameCounter >= 8)
@@ -117,11 +119,11 @@ namespace Terraria3D
             else
                 Main.spriteBatch.Draw(Main.instance.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
         }
+
         public static void DrawWaterFalls()
         {
             Main.instance.waterfallManager.Draw(Main.spriteBatch);
         }
-
 
         public static void DrawProjsBehindNPCsAndTiles() =>
             Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindNPCsAndTiles, true);
@@ -133,7 +135,7 @@ namespace Terraria3D
             if (Main.drawToScreen)
                 Reflection.DrawTiles(true);
             else
-                Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTile2Pos - Main.screenPosition, Color.White);
+                Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
         }
 
         public static void DrawHitTileAnimation() => Main.player[Main.myPlayer].hitTile.DrawFreshAnimations(Main.spriteBatch);
@@ -148,8 +150,12 @@ namespace Terraria3D
 
         public static void DrawProjectiles() => Reflection.DrawProjectiles();
 
-        public static void DrawPlayers() => Reflection.DrawPlayers();
-
+        public static void DrawPlayers()
+        {
+            Main.spriteBatch.End();
+            Reflection.DrawPlayers();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        }
         public static void DrawNPCsOverPlayer() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsOverPlayers, false);
 
         public static void DrawItems() => Main.instance.DrawItems();
@@ -348,5 +354,21 @@ namespace Terraria3D
                 }
             }
         }
+    }
+
+    class SB : IDisposable
+    {
+        private SpriteBatch _sb;
+
+        public SB(SpriteBatch spriteBatch) => _sb = spriteBatch;
+
+        public SB Begin(Matrix? transform = null)
+        {
+            if (transform == null)
+                transform = Matrix.Identity;
+            _sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, transform.Value);
+            return this;
+        }
+        public void Dispose() => _sb.End();
     }
 }

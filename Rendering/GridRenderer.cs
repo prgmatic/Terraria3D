@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 
 namespace Terraria3D
 {
@@ -20,6 +21,7 @@ namespace Terraria3D
             _height = height;
 
             SetGridSize(width, height);
+            Main.OnRenderTargetsInitialized += (w, h) => SetGridSize(w, h);
         }
 
         public void SetGridSize(int width, int height)
@@ -39,6 +41,9 @@ namespace Terraria3D
             _effect.Parameters["_MainTex"].SetValue(texture);
             _effect.Parameters["PixelOffset"].SetValue(new Vector2(1f / _width, 1f / _height));
             _effect.Parameters["World"].SetValue(modelMatrix.Value);
+
+            // Read from z buffer when determining the what pixel to render on top
+            _graphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             foreach (var pass in _effect.CurrentTechnique.Passes)
             {
