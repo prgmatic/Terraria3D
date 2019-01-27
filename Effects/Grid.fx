@@ -1,9 +1,16 @@
 #define REMOVE_INNER 1
+#define ADD_NOISE 1
 
 float4x4 World;
 float4x4 View;
 float4x4 Projection;
 float2 PixelOffset;
+float2 CameraPosition;
+float Depth;
+
+#if ADD_NOISE
+float NoiseAmount;
+#endif
 
 texture _MainTex;
 sampler2D _MainTexSampler = sampler_state 
@@ -15,10 +22,21 @@ sampler2D _MainTexSampler = sampler_state
 	AddressV = Clamp;
 };
 
+Texture NoiseTexture;
+sampler NoiseSampler = sampler_state {
+	texture = <NoiseTexture>;
+	magfilter = POINT;
+	minfilter = POINT;
+	mipfilter = POINT;
+	AddressU = WRAP;
+	AddressV = WRAP;
+};
+
+
 
 struct VertexShaderInput
 {
-    float4 Position : POSITION0;
+	float4 Position : POSITION0;
 	float2 UV : TEXCOORD0;
 	float3 Normal : NORMAL;
 };
@@ -26,20 +44,20 @@ struct VertexShaderInput
 struct VertexShaderOutput
 {
     float4 Position : POSITION0;
+	float3 LocalPosition : TEXCOORD1;
 	float2 UV : TEXCOORD0;
-	float3 Normal : NORMAL;
+	float3 Normal : TEXCOORD2;
 };
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
-
     float4 worldPosition = mul(input.Position, World);
     float4 viewPosition = mul(worldPosition, View);
     output.Position = mul(viewPosition, Projection);
+	output.LocalPosition = input.Position;
 	output.UV = input.UV;
 	output.Normal = input.Normal;
-
     return output;
 }
 
@@ -66,7 +84,23 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 		   uv.x > 0 && uv2.x < 1 && uv2.y > 0 && uv.y < 1));
 #endif
 
-	return color1.a > color2.b ? color1 : color2;
+	float4 result = color1.a > color2.b ? color1 : color2;
+
+#if ADD_NOISE
+	// Noise is 64x64, one noise color per 2 grid cells
+	const float sampleOffset = 1.0 / 64 / 2;
+
+	float x = dot(input.Normal, float3(0, 1, 0) > 0.5) ?
+		(input.LocalPosition.x - CameraPosition.x) * sampleOffset :
+		(input.LocalPosition.y - CameraPosition.y) * sampleOffset;
+	float y = input.LocalPosition.z * sampleOffset * Depth;
+	float2 sampleCoords = float2(x, y);
+
+	float noise = tex2D(NoiseSampler, sampleCoords).r;
+	result.rgb *= lerp(1, 0.5f + noise.r, NoiseAmount);
+#endif
+
+	return result;
 }
 
 technique Technique1
@@ -78,7 +112,7 @@ technique Technique1
 		DestBlend = InvSrcAlpha;
 		CullMode = None;
 
-        VertexShader = compile vs_3_0 VertexShaderFunction();
-        PixelShader = compile ps_3_0 PixelShaderFunction();
+        VertexShader = compile vs_2_0 VertexShaderFunction();
+        PixelShader = compile ps_2_0 PixelShaderFunction();
     }
 }

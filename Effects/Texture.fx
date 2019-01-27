@@ -40,6 +40,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float4 color = tex2D(_MainTexSampler, input.UV);
 	//color.a *= 0.5;
+	if (color.a == 0)
+		clip(-1);
 	return color;
 }
 
@@ -48,10 +50,8 @@ technique Technique1
     pass Pass1
     {
 		AlphaBlendEnable = True;
-		SrcBlend = SrcAlpha;
-		DestBlend = InvSrcAlpha;
 
-        VertexShader = compile vs_3_0 VertexShaderFunction();
-        PixelShader = compile ps_3_0 PixelShaderFunction();
+        VertexShader = compile vs_2_0 VertexShaderFunction();
+        PixelShader = compile ps_2_0 PixelShaderFunction();
     }
 }
