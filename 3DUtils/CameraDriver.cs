@@ -14,8 +14,8 @@ namespace Terraria3D
             var y = 0;
             var z = 0;
 
-            if (keyState.IsKeyDown(Keys.NumPad6)) x -= 1;
-            if (keyState.IsKeyDown(Keys.NumPad4)) x += 1;
+            if (keyState.IsKeyDown(Keys.NumPad4)) x -= 1;
+            if (keyState.IsKeyDown(Keys.NumPad6)) x += 1;
             if (keyState.IsKeyDown(Keys.NumPad8)) z += 1;
             if (keyState.IsKeyDown(Keys.NumPad5)) z -= 1;
             if (keyState.IsKeyDown(Keys.NumPad9)) y += 1;

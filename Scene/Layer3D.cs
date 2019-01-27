@@ -2,25 +2,25 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using ReLogic.Graphics;
-using System.Linq;
 
 namespace Terraria3D
 {
     public class Layer3D
     {
         public float ZPos { get; set; } = 0;
-        public float Depth { get; set; } = 0;
+        public float Depth { get; set; } = 16;
+        public float NoiseAmount { get; set; } = 1;
+        public bool UseInnerPixel { get; set; } = true;
         public Action RenderFunction { get; set; } = null;
 
         private RenderTarget2D _renderTarget;
+        private RenderTarget2D _innerPixelTarget;
 
         public Layer3D()
         {
             UpdateRenderTarget();
             Main.OnResolutionChanged += (size) => UpdateRenderTarget();
         }
-
 
         public void RenderToTarget()
         {
@@ -29,25 +29,28 @@ namespace Terraria3D
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
             RenderFunction();
             Main.spriteBatch.End();
+            if(UseInnerPixel)
+                Renderers.InnerPixelRenderer.Draw(_innerPixelTarget, _renderTarget);
             Main.graphics.GraphicsDevice.SetRenderTarget(null);
         }
 
         public void DrawExtrusion(Camera camera, Matrix matrix)
         {
-            //RenderTarget2D prevTarget = Utils.GetCurrentRenderTarget();
-
-            
-            //Main.graphics.GraphicsDevice.SetRenderTarget(prevTarget);
-            //Main.spriteBatch.Begin();
-            //Main.spriteBatch.Draw(target, Vector2.Zero, Color.Purple);
-            //Main.spriteBatch.End();
-            Renderers.GridRenderer.Draw(_renderTarget, camera, matrix);
+            matrix = Matrix.CreateScale(1, 1, Depth) * Matrix.CreateTranslation(0, 0, -ZPos) * matrix;
+            Renderers.GridRenderer.Draw(UseInnerPixel ? _innerPixelTarget : _renderTarget, camera, Depth, NoiseAmount, matrix);
+        }
+        public void DrawCap(Camera camera, Matrix matrix)
+        {
+            matrix = Matrix.CreateTranslation(0, 0, -ZPos) * matrix; //ZPos * 1f / Screen.Height);
+            Renderers.CapRenderer.Draw(_renderTarget, camera, matrix);
         }
 
         private void UpdateRenderTarget()
         {
             _renderTarget?.Dispose();
             _renderTarget = Utils.CreateRenderTarget();
+            _innerPixelTarget?.Dispose();
+            _innerPixelTarget = Utils.CreateRenderTarget();
         }
     }
 }

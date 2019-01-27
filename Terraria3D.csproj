@@ -45,6 +45,7 @@
     <Compile Include="Rendering\GridRenderer.cs" />
     <Compile Include="Layer3D.cs" />
     <Compile Include="Reflection.cs" />
+    <Compile Include="Rendering\InnerPixelRenderer.cs" />
     <Compile Include="Rendering\Renderers.cs" />
     <Compile Include="Rendering\Rendering.cs" />
     <Compile Include="Scene3D.cs" />
@@ -79,6 +80,8 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="Effects\Grid.fx" />
+    <Content Include="Images\Noise.png" />
+    <Content Include="Images\NoiseDebug.png" />
     <Content Include="Images\Player.png" />
   </ItemGroup>
   <ItemGroup>

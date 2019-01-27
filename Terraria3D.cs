@@ -14,10 +14,37 @@ namespace Terraria3D
         {
             new Layer3D()
             {
+                // Background
+                ZPos = 16,
+                Depth = 4,
                 RenderFunction = () =>
                 {
                     Rendering.DrawBackgroundWater();
+                    Rendering.DrawSceneBackground();
+                    Rendering.DrawWalls();
+                }
+            },
+            new Layer3D()
+            {
+                RenderFunction = () =>
+                {
                     Rendering.DrawSolidTiles();
+                }
+            },
+            new Layer3D()
+            {
+                RenderFunction = () =>
+                {
+                    Rendering.DrawNonSolidTiles();
+                }
+            },
+            new Layer3D()
+            {
+                ZPos = 6,
+                Depth = 10,
+                NoiseAmount = 0,
+                RenderFunction = () =>
+                {
                     Rendering.DrawPlayers();
                 }
             }
@@ -30,11 +57,8 @@ namespace Terraria3D
 
         public override void PreDrawScene()
         {
+            Rendering.CacheDraws();
             if (Main.gameMenu) return;
-            //Main.graphics.GraphicsDevice.SetRenderTarget(Renderers.ScreenTarget);
-            //Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-            //_scene.Draw(_layers);
-            //Main.graphics.GraphicsDevice.SetRenderTarget(null);
             foreach (var layer in _layers)
                 layer.RenderToTarget();
         }
@@ -47,9 +71,6 @@ namespace Terraria3D
         public override void PostDrawScene()
         {
             _scene.Draw(_layers);
-            //Main.spriteBatch.Begin();
-            //Main.spriteBatch.Draw(Renderers.ScreenTarget, Vector2.Zero, Color.White);
-            //Main.spriteBatch.End();
         }
     }
 }
