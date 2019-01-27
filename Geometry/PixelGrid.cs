@@ -6,9 +6,7 @@ namespace Terraria3D
     public class PixelGrid
     {
         public static VertexPositionNormalTexture[] Create(int dimensions = 32)
-        {
-            return Create(dimensions, dimensions);
-        }
+            => Create(dimensions, dimensions);
 
         public static VertexPositionNormalTexture[] Create(int width, int height)
         {
@@ -59,9 +57,7 @@ namespace Terraria3D
         }
 
         private static Vector2 GetUVCoord(int x, int y, int width, int height)
-        {
-            return new Vector2((float)x / width, //+ 1f / dimensions * 0.5f, 
-                               (float)y / height); //+ 1f / dimensions * 0.5f);
-        }
+            => new Vector2((float)x / width, //+ 1f / dimensions * 0.5f, 
+                           (float)y / height); //+ 1f / dimensions * 0.5f);
     }
 }

@@ -5,7 +5,7 @@ namespace Terraria3D
 {
     public class CapRenderer
     {
-        private GraphicsDevice _graphicsDevice { get { return Terraria.Main.graphics.GraphicsDevice; } }
+        private GraphicsDevice _graphicsDevice => Terraria.Main.graphics.GraphicsDevice;
 
         private Effect _effect;
         private VertexBuffer _buffer;

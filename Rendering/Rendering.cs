@@ -64,10 +64,7 @@ namespace Terraria3D
                 Main.spriteBatch.Draw(Main.instance.backgroundTarget, new Vector2(x, Main.sceneBackgroundPos.Y - Main.screenPosition.Y), Color.White);
         }
 
-        public static void DrawSandstorm()
-        {
-            Sandstorm.DrawGrains(Main.spriteBatch);
-        }
+        public static void DrawSandstorm() => Sandstorm.DrawGrains(Main.spriteBatch);
 
         public static void CacheDraws()
         {
@@ -76,9 +73,7 @@ namespace Terraria3D
         }
 
         public static void DrawMoonMoon()
-        {
-            Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsMoonMoon, true);
-        }
+            => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsMoonMoon, true);
 
         public static void DrawBlack()
         {
@@ -100,10 +95,7 @@ namespace Terraria3D
                 Main.spriteBatch.Draw(Main.instance.wallTarget, Main.sceneWallPos - Main.screenPosition, Color.White);
         }
 
-        public static void DrawWallOfFlesh()
-        {
-            Reflection.DrawWoF();
-        }
+        public static void DrawWallOfFlesh() => Reflection.DrawWoF();
 
         public static void DrawBackGore()
         {
@@ -118,9 +110,7 @@ namespace Terraria3D
         }
 
         public static void DrawNPCsBehindNonSoldTiles()
-        {
-            Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsBehindNonSolidTiles, true);
-        }
+            => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsBehindNonSolidTiles, true);
 
         public static void DrawNonSolidTiles()
         {
@@ -135,15 +125,10 @@ namespace Terraria3D
             Main.instance.waterfallManager.Draw(Main.spriteBatch);
         }
 
-        public static void DrawProjsBehindNPCsAndTiles()
-        {
+        public static void DrawProjsBehindNPCsAndTiles() =>
             Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindNPCsAndTiles, false);
-        }
 
-        public static void DrawNPCsBehindTiles()
-        {
-            Reflection.DrawNPCs(true);
-        }
+        public static void DrawNPCsBehindTiles() => Reflection.DrawNPCs(true);
 
         public static void DrawSolidTiles()
         {
@@ -153,30 +138,15 @@ namespace Terraria3D
                 Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
         }
 
-        public static void DrawHitTileAnimation()
-        {
-            Main.player[Main.myPlayer].hitTile.DrawFreshAnimations(Main.spriteBatch);
-        }
+        public static void DrawHitTileAnimation() => Main.player[Main.myPlayer].hitTile.DrawFreshAnimations(Main.spriteBatch);
 
-        public static void DrawNPCsInfrontOfTiles()
-        {
-            Reflection.DrawNPCs(false);
-        }
+        public static void DrawNPCsInfrontOfTiles() => Reflection.DrawNPCs(false);
 
-        public static void DrawNPCProjectiles()
-        {
-            Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
-        }
+        public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
 
-        public static void SortDrawCacheWorm()
-        {
-            Reflection.SortDrawCashWorms();
-        }
+        public static void SortDrawCacheWorm() => Reflection.SortDrawCashWorms();
 
-        public static void DrawProjsBehindProjectiles()
-        {
-            Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, false);
-        }
+        public static void DrawProjsBehindProjectiles() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, false);
 
         public static void DrawProjectiles()
         {
@@ -191,25 +161,13 @@ namespace Terraria3D
             Reflection.DrawPlayers();
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
         }
-        public static void DrawNPCsOverPlayer()
-        {
-            Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsOverPlayers, false);
-        }
+        public static void DrawNPCsOverPlayer() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsOverPlayers, false);
 
-        public static void DrawItems()
-        {
-            Main.instance.DrawItems();
-        }
+        public static void DrawItems() =>Main.instance.DrawItems();
 
-        public static void DrawRain()
-        {
-            Reflection.DrawRain();
-        }
+        public static void DrawRain() => Reflection.DrawRain(); 
 
-        public static void DrawGore()
-        {
-            Reflection.DrawGore();
-        }
+        public static void DrawGore() => Reflection.DrawGore(); 
 
         public static void DrawDust() { using (_sb.End()) { Reflection.DrawDust(); } }
 
@@ -227,25 +185,13 @@ namespace Terraria3D
                 Reflection.DrawWires();
         }
 
-        public static void DrawProjsOverWireUI()
-        {
-            Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverWiresUI, false);
-        }
+        public static void DrawProjsOverWireUI() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverWiresUI, false);
 
-        public static void DrawInfernoRings()
-        {
-            Main.instance.DrawInfernoRings();
-        }
+        public static void DrawInfernoRings() => Main.instance.DrawInfernoRings();
 
-        public static void DrawMoonlordDeathFront()
-        {
-            MoonlordDeathDrama.DrawWhite(Main.spriteBatch);
-        }
+        public static void DrawMoonlordDeathFront() => MoonlordDeathDrama.DrawWhite(Main.spriteBatch);
 
-        public static void DrawScreenObstructions()
-        {
-            ScreenObstruction.Draw(Main.spriteBatch);
-        }
+        public static void DrawScreenObstructions() => ScreenObstruction.Draw(Main.spriteBatch);
 
         public static void DrawChatOverPlayerHeads()
         {
@@ -419,10 +365,7 @@ namespace Terraria3D
         private SpriteBatch _sb;
         bool _open = false;
 
-        public SB(SpriteBatch spriteBatch)
-        {
-            _sb = spriteBatch;
-        }
+        public SB(SpriteBatch spriteBatch) { _sb = spriteBatch; }
 
         public SB Begin(Matrix? transform = null)
         {

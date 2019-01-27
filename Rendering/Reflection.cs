@@ -32,113 +32,32 @@ namespace Terraria3D
         private static MethodInfo _drawWires          = GetMethod("DrawWires",          BindingFlags.Instance);
 
         public static void DrawWaters(bool bg = false, int styleOverride = -1, bool allowUpdate = true)
-        {
-            _drawWaters.Invoke(Main.instance, new object[] { bg, styleOverride, allowUpdate });
-        }
+            => _drawWaters.Invoke(Main.instance, new object[] { bg, styleOverride, allowUpdate });
 
-        public static void DrawBackground()
-        {
-            _drawBackground.Invoke(Main.instance, null);
-        }
-
-        public static void CacheNPCDraws()
-        {
-            _cacheNPCDraws.Invoke(Main.instance, null);
-        }
-
-        public static void CacheProjDraws()
-        {
-            _cacheProjDraws.Invoke(Main.instance, null);
-        }
-
-        public static void DrawCachedNPCs(List<int> npcCache, bool behindTiles)
-        {
-            _drawCachedNPCs.Invoke(Main.instance, new object[] { npcCache, behindTiles });
-        }
-
-        public static void DrawBlack(bool force = false)
-        {
-            _drawBlack.Invoke(Main.instance, new object[] { force });
-        }
-
-        public static void DrawWalls()
-        {
-            _drawWalls.Invoke(Main.instance, null);
-        }
-
-        public static void DrawWoF()
-        {
-            _drawWoF.Invoke(Main.instance, null);
-        }
-
-        public static void DrawGoreBehind()
-        {
-            _drawGoreBehind.Invoke(Main.instance, null);
-        }
-
-        public static void DrawTiles(bool solidOnly = true, int waterStyleOverride = -1)
-        {
-            _drawTiles.Invoke(Main.instance, new object[] { solidOnly, waterStyleOverride });
-        }
-
-        public static void DrawCachedProjs(List<int> projCache, bool startSpriteBatch = true)
-        {
-            _drawCachedProjs.Invoke(Main.instance, new object[] { projCache, startSpriteBatch });
-        }
-
-        public static void DrawNPCs(bool behindTiles)
-        {
-            _drawNPCs.Invoke(Main.instance, new object[] { behindTiles });
-        }
-
-        public static void SortDrawCashWorms()
-        {
-            _sortDrawCacheWorms.Invoke(Main.instance, null);
-        }
-
-        public static void DrawProjectiles()
-        {
-            _drawProjectiles.Invoke(Main.instance, null);
-        }
-
-        public static void DrawPlayers()
-        {
-            _drawPlayers.Invoke(Main.instance, null);
-        }
-
-        public static void DrawItems()
-        {
-            _drawItems.Invoke(Main.instance, null);
-        }
-
-        public static void DrawRain()
-        {
-            _drawRain.Invoke(Main.instance, null);
-        }
-
-        public static void DrawGore()
-        {
-            _drawGore.Invoke(Main.instance, null);
-        }
-
-        public static void DrawDust()
-        {
-            _drawDust.Invoke(Main.instance, null);
-        }
-
-        public static void DrawWires()
-        {
-            _drawWires.Invoke(Main.instance, null);
-        }
+        public static void DrawBackground() => _drawBackground.Invoke(Main.instance, null);
+        public static void CacheNPCDraws() => _cacheNPCDraws.Invoke(Main.instance, null);
+        public static void CacheProjDraws() => _cacheProjDraws.Invoke(Main.instance, null);
+        public static void DrawCachedNPCs(List<int> npcCache, bool behindTiles) => _drawCachedNPCs.Invoke(Main.instance, new object[] { npcCache, behindTiles });
+        public static void DrawBlack(bool force = false) => _drawBlack.Invoke(Main.instance, new object[] { force });
+        public static void DrawWalls() => _drawWalls.Invoke(Main.instance, null);
+        public static void DrawWoF() => _drawWoF.Invoke(Main.instance, null);
+        public static void DrawGoreBehind() => _drawGoreBehind.Invoke(Main.instance, null);
+        public static void DrawTiles(bool solidOnly = true, int waterStyleOverride = -1) => _drawTiles.Invoke(Main.instance, new object[] { solidOnly, waterStyleOverride });
+        public static void DrawCachedProjs(List<int> projCache, bool startSpriteBatch = true) => _drawCachedProjs.Invoke(Main.instance, new object[] { projCache, startSpriteBatch });
+        public static void DrawNPCs(bool behindTiles) => _drawNPCs.Invoke(Main.instance, new object[] { behindTiles });
+        public static void SortDrawCashWorms() => _sortDrawCacheWorms.Invoke(Main.instance, null);
+        public static void DrawProjectiles() => _drawProjectiles.Invoke(Main.instance, null);
+        public static void DrawPlayers() => _drawPlayers.Invoke(Main.instance, null);
+        public static void DrawItems() => _drawItems.Invoke(Main.instance, null);
+        public static void DrawRain() => _drawRain.Invoke(Main.instance, null);
+        public static void DrawGore() => _drawGore.Invoke(Main.instance, null);
+        public static void DrawDust() => _drawDust.Invoke(Main.instance, null);
+        public static void DrawWires() => _drawWires.Invoke(Main.instance, null);
 
         private static FieldInfo GetField(string fieldName, BindingFlags bindingFlags)
-        {
-            return typeof(Main).GetField(fieldName, BindingFlags.NonPublic | bindingFlags);
-        }
+             => typeof(Main).GetField(fieldName, BindingFlags.NonPublic | bindingFlags);
 
         private static MethodInfo GetMethod(string methodName, BindingFlags bindingFlags)
-        {
-            return typeof(Main).GetMethod(methodName, BindingFlags.NonPublic | bindingFlags);
-        }
+             => typeof(Main).GetMethod(methodName, BindingFlags.NonPublic | bindingFlags);
     }
 }

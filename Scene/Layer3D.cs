@@ -7,11 +7,11 @@ namespace Terraria3D
 {
     public class Layer3D
     {
-        public float ZPos { get; set; }
-        public float Depth { get; set; }
-        public float NoiseAmount { get; set; }
-        public bool UseInnerPixel { get; set; }
-        public Action RenderFunction { get; set; }
+        public float ZPos { get; set; } = 0;
+        public float Depth { get; set; } = 16;
+        public float NoiseAmount { get; set; } = 1;
+        public bool UseInnerPixel { get; set; } = true;
+        public Action RenderFunction { get; set; } = null;
 
         private RenderTarget2D _renderTarget;
         private RenderTarget2D _innerPixelTarget;
@@ -20,10 +20,6 @@ namespace Terraria3D
         {
             UpdateRenderTarget();
             Main.OnResolutionChanged += (size) => UpdateRenderTarget();
-            ZPos = 0;
-            Depth = 16;
-            NoiseAmount = 1;
-            UseInnerPixel = true;
         }
 
         public void RenderToTarget()
@@ -33,17 +29,15 @@ namespace Terraria3D
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
             RenderFunction();
             Main.spriteBatch.End();
-            if (UseInnerPixel)
+            if(UseInnerPixel)
                 Renderers.InnerPixelRenderer.Draw(_innerPixelTarget, _renderTarget);
             Main.graphics.GraphicsDevice.SetRenderTarget(null);
         }
 
         public void Dispose()
         {
-            if (_renderTarget != null)
-                _renderTarget.Dispose();
-            if (_innerPixelTarget != null)
-                _innerPixelTarget.Dispose();
+            _renderTarget?.Dispose();
+            _innerPixelTarget?.Dispose();
         }
 
         public void DrawExtrusion(Camera camera, Matrix matrix)

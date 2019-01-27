@@ -3,3 +3,4 @@ version = 0.1
 displayName = Terraria3D
 includePDB = true
 modReferences = TerrariaHooks
+languageVersion = 6

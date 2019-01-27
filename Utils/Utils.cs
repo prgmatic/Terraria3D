@@ -5,10 +5,9 @@ namespace Terraria3D
 {
     public static class Utils
     {
-        public static RenderTarget2D CreateRenderTarget(bool preserve = false)
-        {
-            return CreateRenderTarget(Screen.Width, Screen.Height, preserve);
-        }
+        public static RenderTarget2D CreateRenderTarget(bool preserve = false) 
+            => CreateRenderTarget(Screen.Width, Screen.Height, preserve);
+
 
         public static RenderTarget2D CreateRenderTarget(int width, int height, bool preserve = false)
         {
