@@ -32,7 +32,7 @@ namespace Terraria3D
 
         private void InitLayers()
         {
-            if(_layers != null)
+            if (_layers != null)
             {
                 foreach (var layer in _layers)
                     layer.Dispose();
@@ -57,6 +57,12 @@ namespace Terraria3D
                     RenderFunction = () =>
                     {
                         Rendering.DrawSolidTiles();
+                    }
+                },
+                new Layer3D()
+                {
+                    RenderFunction = () =>
+                    {
                         Rendering.DrawForegroundWater();
                     }
                 },
@@ -106,7 +112,7 @@ namespace Terraria3D
 
                     }
                 },
-                 // Items Gore
+                // Items Gore
                 new Layer3D()
                 {
                     ZPos = 7,
@@ -134,7 +140,6 @@ namespace Terraria3D
                     Depth = 4,
                     RenderFunction = () => Rendering.DrawWires()
                 }
-
             };
         }
 
