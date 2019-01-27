@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour.HookGen;
-using System.Diagnostics;
+﻿
 using Terraria.GameInput;
+using Microsoft.Xna.Framework.Graphics;
+using MonoMod.RuntimeDetour.HookGen;
 
 namespace Terraria3D
 {
-    public static class Hooks
+    public static partial class Hooks
     {
-        public static void Initialize()
+        private static void ApplyDrawHooks()
         {
             IL.Terraria.Main.do_Draw += (il) =>
             {
@@ -16,7 +16,6 @@ namespace Terraria3D
                 AddPreRenderHook(cursor);
                 AddPostSceneRenderHook(cursor);
             };
-
         }
 
         private static void AddPreRenderHook(HookILCursor cursor)
@@ -35,7 +34,6 @@ namespace Terraria3D
             {
                 if (cursor.TryGotoPrev(i => i.MatchCallvirt<SpriteBatch>("End")))
                 {
-                    Trace.WriteLine(cursor.Next.Offset);
                     cursor.Index++;
                     cursor.EmitDelegate(() => Terraria3D.Instance.DrawScene());
                 }

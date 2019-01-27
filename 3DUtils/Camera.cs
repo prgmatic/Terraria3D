@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Terraria;
+using Microsoft.Xna.Framework;
 
 namespace Terraria3D
 {
@@ -17,5 +18,18 @@ namespace Terraria3D
 
         public Matrix Projection => Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), Screen.Aspect, NearClipPlane, FarClipPlane);
         public Matrix View => Matrix.Invert(Transfrom.LocalToWorld);
+        public Ray ScreenPointToRay(Vector2 screenPosition)
+        {
+            Vector3 nearPoint = new Vector3(screenPosition, 0); //new Vector3(screenPosition.X, screenPosition.Y, 0);
+            Vector3 farPoint  = nearPoint + Vector3.Backward;
+
+            nearPoint = Main.graphics.GraphicsDevice.Viewport.Unproject(nearPoint, Projection, View, Matrix.Identity);
+            farPoint  = Main.graphics.GraphicsDevice.Viewport.Unproject(farPoint,  Projection, View, Matrix.Identity);
+
+            Vector3 direction = farPoint - nearPoint;
+            direction.Normalize();
+
+            return new Ray(nearPoint, direction);
+        }
     }
 }

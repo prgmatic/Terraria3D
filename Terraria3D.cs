@@ -1,6 +1,8 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
+using Terraria.GameInput;
 using Terraria.ModLoader;
 
 namespace Terraria3D
@@ -9,8 +11,8 @@ namespace Terraria3D
     {
         public static Terraria3D Instance { get; private set; }
 
+        public Scene3D Scene { get; private set; } = new Scene3D();
         private UISettingsWindow _settingsWinow = new UISettingsWindow("3D Settings");
-        private Scene3D _scene = new Scene3D();
         private Layer3D[] _layers;
 
         public override void Load()
@@ -25,7 +27,7 @@ namespace Terraria3D
             Input.Update();
             if (Main.keyState.IsKeyDown(Keys.P))
                 Layers.PopulateLayers(ref _layers);
-            _scene.Update();
+            Scene.Update();
             //_settingsWinow.Draw(spriteBatch);
         }
 
@@ -39,7 +41,8 @@ namespace Terraria3D
 
         public void DrawScene()
         {
-            _scene.Draw(_layers);
+            Scene.Draw(_layers);
+            Cursor3D.Get3DScreenPos(Scene.Camera, new Vector2(Main.mouseX, Main.mouseY), Scene.ModelTransform.LocalToWorld);
         }
     }
 }
