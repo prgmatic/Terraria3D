@@ -34,6 +34,12 @@ namespace Terraria3D
             Main.graphics.GraphicsDevice.SetRenderTarget(null);
         }
 
+        public void Dispose()
+        {
+            _renderTarget?.Dispose();
+            _innerPixelTarget?.Dispose();
+        }
+
         public void DrawExtrusion(Camera camera, Matrix matrix)
         {
             matrix = Matrix.CreateScale(1, 1, Depth) * Matrix.CreateTranslation(0, 0, -ZPos) * matrix;
@@ -47,9 +53,8 @@ namespace Terraria3D
 
         private void UpdateRenderTarget()
         {
-            _renderTarget?.Dispose();
+            Dispose();
             _renderTarget = Utils.CreateRenderTarget();
-            _innerPixelTarget?.Dispose();
             _innerPixelTarget = Utils.CreateRenderTarget();
         }
     }

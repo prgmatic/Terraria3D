@@ -12,7 +12,7 @@ namespace Terraria3D
         
         public Scene3D()
         {
-            _camera.Transfrom.Position = Vector3.Backward * 2;
+            _camera.Transfrom.Position = Vector3.Backward * 0.2f;
         }
 
         public void Update()

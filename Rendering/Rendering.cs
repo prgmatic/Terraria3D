@@ -109,7 +109,7 @@ namespace Terraria3D
             MoonlordDeathDrama.DrawExplosions(Main.spriteBatch);
         }
 
-        public static void DrawNPCsBehinNonSoldTiles()
+        public static void DrawNPCsBehindNonSoldTiles()
             => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsBehindNonSolidTiles, true);
 
         public static void DrawNonSolidTiles()
@@ -126,7 +126,7 @@ namespace Terraria3D
         }
 
         public static void DrawProjsBehindNPCsAndTiles() =>
-            Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindNPCsAndTiles, true);
+            Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindNPCsAndTiles, false);
 
         public static void DrawNPCsBehindTiles() => Reflection.DrawNPCs(true);
 
@@ -142,13 +142,18 @@ namespace Terraria3D
 
         public static void DrawNPCsInfrontOfTiles() => Reflection.DrawNPCs(false);
 
-        public static void DrawNPCPRojectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
+        public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
 
         public static void SortDrawCacheWorm() => Reflection.SortDrawCashWorms();
 
-        public static void DrawProjsBehindProjectiles() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, true);
+        public static void DrawProjsBehindProjectiles() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, false);
 
-        public static void DrawProjectiles() => Reflection.DrawProjectiles();
+        public static void DrawProjectiles()
+        {
+            Main.spriteBatch.End();
+            Reflection.DrawProjectiles();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        }
 
         public static void DrawPlayers()
         {
@@ -158,14 +163,13 @@ namespace Terraria3D
         }
         public static void DrawNPCsOverPlayer() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsOverPlayers, false);
 
-        public static void DrawItems() => Main.instance.DrawItems();
+        public static void DrawItems() =>Main.instance.DrawItems();
 
-        public static void DrawRain() => Reflection.DrawRain();
+        public static void DrawRain() => Reflection.DrawRain(); 
 
-        public static void DrawGore() => Reflection.DrawGore();
+        public static void DrawGore() => Reflection.DrawGore(); 
 
-        public static void DrawDust() => Reflection.DrawDust();
-
+        public static void DrawDust() { using (_sb.End()) { Reflection.DrawDust(); } }
 
         public static void DrawForegroundWater()
         {
@@ -359,16 +363,28 @@ namespace Terraria3D
     class SB : IDisposable
     {
         private SpriteBatch _sb;
+        bool _open = false;
 
         public SB(SpriteBatch spriteBatch) => _sb = spriteBatch;
 
         public SB Begin(Matrix? transform = null)
         {
+            _open = true;
             if (transform == null)
                 transform = Matrix.Identity;
             _sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, transform.Value);
             return this;
         }
-        public void Dispose() => _sb.End();
+        public SB End()
+        {
+            _open = false;
+            _sb.End();
+            return this;
+        }
+        public void Dispose()
+        {
+            if (_open) _sb.End();
+            else _sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        }
     }
 }
