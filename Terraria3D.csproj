@@ -49,6 +49,7 @@
     <Compile Include="Rendering\InnerPixelRenderer.cs" />
     <Compile Include="Rendering\Renderers.cs" />
     <Compile Include="Rendering\Rendering.cs" />
+    <Compile Include="Scene\Layers.cs" />
     <Compile Include="Scene\Scene3D.cs" />
     <Compile Include="Terraria3D.cs" />
     <Compile Include="UI\UISettingsWindow.cs" />
