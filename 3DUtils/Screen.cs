@@ -5,10 +5,9 @@ namespace Terraria3D
 {
     public static class Screen
     {
-        private static GraphicsDevice _graphicsDevice => Main.graphics.GraphicsDevice;
-        public static int Width => _graphicsDevice.Viewport.Width;
-        public static int Height => _graphicsDevice.Viewport.Height;
-        public static float Aspect => (float)Width / Height;
-
+        private static GraphicsDevice _graphicsDevice { get { return Main.graphics.GraphicsDevice; } }
+        public static int Width { get { return _graphicsDevice.Viewport.Width; } }
+        public static int Height { get { return _graphicsDevice.Viewport.Height; } }
+        public static float Aspect { get { return (float)Width / Height; } }
     }
 }

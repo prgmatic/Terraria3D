@@ -6,10 +6,14 @@ namespace Terraria3D
 {
     public class InnerPixelRenderer
     {
-        private GraphicsDevice _graphicsDevice => Main.graphics.GraphicsDevice;
+        private GraphicsDevice _graphicsDevice { get { return Main.graphics.GraphicsDevice; } }
+
         private Effect _effect;
 
-        public InnerPixelRenderer(Effect effect) => _effect = effect;
+        public InnerPixelRenderer(Effect effect)
+        {
+            _effect = effect;
+        }
 
         public void Draw(RenderTarget2D target, Texture2D texture)
         {

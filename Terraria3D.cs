@@ -2,9 +2,16 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoMod.RuntimeDetour.HookGen;
 using Terraria;
 using Terraria.ModLoader;
+using Mono.Cecil;
 using Terraria.UI;
+using System.Diagnostics;
+using System.Text;
+using System.IO;
+using System;
+using Mono.Cecil.Cil;
 
 namespace Terraria3D
 {
@@ -16,18 +23,11 @@ namespace Terraria3D
         private Scene3D _scene = new Scene3D();
         private Layer3D[] _layers;
 
-        public override void PostSetupContent()
+        public override void Load()
         {
             Instance = this;
             InitLayers();
-        }
-
-        public override void PreDrawScene()
-        {
-            Rendering.CacheDraws();
-            if (Main.gameMenu) return;
-            foreach (var layer in _layers)
-                layer.RenderToTarget();
+            Hooks.Initialize();
         }
 
         private void InitLayers()
@@ -152,9 +152,21 @@ namespace Terraria3D
             //_settingsWinow.Draw(spriteBatch);
         }
 
-        public override void PostDrawScene()
+        public void RenderLayersTargets()
         {
-            _scene.Draw(_layers);
+            Rendering.CacheDraws();
+            if (Main.gameMenu) return;
+            foreach (var layer in _layers)
+                layer.RenderToTarget();
+        }
+
+        public void DrawScene()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                _scene.Draw(_layers);
+
+            }
         }
     }
 }

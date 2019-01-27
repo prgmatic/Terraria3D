@@ -18,7 +18,7 @@ namespace Terraria3D
             Main.OnResolutionChanged += (size) => GridRenderer.SetGridSize(Screen.Width, Screen.Height);
         }
 
-        private static Effect GetEffect(string name) => Terraria3D.Instance.GetEffect(name);
-        private static Texture2D GetTexture(string name) => Terraria3D.Instance.GetTexture(name);
+        private static Effect GetEffect(string name) { return Terraria3D.Instance.GetEffect(name); }
+        private static Texture2D GetTexture(string name) { return Terraria3D.Instance.GetTexture(name); }
     }
 }
