@@ -42,7 +42,6 @@
     <Compile Include="3DUtils\Transfrom.cs" />
     <Compile Include="Hooks\DrawHooks.cs" />
     <Compile Include="Hooks\InputHooks.cs" />
-    <Compile Include="Hooks\SkipDrawHooks.cs" />
     <Compile Include="Input\Cursor3D.cs" />
     <Compile Include="Rendering\CapRenderer.cs" />
     <Compile Include="Geometry\PixelGrid.cs" />
@@ -57,6 +56,7 @@
     <Compile Include="Scene\Scene3D.cs" />
     <Compile Include="Terraria3D.cs" />
     <Compile Include="UI\UISettingsWindow.cs" />
+    <Compile Include="UI\UITerraria3D.cs" />
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="Hooks\Hooks.cs" />
     <Compile Include="Utils\Input.cs" />

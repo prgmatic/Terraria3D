@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
-using Terraria.GameInput;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Terraria3D
 {
@@ -43,6 +44,24 @@ namespace Terraria3D
         {
             Scene.Draw(_layers);
             Cursor3D.Get3DScreenPos(Scene.Camera, new Vector2(Main.mouseX, Main.mouseY), Scene.ModelTransform.LocalToWorld);
+        }
+
+        public override void UpdateUI(GameTime gameTime) => UITerraria3D.Update(gameTime);
+
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (inventoryIndex != -1)
+            {
+                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+                    "ExampleMod: Example Person UI", () => 
+                    {
+                        if (UITerraria3D.Visible)
+                            UITerraria3D.Draw();
+                        return true;
+                    }, InterfaceScaleType.UI)
+                );
+            }
         }
     }
 }

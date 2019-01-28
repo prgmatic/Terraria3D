@@ -34,6 +34,10 @@ namespace Terraria3D
             {
                 Left.Set(Left.Pixels + Input.MousePosition.X - _prevMousePos.X, 0);
                 Top.Set(Top.Pixels + Input.MousePosition.Y - _prevMousePos.Y, 0);
+
+                var parentDimensions = Parent.GetDimensions().ToRectangle();
+                Left.Pixels = MathHelper.Clamp(Left.Pixels, 0, parentDimensions.Right  - Width.Pixels);
+                Top.Pixels  = MathHelper.Clamp(Top.Pixels,  0, parentDimensions.Bottom - Height.Pixels);
             }
             _prevMousePos = Input.MousePosition;
             base.Recalculate();

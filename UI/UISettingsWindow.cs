@@ -1,4 +1,6 @@
-﻿using Terraria.GameContent.UI.Elements;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.GameInput;
 
 namespace Terraria3D
 {
@@ -11,18 +13,15 @@ namespace Terraria3D
             //this.Left.Set(-Width.Pixels * 0.5f, 0.5f);
             //this.Top.Set(-Height.Pixels * 0.5f, 0.5f);
             Recalculate();
+            OnClick += (evt, listeningElement) => System.Diagnostics.Trace.WriteLine("Click");
         }
 
-        public override void Recalculate()
+        protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            base.Recalculate();
-        }
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            //Recalculate();
+            // Block cursor from clicking world.
+            if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface)
+                Main.LocalPlayer.mouseInterface = true;
+            base.DrawSelf(spriteBatch);
         }
     }
 }
