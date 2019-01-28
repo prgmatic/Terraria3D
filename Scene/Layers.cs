@@ -15,10 +15,11 @@ namespace Terraria3D
                 new Layer3D()
                 {
                     // Background
-                    ZPos = 16,
+                    ZPos = 32,
                     Depth = 4,
                     RenderFunction = () =>
                     {
+                        Rendering.DrawBlack();
                         Rendering.DrawBackgroundWater();
                         Rendering.DrawSceneBackground();
                         Rendering.DrawWalls();
@@ -27,6 +28,7 @@ namespace Terraria3D
                 // Solid tiles
                 new Layer3D()
                 {
+                    Depth = 32,
                     RenderFunction = () =>
                     {
                         Rendering.DrawSolidTiles();
@@ -34,6 +36,7 @@ namespace Terraria3D
                 },
                 new Layer3D()
                 {
+                    Depth = 32,
                     RenderFunction = () =>
                     {
                         Rendering.DrawForegroundWater();
@@ -42,8 +45,8 @@ namespace Terraria3D
                 // Non Solid tiles
                 new Layer3D()
                 {
-                    ZPos = 12,
-                    Depth = 4,
+                    ZPos = 24,
+                    Depth = 8,
                     RenderFunction = () =>
                     {
                         Rendering.DrawNonSolidTiles();
@@ -54,8 +57,8 @@ namespace Terraria3D
                 //Player
                 new Layer3D()
                 {
-                    ZPos = 6,
-                    Depth = 8,
+                    ZPos = 12,
+                    Depth = 16,
                     NoiseAmount = 0,
                     RenderFunction = () =>
                     {
@@ -71,8 +74,8 @@ namespace Terraria3D
                 // Proj
                 new Layer3D()
                 {
-                    ZPos = 8,
-                    Depth = 1,
+                    ZPos = 16,
+                    Depth = 2,
                     NoiseAmount = 0,
                     RenderFunction = () =>
                     {
@@ -88,8 +91,8 @@ namespace Terraria3D
                 // Items Gore
                 new Layer3D()
                 {
-                    ZPos = 7,
-                    Depth = 3,
+                    ZPos = 14,
+                    Depth = 6,
                     NoiseAmount = 0,
                     RenderFunction = () =>
                     {
@@ -109,8 +112,8 @@ namespace Terraria3D
                 },
                 new Layer3D()
                 {
-                    ZPos = -4,
-                    Depth = 4,
+                    ZPos = -8,
+                    Depth = 8,
                     RenderFunction = () => Rendering.DrawWires()
                 }
             };

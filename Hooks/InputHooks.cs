@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using MonoMod.RuntimeDetour.HookGen;
-using System.Diagnostics;
-using Terraria;
-using Terraria.GameContent;
+﻿using Terraria;
 
 namespace Terraria3D
 {
@@ -10,7 +6,6 @@ namespace Terraria3D
     {
         private static void ApplyMouseHook()
         {
-
             // TODO: Hook should happen after this function is called, not in it
             // Can't hook DoUpdate, guessing because I don't have the v0.16
             // TerrariaHooks.dll

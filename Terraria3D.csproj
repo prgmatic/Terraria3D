@@ -42,6 +42,7 @@
     <Compile Include="3DUtils\Transfrom.cs" />
     <Compile Include="Hooks\DrawHooks.cs" />
     <Compile Include="Hooks\InputHooks.cs" />
+    <Compile Include="Hooks\SkipDrawHooks.cs" />
     <Compile Include="Input\Cursor3D.cs" />
     <Compile Include="Rendering\CapRenderer.cs" />
     <Compile Include="Geometry\PixelGrid.cs" />

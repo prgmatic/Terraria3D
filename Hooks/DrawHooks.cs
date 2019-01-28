@@ -14,6 +14,7 @@ namespace Terraria3D
                 var cursor = il.At(0);
 
                 AddPreRenderHook(cursor);
+                AddSkip2DHook(cursor);
                 AddPostSceneRenderHook(cursor);
             };
         }
