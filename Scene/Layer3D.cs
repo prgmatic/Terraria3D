@@ -7,11 +7,14 @@ namespace Terraria3D
 {
     public class Layer3D
     {
+        public string Name { get; set; } = "Un-named";
         public float ZPos { get; set; } = 0;
         public float Depth { get; set; } = 16;
         public float NoiseAmount { get; set; } = 1;
+        public bool Enabled { get; set; } = true;
         public bool UseInnerPixel { get; set; } = true;
         public Action RenderFunction { get; set; } = null;
+        public InputPlaneType InputPlane { get; set; } = InputPlaneType.None;
 
         private RenderTarget2D _renderTarget;
         private RenderTarget2D _innerPixelTarget;
@@ -42,12 +45,14 @@ namespace Terraria3D
 
         public void DrawExtrusion(Camera camera, Matrix matrix)
         {
-            matrix = Matrix.CreateScale(1, 1, Depth) * Matrix.CreateTranslation(0, 0, -ZPos) * matrix;
+            if (!Enabled) return;
+            matrix = Matrix.CreateScale(1, 1, Depth) * Matrix.CreateTranslation(0, 0, Depth - ZPos) * matrix;
             Renderers.GridRenderer.Draw(UseInnerPixel ? _innerPixelTarget : _renderTarget, camera, Depth, NoiseAmount, matrix);
         }
         public void DrawCap(Camera camera, Matrix matrix)
         {
-            matrix = Matrix.CreateTranslation(0, 0, -ZPos) * matrix; //ZPos * 1f / Screen.Height);
+            if (!Enabled) return;
+            matrix = Matrix.CreateTranslation(0, 0, Depth - ZPos) * matrix; //ZPos * 1f / Screen.Height);
             Renderers.CapRenderer.Draw(_renderTarget, camera, matrix);
         }
 
@@ -56,6 +61,13 @@ namespace Terraria3D
             Dispose();
             _renderTarget = Utils.CreateRenderTarget();
             _innerPixelTarget = Utils.CreateRenderTarget();
+        }
+
+        public enum InputPlaneType
+        {
+            None,
+            SolidTiles,
+            NoneSolidTiles,
         }
     }
 }

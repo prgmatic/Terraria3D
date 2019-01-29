@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria3D.UI.Elements;
 
@@ -8,21 +9,41 @@ namespace Terraria3D
     public class UISettingsWindow : UIWindow
     {
         private UIListScrollView _scrollView = new UIListScrollView();
+        private UIText _resetButton = new UIText("Reset");
 
         public UISettingsWindow(string text)
         {
             Width.Set(600, 0);
             Height.Set(400, 0);
-            _scrollView.Width.Set(500, 0);
-            _scrollView.Height.Set(300, 0);
-            _scrollView.HAlign = 0.5f;
+            _scrollView.Width.Set(0, 1);
+            _scrollView.Height.Set(-30, 1);
+
+            _resetButton.VAlign = 1;
+            _resetButton.Top.Set(-5, 0);
+            _resetButton.OnClick += (evt, listener) => Resest();
             
             Append(_scrollView);
+            Append(_resetButton);
+        }
 
-            for (int i = 0; i < 30; i++)
-                _scrollView.List.Add(new UILayerEntry(i));
+        public override void OnActivate()
+        {
+            base.OnActivate();
+            RebuildLayerList();
+        }
 
-            Recalculate();
+        private void RebuildLayerList()
+        {
+            _scrollView.List.Clear();
+            var layers = Terraria3D.Instance.LayerManager.Layers;
+            for (int i = 0; i < layers.Length; i++)
+                _scrollView.List.Add(new UILayerEntry(i) { Layer = layers[i] }); 
+        }
+
+        private void Resest()
+        {
+            Terraria3D.Instance.LayerManager.Rebuild();
+            RebuildLayerList();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

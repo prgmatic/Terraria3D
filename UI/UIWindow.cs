@@ -7,20 +7,17 @@ namespace Terraria3D
 {
     public class UIWindow : UIPanel
     {
-
-
         public bool Draggable { get; set; }
         private bool _dragging = false;
         private Vector2 _prevMousePos;
-
 
         public UIWindow()
         {
             Draggable = true;
             OnMouseDown += UIWindow_OnMouseDown;
             OnMouseUp += UIWindow_OnMouseUp;
+            Activate();
         }
-
 
         void UIWindow_OnMouseDown(UIMouseEvent evt, UIElement listeningElement)
         {

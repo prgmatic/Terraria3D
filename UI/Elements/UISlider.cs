@@ -8,8 +8,8 @@ namespace Terraria3D.UI.Elements
 {
     public class UISlider : UIElement
     {
-        protected static Texture2D _handleTexture  = Terraria.Main.colorSliderTexture;
-		protected static Texture2D _barTexture = TextureManager.Load("Images/UI/ScrollbarInner");
+        protected static Texture2D _handleTexture = Terraria.Main.colorSliderTexture;
+        protected static Texture2D _barTexture = TextureManager.Load("Images/UI/ScrollbarInner");
 
         public delegate void UISliderValueEvent(UISlider sender, float value);
         public event UISliderValueEvent ValueChanged;
@@ -19,13 +19,7 @@ namespace Terraria3D.UI.Elements
         public float Value
         {
             get { return _value; }
-            set
-            {
-                var prevValue = _value;
-                _value = MathHelper.Clamp(value, MinValue, MaxValue);
-                if (prevValue != _value)
-                    ValueChanged?.Invoke(this, _value);
-            }
+            set { _value = MathHelper.Clamp(value, MinValue, MaxValue); }
         }
         private float _value = 0;
         private bool _isDragging = false;
@@ -44,8 +38,8 @@ namespace Terraria3D.UI.Elements
         private void DrawBar(SpriteBatch spriteBatch, Texture2D texture, Rectangle dimensions, Color color)
         {
             var rot = MathHelper.ToRadians(-90);
-            spriteBatch.Draw(texture, new Rectangle(dimensions.X - 6, dimensions.Y, dimensions.Height, 6),                new Rectangle?(new Rectangle(0, 0, texture.Width, 6)),                  color, rot, Vector2.UnitX * dimensions.Height, SpriteEffects.None, 0);
-            spriteBatch.Draw(texture, new Rectangle(dimensions.X, dimensions.Y, dimensions.Height, dimensions.Width),     new Rectangle?(new Rectangle(0, 6, texture.Width, 4)),                  color, rot, Vector2.UnitX * dimensions.Height, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, new Rectangle(dimensions.X - 6, dimensions.Y, dimensions.Height, 6), new Rectangle?(new Rectangle(0, 0, texture.Width, 6)), color, rot, Vector2.UnitX * dimensions.Height, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, new Rectangle(dimensions.X, dimensions.Y, dimensions.Height, dimensions.Width), new Rectangle?(new Rectangle(0, 6, texture.Width, 4)), color, rot, Vector2.UnitX * dimensions.Height, SpriteEffects.None, 0);
             spriteBatch.Draw(texture, new Rectangle(dimensions.X + dimensions.Width, dimensions.Y, dimensions.Height, 6), new Rectangle?(new Rectangle(0, texture.Height - 6, texture.Width, 6)), color, rot, Vector2.UnitX * dimensions.Height, SpriteEffects.None, 0);
         }
 
@@ -83,8 +77,11 @@ namespace Terraria3D.UI.Elements
 
         private void MoveSliderUnderMouse()
         {
+            var prevValue = _value;
             var pos = UserInterface.ActiveInstance.MousePosition.X - GetInnerDimensions().X;
             Value = MathHelper.Lerp(MinValue, MaxValue, pos / Width.Pixels);
+            if (prevValue != _value)
+                ValueChanged?.Invoke(this, _value);
         }
     }
 }

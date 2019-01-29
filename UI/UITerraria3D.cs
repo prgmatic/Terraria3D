@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Terraria.GameInput;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Terraria3D
@@ -11,8 +13,9 @@ namespace Terraria3D
         private static UserInterface _interface;
         private static UIState _state;
         private static UISettingsWindow _settingsWindow;
+        private static ModHotKey _settingsKeyBinding;
 
-        
+
         public static void Load()
         {
             _interface = new UserInterface();
@@ -22,6 +25,8 @@ namespace Terraria3D
             _interface.SetState(_state);
             _state.Append(_settingsWindow);
             _state.Activate();
+
+            _settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
         }
 
         public static void Unload()
@@ -32,10 +37,16 @@ namespace Terraria3D
             _settingsWindow = null;
             _state = null;
             _interface = null;
+
+            _settingsKeyBinding = null;
         }
 
         public static void Update(GameTime gameTime)
-            => _interface.Update(gameTime);
+        {
+            _interface.Update(gameTime);
+            // Hack to fix scroll bug.
+            PlayerInput.ScrollWheelDeltaForUI = 0;
+        }
 
         public static void Draw()
             => _interface.Draw(Terraria.Main.spriteBatch, new GameTime());
@@ -53,6 +64,11 @@ namespace Terraria3D
                     }, InterfaceScaleType.UI)
                 );
             }
+        }
+        public static void ProcessInput()
+        {
+            if (_settingsKeyBinding.JustPressed)
+                Visible = !Visible;
         }
     }
 }

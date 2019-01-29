@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Microsoft.Xna.Framework;
+using System.Linq;
 
 namespace Terraria3D
 {
@@ -18,8 +19,15 @@ namespace Terraria3D
 
         public static Vector2 Get3DScreenPos(Camera camera, Vector2 mousePos, Matrix modelMatrix)
         {
+            var layers = Terraria3D.Instance.LayerManager.Layers;
+            var solidLayer = layers.FirstOrDefault(l => l.InputPlane == Layer3D.InputPlaneType.SolidTiles);
+            var nonSolidLayer = layers.FirstOrDefault(l => l.InputPlane == Layer3D.InputPlaneType.NoneSolidTiles);
+
+            if (solidLayer == null || nonSolidLayer == null)
+                return Vector2.Zero;
+
             // Find intersection with front plane
-            _tilePlane.D = 0;
+            SetTilePlanDistance(solidLayer.Depth, solidLayer.ZPos, modelMatrix);
             var ray = camera.ScreenPointToRay(new Vector2(Main.mouseX, Main.mouseY));
             var invMatrix = Matrix.Invert(modelMatrix);
 
@@ -35,7 +43,7 @@ namespace Terraria3D
                 {
                     if (!TileIsCollider(tilePos))
                     {
-                        _tilePlane.D = Vector3.Transform(Vector3.Backward * 16, modelMatrix).Z;
+                        SetTilePlanDistance(nonSolidLayer.Depth, nonSolidLayer.ZPos, modelMatrix);
                         intersectPos = GetPlaneIntersectOnScreen(ray, _tilePlane, invMatrix);
                         if (intersectPos.HasValue)
                             iPos = new Vector2(intersectPos.Value.X, intersectPos.Value.Y);
@@ -45,6 +53,9 @@ namespace Terraria3D
             }
             return Vector2.Zero;
         }
+
+        private static void SetTilePlanDistance(float depth, float zPos, Matrix matrix)
+            => _tilePlane.D = Vector3.Transform(Vector3.Forward * (depth - zPos), matrix).Z;
 
         // Apply matrix and flip y
         private static Vector2? GetPlaneIntersectOnScreen(Ray ray, Plane plane, Matrix? matrix)

@@ -48,7 +48,7 @@ namespace Terraria3D
         private void DrawCaps(Layer3D[] layers)
         {
             var matrix = Matrix.CreateScale((float)Screen.Width / Screen.Height, 1, 1f / Screen.Height);
-            foreach (var layer in layers.OrderBy(l => -l.ZPos))
+            foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
                 layer.DrawCap(Camera, matrix);
         }
     }

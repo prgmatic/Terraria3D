@@ -7,11 +7,13 @@ namespace Terraria3D.UI.Elements
 {
     public class UIListScrollView : UIPanel
     {
-        public UIList List { get; private set; } = new UIList();
+        public UIListModifiedScrollAmount List { get; private set; } = new UIListModifiedScrollAmount();
         public UIScrollbar ScrollBar { get; private set; } = new UIScrollbar();
 
         public UIListScrollView()
         {
+            List.ScrollModifier = 0.5f;
+
             ScrollBar.Height.Set(0, 1);
             ScrollBar.HAlign = 1f;
 

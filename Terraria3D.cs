@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.GameInput;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Terraria3D
 {
@@ -32,11 +35,16 @@ namespace Terraria3D
         // UI
         public override void UpdateUI(GameTime gameTime)
         {
-            //UITerraria3D.Update(gameTime);
+            UITerraria3D.Update(gameTime);
             Scene.Update(gameTime);
             if (Main.keyState.IsKeyDown(Keys.P))
                 LayerManager.Rebuild();
         }
-        //public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
+    }
+
+    public class PlayerHooks : ModPlayer
+    {
+        public override void ProcessTriggers(TriggersSet triggersSet) => UITerraria3D.ProcessInput();
     }
 }
