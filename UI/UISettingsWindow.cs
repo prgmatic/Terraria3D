@@ -1,19 +1,28 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameInput;
+using Terraria3D.UI.Elements;
 
 namespace Terraria3D
 {
     public class UISettingsWindow : UIWindow
     {
+        private UIListScrollView _scrollView = new UIListScrollView();
+
         public UISettingsWindow(string text)
         {
             Width.Set(600, 0);
             Height.Set(400, 0);
-            //this.Left.Set(-Width.Pixels * 0.5f, 0.5f);
-            //this.Top.Set(-Height.Pixels * 0.5f, 0.5f);
+            _scrollView.Width.Set(500, 0);
+            _scrollView.Height.Set(300, 0);
+            _scrollView.HAlign = 0.5f;
+            
+            Append(_scrollView);
+
+            for (int i = 0; i < 30; i++)
+                _scrollView.List.Add(new UILayerEntry(i));
+
             Recalculate();
-            OnClick += (evt, listeningElement) => System.Diagnostics.Trace.WriteLine("Click");
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -23,5 +32,7 @@ namespace Terraria3D
                 Main.LocalPlayer.mouseInterface = true;
             base.DrawSelf(spriteBatch);
         }
+
+        
     }
 }

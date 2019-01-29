@@ -55,6 +55,9 @@
     <Compile Include="Scene\Layers.cs" />
     <Compile Include="Scene\Scene3D.cs" />
     <Compile Include="Terraria3D.cs" />
+    <Compile Include="UI\Elements\UILayerEntry.cs" />
+    <Compile Include="UI\Elements\UIListScrollView.cs" />
+    <Compile Include="UI\Elements\UISlider.cs" />
     <Compile Include="UI\UISettingsWindow.cs" />
     <Compile Include="UI\UITerraria3D.cs" />
     <Compile Include="UI\UIWindow.cs" />

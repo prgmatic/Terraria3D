@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria.UI;
 
 namespace Terraria3D
@@ -23,5 +24,20 @@ namespace Terraria3D
 
         public static void Draw()
             => _interface.Draw(Terraria.Main.spriteBatch, new GameTime());
+
+        public static void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
+        {
+            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (inventoryIndex != -1)
+            {
+                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+                    "ExampleMod: Example Person UI", () =>
+                    {
+                        if (Visible) Draw();
+                        return true;
+                    }, InterfaceScaleType.UI)
+                );
+            }
+        }
     }
 }
