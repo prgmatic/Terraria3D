@@ -8,15 +8,30 @@ namespace Terraria3D
     {
         public static bool Visible { get; private set; } = true;
 
-        private static UserInterface _interface = new UserInterface();
-        private static UIState _state = new UIState();
-        private static UISettingsWindow _settingsWindow = new UISettingsWindow("Settings");
+        private static UserInterface _interface;
+        private static UIState _state;
+        private static UISettingsWindow _settingsWindow;
 
-        static UITerraria3D()
+        
+        public static void Load()
         {
+            _interface = new UserInterface();
+            _state = new UIState();
+            _settingsWindow = new UISettingsWindow("Settings");
+
             _interface.SetState(_state);
             _state.Append(_settingsWindow);
             _state.Activate();
+        }
+
+        public static void Unload()
+        {
+            _interface.SetState(null);
+            _state.Deactivate();
+
+            _settingsWindow = null;
+            _state = null;
+            _interface = null;
         }
 
         public static void Update(GameTime gameTime)

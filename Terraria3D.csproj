@@ -52,7 +52,8 @@
     <Compile Include="Rendering\InnerPixelRenderer.cs" />
     <Compile Include="Rendering\Renderers.cs" />
     <Compile Include="Rendering\Rendering.cs" />
-    <Compile Include="Scene\Layers.cs" />
+    <Compile Include="Scene\LayerManager.cs" />
+    <Compile Include="Scene\LayersBuilder.cs" />
     <Compile Include="Scene\Scene3D.cs" />
     <Compile Include="Terraria3D.cs" />
     <Compile Include="UI\Elements\UILayerEntry.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="Hooks\Hooks.cs" />
     <Compile Include="Utils\Input.cs" />
+    <Compile Include="Utils\Loading.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>

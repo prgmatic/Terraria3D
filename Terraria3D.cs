@@ -1,26 +1,20 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace Terraria3D
 {
-    class Terraria3D : Mod
+    public class Terraria3D : Mod
     {
         public static Terraria3D Instance { get; private set; }
-
-        public Scene3D Scene { get; private set; } = new Scene3D();
-
-        private UISettingsWindow _settingsWinow = new UISettingsWindow("3D Settings");
-        private Layer3D[] _layers;
+        public Scene3D Scene { get; set; }
+        public LayerManager LayerManager { get; set; }
 
         public override void Load()
         {
             Instance = this;
-            Layers.PopulateLayers(ref _layers);
-            Hooks.Initialize();
+            Loading.Load(this);
             Main.OnPostDraw += (gt) =>
             {
                 //Main.spriteBatch.Begin();
@@ -29,19 +23,20 @@ namespace Terraria3D
                 //Main.spriteBatch.End();
             };
         }
+        public override void Unload() => Loading.Unload(this);
 
         // Drawing
-        public void RenderLayersTargets() => Scene.RenderLayers(_layers);
-        public void DrawScene() => Scene.DrawToScreen(_layers);
+        public void RenderLayersTargets() => Scene.RenderLayers(LayerManager.Layers);
+        public void DrawScene() => Scene.DrawToScreen(LayerManager.Layers);
 
         // UI
         public override void UpdateUI(GameTime gameTime)
         {
-            UITerraria3D.Update(gameTime);
+            //UITerraria3D.Update(gameTime);
             Scene.Update(gameTime);
             if (Main.keyState.IsKeyDown(Keys.P))
-                Layers.PopulateLayers(ref _layers);
+                LayerManager.Rebuild();
         }
-        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
+        //public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
     }
 }

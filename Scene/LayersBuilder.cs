@@ -1,7 +1,7 @@
 ﻿
 namespace Terraria3D
 {
-    public static class Layers
+    public static class LayerBuilder
     {
         public static void PopulateLayers(ref Layer3D[] layers)
         {

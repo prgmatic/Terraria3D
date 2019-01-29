@@ -28,9 +28,17 @@ namespace Terraria3D
             _effect.Parameters["NoiseTexture"].SetValue(_noiseTexture);
         }
 
+        public void Dispose()
+        {
+            _effect?.Dispose();
+            _noiseTexture?.Dispose();
+            _gridBuffer?.Dispose();
+        }
+
         public void SetGridSize(int width, int height)
         {
             _grid = PixelGrid.Create(width, height);
+            _gridBuffer?.Dispose();
             _gridBuffer = new VertexBuffer(_graphicsDevice, VertexPositionNormalTexture.VertexDeclaration, _grid.Length, BufferUsage.WriteOnly);
             _gridBuffer.SetData(_grid);
         }

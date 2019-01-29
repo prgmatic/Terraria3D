@@ -18,6 +18,12 @@ namespace Terraria3D
             _buffer.SetData(quad);
         }
 
+        public void Dispose()
+        {
+            _effect?.Dispose();
+            _buffer?.Dispose();
+        }
+
         public void Draw(Texture texture, Camera camera,  Matrix matrix)
         {
             _effect.Parameters["World"].SetValue(matrix);

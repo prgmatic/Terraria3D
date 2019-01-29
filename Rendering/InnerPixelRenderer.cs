@@ -11,6 +11,11 @@ namespace Terraria3D
 
         public InnerPixelRenderer(Effect effect) { _effect = effect; }
 
+        public void Dispose()
+        {
+            _effect?.Dispose();
+        }
+
         public void Draw(RenderTarget2D target, Texture2D texture)
         {
             _graphicsDevice.SetRenderTarget(target);
