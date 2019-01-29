@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Terraria;
 using Terraria.ModLoader;
@@ -13,6 +12,7 @@ namespace Terraria3D
         public static Terraria3D Instance { get; private set; }
 
         public Scene3D Scene { get; private set; } = new Scene3D();
+
         private UISettingsWindow _settingsWinow = new UISettingsWindow("3D Settings");
         private Layer3D[] _layers;
 
@@ -21,47 +21,27 @@ namespace Terraria3D
             Instance = this;
             Layers.PopulateLayers(ref _layers);
             Hooks.Initialize();
+            Main.OnPostDraw += (gt) =>
+            {
+                //Main.spriteBatch.Begin();
+                //UITerraria3D.Update(gt);
+                //UITerraria3D.Draw();
+                //Main.spriteBatch.End();
+            };
         }
 
-        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        // Drawing
+        public void RenderLayersTargets() => Scene.RenderLayers(_layers);
+        public void DrawScene() => Scene.DrawToScreen(_layers);
+
+        // UI
+        public override void UpdateUI(GameTime gameTime)
         {
-            Input.Update();
+            UITerraria3D.Update(gameTime);
+            Scene.Update(gameTime);
             if (Main.keyState.IsKeyDown(Keys.P))
                 Layers.PopulateLayers(ref _layers);
-            Scene.Update();
-            //_settingsWinow.Draw(spriteBatch);
         }
-
-        public void RenderLayersTargets()
-        {
-            Rendering.CacheDraws();
-            if (Main.gameMenu) return;
-            foreach (var layer in _layers)
-                layer.RenderToTarget();
-        }
-
-        public void DrawScene()
-        {
-            Scene.Draw(_layers);
-            Cursor3D.Get3DScreenPos(Scene.Camera, new Vector2(Main.mouseX, Main.mouseY), Scene.ModelTransform.LocalToWorld);
-        }
-
-        public override void UpdateUI(GameTime gameTime) => UITerraria3D.Update(gameTime);
-
-        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-        {
-            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-            if (inventoryIndex != -1)
-            {
-                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-                    "ExampleMod: Example Person UI", () => 
-                    {
-                        if (UITerraria3D.Visible)
-                            UITerraria3D.Draw();
-                        return true;
-                    }, InterfaceScaleType.UI)
-                );
-            }
-        }
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
     }
 }

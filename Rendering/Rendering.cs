@@ -13,6 +13,13 @@ namespace Terraria3D
     {
         private static SB _sb = new SB(Main.spriteBatch);
 
+        public static void PreRenderSetup()
+        {
+            DoLighting();
+            UpdateState();
+            CacheDraws();
+        }
+
         public static void UpdateState()
         {
             if (Main.magmaBGFrameCounter >= 8)
@@ -37,6 +44,18 @@ namespace Terraria3D
                     Main.essDir = 1;
                     Main.essScale = 0.7f;
                 }
+            }
+        }
+
+        public static void DoLighting()
+        {
+            var firstTileX = (int)Math.Floor((double)(Main.screenPosition.X / 16f)) - 1;
+            var lastTileX = (int)Math.Floor((double)((Main.screenPosition.X + (float)Main.screenWidth) / 16f)) + 2;
+            var firstTileY = (int)Math.Floor((double)(Main.screenPosition.Y / 16f)) - 1;
+            var lastTileY = (int)Math.Floor((double)((Main.screenPosition.Y + (float)Main.screenHeight) / 16f)) + 2;
+            if (!Main.drawSkip)
+            {
+                Lighting.LightTiles(firstTileX, lastTileX, firstTileY, lastTileY);
             }
         }
 

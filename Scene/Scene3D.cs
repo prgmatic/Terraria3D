@@ -7,22 +7,33 @@ namespace Terraria3D
 {
     public class Scene3D
     {
+        public bool Enable { get; private set; } = true;
         public Camera Camera { get; private set; } = new Camera();
         public Transfrom ModelTransform { get; private set; } = new Transfrom();
         
+        private bool _canSkipDrawing => Main.gameMenu || Main.mapFullscreen;
+
         public Scene3D()
         {
             Camera.Transfrom.Position = Vector3.Backward * 0.2f;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            // Why doesn't this game use delta time? :\
-            CameraDriver.Drive(Camera, 0.2f, 5, 1f / 60);
+            CameraDriver.Drive(Camera, 0.2f, 0.5f, (float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
-        public void Draw(Layer3D[] layers)
+        public void RenderLayers(Layer3D[] layers)
         {
+            if (!Enable || _canSkipDrawing) return;
+            Rendering.PreRenderSetup();
+            foreach (var layer in layers)
+                layer.RenderToTarget();
+        }
+
+        public void DrawToScreen(Layer3D[] layers)
+        {
+            if (!Enable || _canSkipDrawing) return;
             DrawExtrusions(layers);
             DrawCaps(layers);
         }
