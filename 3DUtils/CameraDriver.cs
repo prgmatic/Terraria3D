@@ -22,14 +22,14 @@ namespace Terraria3D
             if (keyState.IsKeyDown(Keys.NumPad7)) y -= 1;
 
             camera.Transfrom.Position += camera.Transfrom.Forward * z * moveSpeed * deltaTime;
-            camera.Transfrom.Position += camera.Transfrom.Right * x * moveSpeed * deltaTime;
-            camera.Transfrom.Position += camera.Transfrom.Up * y * moveSpeed * deltaTime;
+            camera.Transfrom.Position += camera.Transfrom.Right   * x * moveSpeed * deltaTime;
+            camera.Transfrom.Position += camera.Transfrom.Up      * y * moveSpeed * deltaTime;
 
             if (Terraria.Main.mouseRight)
             {
                 var mouseDelta = new Vector2(Main.mouseX - Main.lastMouseX, Main.mouseY - Main.lastMouseY);
-                camera.Transfrom.Rotation *= Quaternion.CreateFromAxisAngle(Vector3.Right, MathHelper.ToRadians(-mouseDelta.Y * lookSensitivty / 360));
-                camera.Transfrom.Rotation *= Quaternion.CreateFromAxisAngle(Vector3.Up, MathHelper.ToRadians(-mouseDelta.X * lookSensitivty / 360));
+                camera.Transfrom.Rotation = Quaternion.CreateFromAxisAngle(Vector3.Up,             MathHelper.ToRadians(-mouseDelta.X * lookSensitivty) * deltaTime) * camera.Transfrom.Rotation;
+                camera.Transfrom.Rotation = Quaternion.CreateFromAxisAngle(camera.Transfrom.Right, MathHelper.ToRadians(-mouseDelta.Y * lookSensitivty) * deltaTime) * camera.Transfrom.Rotation;
             }
         }
     }

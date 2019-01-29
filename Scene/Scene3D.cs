@@ -20,7 +20,7 @@ namespace Terraria3D
 
         public void Update(GameTime gameTime)
         {
-            CameraDriver.Drive(Camera, 0.2f, 0.5f, (float)gameTime.ElapsedGameTime.TotalSeconds);
+            CameraDriver.Drive(Camera, 0.2f, 20f, (float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public void RenderLayers(Layer3D[] layers)

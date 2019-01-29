@@ -32,7 +32,5 @@ namespace Terraria3D
                 Main.LocalPlayer.mouseInterface = true;
             base.DrawSelf(spriteBatch);
         }
-
-        
     }
 }
