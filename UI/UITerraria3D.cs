@@ -8,7 +8,7 @@ namespace Terraria3D
 {
     public static class UITerraria3D
     {
-        public static bool Visible { get; private set; } = true;
+        public static bool Visible { get; private set; } = false;
 
         private static UserInterface _interface;
         private static UIState _state;
@@ -26,6 +26,7 @@ namespace Terraria3D
             _state.Append(_settingsWindow);
             _state.Activate();
 
+            // Why 'L'? No clue, I hope it's not already bound to something xD
             _settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
         }
 
