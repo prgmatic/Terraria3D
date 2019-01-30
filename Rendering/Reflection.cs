@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Terraria3D
 {
@@ -30,6 +31,9 @@ namespace Terraria3D
         private static MethodInfo _drawDust           = GetMethod("DrawDust",           BindingFlags.Instance);
         private static MethodInfo _drawWires          = GetMethod("DrawWires",          BindingFlags.Instance);
 
+        private static MethodInfo _postDrawTiles = typeof(Mod).Assembly.GetType("Terraria.ModLoader.WorldHooks")
+                .GetMethod("PostDrawTiles", BindingFlags.Public | BindingFlags.Instance);
+
         public static GraphicsProfile CurrentGraphicsProfile => (GraphicsProfile)_currentGraphicsProfile.GetValue(null);
 
         public static void DrawWaters(bool bg = false, int styleOverride = -1, bool allowUpdate = true)
@@ -54,6 +58,8 @@ namespace Terraria3D
         public static void DrawGore() => _drawGore.Invoke(Main.instance, null);
         public static void DrawDust() => _drawDust.Invoke(Main.instance, null);
         public static void DrawWires() => _drawWires.Invoke(Main.instance, null);
+
+        public static void PostDrawTiles() => WorldHooks.PostDrawTiles();
 
         private static FieldInfo GetField(string fieldName, BindingFlags bindingFlags)
              => typeof(Main).GetField(fieldName, BindingFlags.NonPublic | bindingFlags);
