@@ -112,12 +112,13 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="Effects\Grid.fx" />
+    <Content Include="Effects\InnerPixel.fx" />
+    <Content Include="Effects\Texture.fx" />
     <Content Include="Images\Noise.png" />
     <Content Include="Images\Player.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Effects\Grid.xnb" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

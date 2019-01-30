@@ -14,10 +14,9 @@ namespace Terraria3D
             GridRenderer = new GridRenderer(GetEffect("Effects/Grid"), GetTexture("Images/Noise"), Screen.Width, Screen.Height, RTManager.Width, RTManager.Height);
             CapRenderer = new CapRenderer(GetEffect("Effects/Texture"));
             InnerPixelRenderer = new InnerPixelRenderer(GetEffect("Effects/InnerPixel"));
+            RTManager.ResolutionChanged += ResolutionChanged;
         }
 
-       
-       
         public static void Unload()
         {
             GridRenderer?.Dispose();
