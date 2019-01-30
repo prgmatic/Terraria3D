@@ -6,22 +6,19 @@ namespace Terraria3D
 {
     public static class Utils
     {
-        public static RenderTarget2D CreateRenderTarget(bool preserve = false) 
-            => CreateRenderTarget(Screen.Width, Screen.Height, preserve);
+        public static RenderTarget2D CreateRenderTarget(bool PoT = false) 
+            => CreateRenderTarget(Screen.Width, Screen.Height, PoT);
 
-
-        public static RenderTarget2D CreateRenderTarget(int width, int height, bool preserve = false)
+        // PoT: Make power of two
+        public static RenderTarget2D CreateRenderTarget(int width, int height, bool PoT = false)
         {
-            bool makePot = true;
-
-            if(makePot)
+            if(PoT)
             {
                 width = GetSmallestPoT(width);
                 height = GetSmallestPoT(height);
             }
-
             var g = Main.graphics.GraphicsDevice;
-            return new RenderTarget2D(g, width, height, false, g.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, preserve ? RenderTargetUsage.PreserveContents : RenderTargetUsage.DiscardContents);
+            return new RenderTarget2D(g, width, height, false, g.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
         }
 
         public static int GetSmallestPoT(int value)

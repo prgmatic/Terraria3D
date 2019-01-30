@@ -55,15 +55,15 @@ namespace Terraria3D
         public void DrawCap(Camera camera, Matrix matrix)
         {
             if (!Enabled) return;
-            matrix = Matrix.CreateTranslation(0, 0, Depth - ZPos) * matrix; //ZPos * 1f / Screen.Height);
+            matrix = Matrix.CreateTranslation(0, 0, Depth - ZPos) * matrix;
             Renderers.CapRenderer.Draw(_renderTarget, camera, matrix);
         }
 
         private void UpdateRenderTarget()
         {
             Dispose();
-            _renderTarget = Utils.CreateRenderTarget();
-            _innerPixelTarget = Utils.CreateRenderTarget();
+            _renderTarget = Utils.CreateRenderTarget(RTManager.UsingPoT);
+            _innerPixelTarget = Utils.CreateRenderTarget(RTManager.UsingPoT);
         }
 
         public enum InputPlaneType

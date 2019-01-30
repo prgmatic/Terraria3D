@@ -6,7 +6,7 @@ namespace Terraria3D
     public static class RTManager
     {
         // I broke NPoT when implementing PoT, may revisit.
-        private const bool FORCE_POT = true;
+        private const bool FORCE_POT = false;
 
         public delegate void ResolutionChangedEvent(int width, int height, int rtWidth, int rtHeight);
         public static event ResolutionChangedEvent ResolutionChanged;
