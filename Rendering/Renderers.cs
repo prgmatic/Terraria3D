@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace Terraria3D
 {
@@ -9,16 +7,16 @@ namespace Terraria3D
         public static GridRenderer GridRenderer { get; private set; }
         public static CapRenderer CapRenderer { get; private set; }
         public static InnerPixelRenderer InnerPixelRenderer { get; private set; }
-       
+
         public static void Load()
         {
-            GridRenderer = new GridRenderer(GetEffect("Effects/Grid"), GetTexture("Images/Noise"), Screen.Width, Screen.Height);
+            RTManager.Load();
+            GridRenderer = new GridRenderer(GetEffect("Effects/Grid"), GetTexture("Images/Noise"), Screen.Width, Screen.Height, RTManager.Width, RTManager.Height);
             CapRenderer = new CapRenderer(GetEffect("Effects/Texture"));
             InnerPixelRenderer = new InnerPixelRenderer(GetEffect("Effects/InnerPixel"));
-
-            Main.OnResolutionChanged += ResolutionChanged; 
         }
 
+       
        
         public static void Unload()
         {
@@ -30,11 +28,12 @@ namespace Terraria3D
             CapRenderer = null;
             InnerPixelRenderer = null;
 
-            Main.OnResolutionChanged -= ResolutionChanged;
+            RTManager.ResolutionChanged -= ResolutionChanged;
+            RTManager.Unload();
         }
 
         private static Effect GetEffect(string name) => Terraria3D.Instance.GetEffect(name);
         private static Texture2D GetTexture(string name) => Terraria3D.Instance.GetTexture(name);
-        private static void ResolutionChanged(Vector2 size) => GridRenderer.SetGridSize(Screen.Width, Screen.Height);
+        private static void ResolutionChanged(int w, int h, int rtW, int rtH) => GridRenderer.SetGridSize(w, h, rtW, rtH);
     }
 }

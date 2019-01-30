@@ -39,16 +39,20 @@ namespace Terraria3D
 
         private void DrawExtrusions(Layer3D[] layers)
         {
-            ModelTransform.Position = new Vector3(-Screen.Width * 0.5f, -Screen.Height * 0.5f, 0) * ModelTransform.Scale.X;
             ModelTransform.Scale = Vector3.One / Screen.Height;
-            //var matrix = Matrix.CreateTranslation(layers.)
+            ModelTransform.Position = new Vector3(-Screen.Width * 0.5f, -Screen.Height * 0.5f, 0) * ModelTransform.Scale.X;
             foreach (var layer in layers)
                 layer.DrawExtrusion(Camera, ModelTransform.LocalToWorld);
         }
 
         private void DrawCaps(Layer3D[] layers)
         {
-            var matrix = Matrix.CreateScale((float)Screen.Width / Screen.Height, 1, 1f / Screen.Height);
+            float s = (float)RTManager.Height / Screen.Height;
+            var scale = Matrix.CreateScale((float)RTManager.Width / RTManager.Height, 1, 1) *
+                        Matrix.CreateScale(s, s, 1f / Screen.Height);
+            var translation = Matrix.CreateTranslation(0.5f - ((float)Screen.Width / RTManager.Width) * 0.5f,
+                                                      -0.5f + ((float)Screen.Height / RTManager.Height) * 0.5f, 0);
+            var matrix = translation * scale;
             foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
                 layer.DrawCap(Camera, matrix);
         }

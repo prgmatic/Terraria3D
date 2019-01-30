@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 
@@ -6,6 +7,8 @@ namespace Terraria3D
 {
     public static class Reflection
     {
+        private static FieldInfo _currentGraphicsProfile => GetField("_currentGraphicsProfile", BindingFlags.Static);
+
         private static MethodInfo _drawWaters         = GetMethod("drawWaters",         BindingFlags.Instance);
         private static MethodInfo _drawBackground     = GetMethod("DrawBackground",     BindingFlags.Instance);
         private static MethodInfo _cacheNPCDraws      = GetMethod("CacheNPCDraws",      BindingFlags.Instance);
@@ -26,6 +29,8 @@ namespace Terraria3D
         private static MethodInfo _drawGore           = GetMethod("DrawGore",           BindingFlags.Instance);
         private static MethodInfo _drawDust           = GetMethod("DrawDust",           BindingFlags.Instance);
         private static MethodInfo _drawWires          = GetMethod("DrawWires",          BindingFlags.Instance);
+
+        public static GraphicsProfile CurrentGraphicsProfile => (GraphicsProfile)_currentGraphicsProfile.GetValue(null);
 
         public static void DrawWaters(bool bg = false, int styleOverride = -1, bool allowUpdate = true)
             => _drawWaters.Invoke(Main.instance, new object[] { bg, styleOverride, allowUpdate });

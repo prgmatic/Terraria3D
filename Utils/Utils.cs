@@ -16,15 +16,15 @@ namespace Terraria3D
 
             if(makePot)
             {
-                width = FindSmallestPoT(width);
-                height = FindSmallestPoT(height);
+                width = GetSmallestPoT(width);
+                height = GetSmallestPoT(height);
             }
 
             var g = Main.graphics.GraphicsDevice;
             return new RenderTarget2D(g, width, height, false, g.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, preserve ? RenderTargetUsage.PreserveContents : RenderTargetUsage.DiscardContents);
         }
 
-        private static int FindSmallestPoT(int value)
+        public static int GetSmallestPoT(int value)
         {
             return (int)Math.Pow(2, Math.Ceiling(Math.Log(value, 2)));
         }

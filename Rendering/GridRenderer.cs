@@ -15,16 +15,14 @@ namespace Terraria3D
         private float _width;
         private float _height;
 
-        public GridRenderer(Effect effect, Texture noiseTexture, int width, int height)
+        public GridRenderer(Effect effect, Texture noiseTexture, int width, int height, int targetWidth, int targetHeight)
         {
             _effect = effect;
             _noiseTexture = noiseTexture;
             _width = width;
             _height = height;
 
-            SetGridSize(width, height);
-            Main.OnRenderTargetsInitialized += (w, h) => SetGridSize(w, h);
-
+            SetGridSize(width, height, targetWidth, targetHeight);
             _effect.Parameters["NoiseTexture"].SetValue(_noiseTexture);
         }
 
@@ -35,15 +33,15 @@ namespace Terraria3D
             _gridBuffer?.Dispose();
         }
 
-        public void SetGridSize(int width, int height)
+        public void SetGridSize(int width, int height, int targetWidth, int targetHeight)
         {
-            _grid = PixelGrid.Create(width, height);
+            _grid = PixelGrid.Create(width, height, targetWidth, targetHeight);
             _gridBuffer?.Dispose();
             _gridBuffer = new VertexBuffer(_graphicsDevice, VertexPositionNormalTexture.VertexDeclaration, _grid.Length, BufferUsage.WriteOnly);
             _gridBuffer.SetData(_grid);
         }
 
-        public void Draw(Texture texture, Camera camera, float depth, float noiseAmount = 1, Matrix? modelMatrix = null)
+        public void Draw(Texture2D texture, Camera camera, float depth, float noiseAmount = 1, Matrix? modelMatrix = null)
         {
             if (modelMatrix == null)
                 modelMatrix = Matrix.Identity;
@@ -52,7 +50,7 @@ namespace Terraria3D
             _effect.Parameters["View"].SetValue(camera.View);
             _effect.Parameters["Projection"].SetValue(camera.Projection);
             _effect.Parameters["_MainTex"].SetValue(texture);
-            _effect.Parameters["PixelOffset"].SetValue(new Vector2(1f / _width, 1f / _height));
+            _effect.Parameters["PixelOffset"].SetValue(new Vector2(1f / texture.Width, 1f / texture.Height));
             _effect.Parameters["World"].SetValue(modelMatrix.Value);
             _effect.Parameters["Depth"].SetValue(depth);
             _effect.Parameters["NoiseAmount"].SetValue(noiseAmount);

@@ -1,9 +1,12 @@
-﻿namespace Terraria3D
+﻿using Terraria;
+
+namespace Terraria3D
 {
     public static class Loading
     {
         public static void Load(Terraria3D instance)
         {
+
             Renderers.Load();
             instance.Scene = new Scene3D();
             instance.LayerManager = new LayerManager();

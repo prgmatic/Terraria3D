@@ -25,7 +25,7 @@ namespace Terraria3D
         public Layer3D()
         {
             UpdateRenderTarget();
-            Main.OnResolutionChanged += (size) => UpdateRenderTarget();
+            RTManager.ResolutionChanged += (w, h, rtW, rtH) => UpdateRenderTarget();
         }
 
         public void RenderToTarget()

@@ -18,13 +18,6 @@ namespace Terraria3D
         {
             Instance = this;
             Loading.Load(this);
-            Main.OnPostDraw += (gt) =>
-            {
-                //Main.spriteBatch.Begin();
-                //UITerraria3D.Update(gt);
-                //UITerraria3D.Draw();
-                //Main.spriteBatch.End();
-            };
         }
         public override void Unload() => Loading.Unload(this);
 
