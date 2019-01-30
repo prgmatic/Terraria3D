@@ -111,7 +111,7 @@ namespace Terraria3D
                     cursor.EmitDelegate<Func<bool>>(() =>
                     {
                         var result = !Main.gameMenu && !Main.mapFullscreen;
-                        if (result)
+                        if (result && !Main.drawToScreen)
                             Filters.Scene.EndCapture();
                         return result;
                     });
