@@ -34,7 +34,7 @@ namespace Terraria3D
                     RenderFunction = () =>
                     {
                         Rendering.DrawSolidTiles();
-                        Reflection.PostDrawTiles();
+                        Rendering.PostDrawTiles();
                     }
                 },
                 // Non Solid tiles

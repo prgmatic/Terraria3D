@@ -377,6 +377,12 @@ namespace Terraria3D
                 }
             }
         }
+
+        public static void PostDrawTiles()
+        {
+            using (_sb.End())
+                Reflection.PostDrawTiles();
+        }
     }
 
     class SB : IDisposable
