@@ -34,28 +34,51 @@ namespace Terraria3D
         public void DrawToScreen(Layer3D[] layers)
         {
             if (!Enable || _canSkipDrawing) return;
-            DrawExtrusions(layers);
-            DrawCaps(layers);
+            DrawExtrusionAndCap(layers);
         }
 
         private void DrawExtrusions(Layer3D[] layers)
         {
-            ModelTransform.Scale = Vector3.One / Screen.Height;
-            ModelTransform.Position = new Vector3(-Screen.Width * 0.5f, -Screen.Height * 0.5f, 0) * ModelTransform.Scale.X;
             foreach (var layer in layers)
-                layer.DrawExtrusion(Camera, ModelTransform.LocalToWorld);
+                layer.DrawExtrusion(Camera, _extrusionMatrix);
         }
 
         private void DrawCaps(Layer3D[] layers)
         {
-            float s = (float)RTManager.Height / Screen.Height;
-            var scale = Matrix.CreateScale((float)RTManager.Width / RTManager.Height, 1, 1) *
-                        Matrix.CreateScale(s, s, 1f / Screen.Height);
-            var translation = Matrix.CreateTranslation(0.5f - ((float)Screen.Width / RTManager.Width) * 0.5f,
-                                                      -0.5f + ((float)Screen.Height / RTManager.Height) * 0.5f, 0);
-            var matrix = translation * scale;
             foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
-                layer.DrawCap(Camera, matrix);
+                layer.DrawCap(Camera, _capMatrix);
+        }
+
+        private void DrawExtrusionAndCap(Layer3D[] layers)
+        {
+            foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
+            {
+                layer.DrawExtrusion(Camera, _extrusionMatrix);
+                layer.DrawCap(Camera, _capMatrix);
+            }
+        }
+
+        private Matrix _extrusionMatrix
+        {
+            get
+            {
+                ModelTransform.Scale = Vector3.One / Screen.Height;
+                ModelTransform.Position = new Vector3(-Screen.Width * 0.5f, -Screen.Height * 0.5f, 0) * ModelTransform.Scale.X;
+                return ModelTransform.LocalToWorld;
+            }
+        }
+
+        private Matrix _capMatrix
+        {
+            get
+            {
+                float s = (float)RTManager.Height / Screen.Height;
+                var scale = Matrix.CreateScale((float)RTManager.Width / RTManager.Height, 1, 1) *
+                            Matrix.CreateScale(s, s, 1f / Screen.Height);
+                var translation = Matrix.CreateTranslation(0.5f - ((float)Screen.Width / RTManager.Width) * 0.5f,
+                                                          -0.5f + ((float)Screen.Height / RTManager.Height) * 0.5f, 0);
+                return translation * scale;
+            }
         }
     }
 }
