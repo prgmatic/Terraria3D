@@ -46,7 +46,11 @@ namespace Terraria3D
             {
                 cursor.Index += 3;
                 // Render layers to targets
-                cursor.EmitDelegate(() => Terraria3D.Instance.RenderLayersTargets());
+                cursor.EmitDelegate(() =>
+                {
+                    if (Terraria3D.Enabled)
+                        Terraria3D.Instance.RenderLayersTargets();
+                });
             }
         }
 
@@ -84,13 +88,13 @@ namespace Terraria3D
                                    i => i.MatchCallvirt<OverlayManager>("Draw")))
             {
                 // Move to after Scene.Draw
-                cursor.Index+= 3;
+                cursor.Index += 3;
                 // Make a new cursor so we keep track of where we currently are
                 var cursor2 = new HookILCursor(cursor);
 
                 // Find PlayerInpug.SetZoom_UI() call and then the spriteBatch.End()
                 // preceding it.
-                if(cursor2.TryGotoNext(i => i.MatchCall<PlayerInput>("SetZoom_UI")) &&
+                if (cursor2.TryGotoNext(i => i.MatchCall<PlayerInput>("SetZoom_UI")) &&
                    cursor2.TryGotoPrev(i => i.MatchCallvirt<SpriteBatch>("End")))
                 {
                     // Move to after spriteBatch.End();
@@ -99,7 +103,8 @@ namespace Terraria3D
                     cursor2.EmitDelegate(() =>
                     {
                         // Render the 3D scene
-                        Terraria3D.Instance.DrawScene();
+                        if (Terraria3D.Enabled)
+                            Terraria3D.Instance.DrawScene();
                     });
                     // Move cursor to the starting instruction of our 
                     // newly injected code.
@@ -110,7 +115,7 @@ namespace Terraria3D
                     // that we just created with cursor 2.
                     cursor.EmitDelegate<Func<bool>>(() =>
                     {
-                        var result = !Main.gameMenu && !Main.mapFullscreen;
+                        var result = Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
                         if (result && !Main.drawToScreen)
                             Filters.Scene.EndCapture();
                         return result;
@@ -144,7 +149,7 @@ namespace Terraria3D
                 cursor.EmitDelegate(() =>
                 {
                     // If UI is hidden, the scene has not been drawn, do it now.
-                    if (Main.hideUI)
+                    if (Main.hideUI && Terraria3D.Enabled)
                         Terraria3D.Instance.DrawScene();
                 });
             }

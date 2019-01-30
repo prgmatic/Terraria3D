@@ -16,6 +16,7 @@ namespace Terraria3D
         private static UISettingsWindow _settingsWindow;
         private static ModHotKey _settingsKeyBinding;
         private static ModHotKey _toggleCameraControlsKeyBinding;
+        private static ModHotKey _toggle3DKeyBinding;
 
 
         public static void Load()
@@ -31,6 +32,7 @@ namespace Terraria3D
             // Why 'L'? No clue, I hope it's not already bound to something xD
             _settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
             _toggleCameraControlsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle Camera Controls", "Multiply");
+            _toggle3DKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D", "K");
         }
 
         public static void Unload()
@@ -75,6 +77,8 @@ namespace Terraria3D
                 Visible = !Visible;
             if (_toggleCameraControlsKeyBinding.JustPressed)
                 CameraContolsEnabled = !CameraContolsEnabled;
+            if (_toggle3DKeyBinding.JustPressed)
+                Terraria3D.Enabled = !Terraria3D.Enabled;
         }
     }
 }

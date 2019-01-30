@@ -10,6 +10,7 @@ namespace Terraria3D
 {
     public class Terraria3D : Mod
     {
+        public static bool Enabled { get; set; } = true;
         public static Terraria3D Instance { get; private set; }
         public Scene3D Scene { get; set; }
         public LayerManager LayerManager { get; set; }
@@ -17,6 +18,7 @@ namespace Terraria3D
         public override void Load()
         {
             Instance = this;
+            Enabled = true;
             Loading.Load(this);
         }
         public override void Unload() => Loading.Unload(this);

@@ -13,6 +13,7 @@ namespace Terraria3D
             {
                 il.At(0).EmitDelegate(() =>
                 {
+                    if (!Terraria3D.Enabled) return;
                     var screenPos = Cursor3D.Get3DScreenPos();
                     Main.mouseX = (int)screenPos.X;
                     Main.mouseY = (int)screenPos.Y;
