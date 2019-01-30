@@ -41,6 +41,7 @@ namespace Terraria3D
         {
             ModelTransform.Position = new Vector3(-Screen.Width * 0.5f, -Screen.Height * 0.5f, 0) * ModelTransform.Scale.X;
             ModelTransform.Scale = Vector3.One / Screen.Height;
+            //var matrix = Matrix.CreateTranslation(layers.)
             foreach (var layer in layers)
                 layer.DrawExtrusion(Camera, ModelTransform.LocalToWorld);
         }

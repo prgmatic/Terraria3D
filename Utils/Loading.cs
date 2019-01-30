@@ -15,7 +15,7 @@
         {
             UITerraria3D.Unload();
             instance.Scene = null;
-            instance.LayerManager.Dispose();
+            instance.LayerManager?.Dispose();
             instance.LayerManager = null;
             Renderers.Unload();
         }

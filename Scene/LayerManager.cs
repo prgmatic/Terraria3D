@@ -18,7 +18,7 @@
         public void Dispose()
         {
             foreach (var layer in _layers)
-                layer.Dispose();
+                layer?.Dispose();
         }
     }
 }

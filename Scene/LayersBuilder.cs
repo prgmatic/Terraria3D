@@ -8,7 +8,7 @@ namespace Terraria3D
             if (layers != null)
             {
                 foreach (var layer in layers)
-                    layer.Dispose();
+                    layer?.Dispose();
             }
             layers = new Layer3D[]
             {

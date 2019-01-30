@@ -22,9 +22,9 @@ namespace Terraria3D
        
         public static void Unload()
         {
-            GridRenderer.Dispose();
-            CapRenderer.Dispose();
-            InnerPixelRenderer.Dispose();
+            GridRenderer?.Dispose();
+            CapRenderer?.Dispose();
+            InnerPixelRenderer?.Dispose();
 
             GridRenderer = null;
             CapRenderer = null;

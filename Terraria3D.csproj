@@ -43,7 +43,6 @@
     <Compile Include="Hooks\DrawHooks.cs" />
     <Compile Include="Hooks\InputHooks.cs" />
     <Compile Include="Input\Cursor3D.cs" />
-    <Compile Include="Input\InputUtils.cs" />
     <Compile Include="Rendering\CapRenderer.cs" />
     <Compile Include="Geometry\PixelGrid.cs" />
     <Compile Include="Geometry\Quad.cs" />

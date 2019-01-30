@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 
 namespace Terraria3D
@@ -11,8 +12,21 @@ namespace Terraria3D
 
         public static RenderTarget2D CreateRenderTarget(int width, int height, bool preserve = false)
         {
+            bool makePot = true;
+
+            if(makePot)
+            {
+                width = FindSmallestPoT(width);
+                height = FindSmallestPoT(height);
+            }
+
             var g = Main.graphics.GraphicsDevice;
             return new RenderTarget2D(g, width, height, false, g.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, preserve ? RenderTargetUsage.PreserveContents : RenderTargetUsage.DiscardContents);
+        }
+
+        private static int FindSmallestPoT(int value)
+        {
+            return (int)Math.Pow(2, Math.Ceiling(Math.Log(value, 2)));
         }
 
         public static RenderTarget2D GetCurrentRenderTarget()

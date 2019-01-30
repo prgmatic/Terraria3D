@@ -16,6 +16,9 @@ namespace Terraria3D
         public Action RenderFunction { get; set; } = null;
         public InputPlaneType InputPlane { get; set; } = InputPlaneType.None;
 
+        public int TargetWidth => _renderTarget.Width;
+        public int TargetHeght => _renderTarget.Height;
+
         private RenderTarget2D _renderTarget;
         private RenderTarget2D _innerPixelTarget;
 
