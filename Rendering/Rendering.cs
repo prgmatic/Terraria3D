@@ -13,6 +13,8 @@ namespace Terraria3D
     {
         private static SB _sb = new SB(Main.spriteBatch);
 
+        public static bool RenderHalfBlockWaterHack { get; set; } = false;
+
         public static void PreRenderSetup()
         {
             DoLighting();
