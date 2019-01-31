@@ -49,7 +49,8 @@ namespace Terraria3D
 
         public static void Update(GameTime gameTime)
         {
-            _interface.Update(gameTime);
+            if (Visible)
+                _interface.Update(gameTime);
             // Hack to fix scroll bug.
             PlayerInput.ScrollWheelDeltaForUI = 0;
         }
