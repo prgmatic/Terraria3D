@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
@@ -34,5 +35,13 @@ namespace Terraria3D
                 result = bindings[0].RenderTarget as RenderTarget2D;
             return result;
         }
+
+        public static void SetZoom(float zoom)
+        {
+            Main.GameZoomTarget = zoom;
+            UpdateGameViewMatrixZoom();
+        }
+        public static void UpdateGameViewMatrixZoom()
+            => Main.GameViewMatrix.Zoom = new Vector2(Main.ForcedMinimumZoom * MathHelper.Clamp(Main.GameZoomTarget, 1f, 2f));
     }
 }

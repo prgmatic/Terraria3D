@@ -26,9 +26,14 @@ namespace Terraria3D
         public void RenderLayers(Layer3D[] layers)
         {
             if (!Enable || _canSkipDrawing) return;
+            // Disable zoom
+            var oldZoom = Main.GameZoomTarget;
+            Utils.SetZoom(1);
             Rendering.PreRenderSetup();
             foreach (var layer in layers)
                 layer.RenderToTarget();
+            // Restore zoom
+            Utils.SetZoom(oldZoom);
         }
 
         public void DrawToScreen(Layer3D[] layers)
