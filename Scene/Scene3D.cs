@@ -14,7 +14,7 @@ namespace Terraria3D
 
         public Scene3D()
         {
-            Camera.Transfrom.Position = Vector3.Backward * 0.2f;
+            Camera.Transfrom.Position = Vector3.Backward * 0.6f;
         }
 
         public void Update(GameTime gameTime)
