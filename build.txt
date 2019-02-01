@@ -1,8 +1,8 @@
 author = Matt Thompson - chatrat12
-version = 0.0.4
+version = 0.0.7
 displayName = Terraria3D
-includePDB = true
+includePDB = false
 modReferences = TerrariaHooks
 languageVersion = 6
 homepage = https://github.com/chatrat12/Terraria3D
-buildIgnore = build.txt, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, Thumbs.db, C: .csproj, .cs, .sln, .fx
+buildIgnore = build.txt, README.md, LICENSE, packages/*, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, lib/*, Effects/Compiler/*, Thumbs.db, C: .csproj, .cs, .sln, .fx, .config
