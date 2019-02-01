@@ -59,13 +59,14 @@ namespace Terraria3D
                     NoiseAmount = 0,
                     RenderFunction = () =>
                     {
-                        Rendering.DrawPlayers();
+                        Rendering.DrawMoonMoon();
                         Rendering.DrawNPCsBehindTiles();
+                        Rendering.SortDrawCacheWorm();
+                        Rendering.DrawWallOfFlesh();
                         Rendering.DrawNPCsBehindNonSoldTiles();
                         Rendering.DrawNPCsInfrontOfTiles();
+                        Rendering.DrawPlayers();
                         Rendering.DrawNPCsOverPlayer();
-                        Rendering.DrawWallOfFlesh();
-                        Rendering.SortDrawCacheWorm();
                     }
                 },
                 // Proj
@@ -77,13 +78,13 @@ namespace Terraria3D
                     NoiseAmount = 0,
                     RenderFunction = () =>
                     {
-                        Rendering.DrawProjectiles();
                         Rendering.DrawProjsBehindNPCsAndTiles();
+                        Rendering.DrawProjsBehindNPCs();
                         Rendering.DrawProjsBehindProjectiles();
+                        Rendering.DrawProjectiles();
+                        Rendering.DrawInfernoRings();
                         Rendering.DrawProjsOverWireUI();
                         Rendering.DrawNPCProjectiles();
-                        Rendering.DrawInfernoRings();
-
                     }
                 },
                 // Items Gore
@@ -95,8 +96,8 @@ namespace Terraria3D
                     NoiseAmount = 0,
                     RenderFunction = () =>
                     {
+                        Rendering.DrawGoreBehind();
                         Rendering.DrawGore();
-                        Rendering.DrawBackGore();
                         Rendering.DrawDust();
                         Rendering.DrawRain();
                         Rendering.DrawSandstorm();

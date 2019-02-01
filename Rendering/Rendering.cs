@@ -118,7 +118,7 @@ namespace Terraria3D
 
         public static void DrawWallOfFlesh() => Reflection.DrawWoF();
 
-        public static void DrawBackGore()
+        public static void DrawGoreBehind()
         {
             if (Main.drawBackGore)
                 Reflection.DrawGoreBehind();
@@ -166,6 +166,8 @@ namespace Terraria3D
         public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
 
         public static void SortDrawCacheWorm() => Reflection.SortDrawCashWorms();
+
+        public static void DrawProjsBehindNPCs() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheProjsBehindNPCs, false);
 
         public static void DrawProjsBehindProjectiles() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, false);
 
