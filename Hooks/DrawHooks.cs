@@ -18,7 +18,6 @@ namespace Terraria3D
 
                 PreRenderHook(cursor);
                 DrawSceneHook(cursor);
-                DrawIfUIHiddenHook(cursor);
             };
         }
 
@@ -122,36 +121,6 @@ namespace Terraria3D
                     });
                     cursor.Emit(OpCodes.Brtrue_S, cursor2.Next);
                 }
-            }
-        }
-
-        // HOOK LOCATION:
-        // After the if (!Main.hideUI) block.
-
-        // HOOK FUNCTION:
-        // Draw's the 3D scene if UI is hidden. We normally draw the 3D
-        // scene before screen space UI. However, if UI is hidden, our 
-        // post scene draw hook will not be called.
-
-        // SOURCE REFERENCE =====================
-        // else
-        //     Main.maxQ = true;
-        // TimeLogger.DetailedDrawTime(37);
-        // <!---- HOOK HERE ------>
-        //if (Main.mouseLeft)
-        // ======================================
-        public static void DrawIfUIHiddenHook(HookILCursor cursor)
-        {
-            if (cursor.TryGotoNext(i => i.MatchLdcI4(37),
-                                      i => i.MatchCall("Terraria.TimeLogger", "DetailedDrawTime")))
-            {
-                cursor.Index++;
-                cursor.EmitDelegate(() =>
-                {
-                    // If UI is hidden, the scene has not been drawn, do it now.
-                    if (Main.hideUI && Terraria3D.Enabled)
-                        Terraria3D.Instance.DrawScene();
-                });
             }
         }
     }

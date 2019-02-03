@@ -49,6 +49,7 @@ technique Technique1
 {
     pass Pass1
     {
+		// Premultiplied Alpha
 		AlphaBlendEnable = True;
 		SrcBlend = One;
 		DestBlend = InvSrcAlpha;
