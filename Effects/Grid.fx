@@ -107,8 +107,9 @@ technique Technique1
 {
     pass Pass1
     {
+		// Premultiplied Alpha
 		AlphaBlendEnable = True;
-		SrcBlend = SrcAlpha;
+		SrcBlend = One;
 		DestBlend = InvSrcAlpha;
 		CullMode = None;
 
