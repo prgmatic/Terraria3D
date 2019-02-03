@@ -13,7 +13,7 @@ float NoiseAmount;
 #endif
 
 texture _MainTex;
-sampler2D _MainTexSampler = sampler_state 
+sampler2D _MainTexSampler = sampler_state
 {
 	Texture = (_MainTex);
 	MinFilter = Point;
@@ -43,7 +43,7 @@ struct VertexShaderInput
 
 struct VertexShaderOutput
 {
-    float4 Position : POSITION0;
+	float4 Position : POSITION0;
 	float3 LocalPosition : TEXCOORD1;
 	float2 UV : TEXCOORD0;
 	float3 Normal : TEXCOORD2;
@@ -51,14 +51,14 @@ struct VertexShaderOutput
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
-    VertexShaderOutput output;
-    float4 worldPosition = mul(input.Position, World);
-    float4 viewPosition = mul(worldPosition, View);
-    output.Position = mul(viewPosition, Projection);
+	VertexShaderOutput output;
+	float4 worldPosition = mul(input.Position, World);
+	float4 viewPosition = mul(worldPosition, View);
+	output.Position = mul(viewPosition, Projection);
 	output.LocalPosition = input.Position;
 	output.UV = input.UV;
 	output.Normal = input.Normal;
-    return output;
+	return output;
 }
 
 
@@ -76,15 +76,18 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 #endif
 
 	// If both pixels are transparent, clip it.
-	float cutoff = 0.1;
-	clip(max(color1.a - cutoff, color2.a - cutoff));
+	float4 zero = 0;
+	bool color1IsZero = color1 == zero;
+	bool color2IsZero = color2 == zero;
+
+	clip(-(color1IsZero && color2IsZero));
 
 #if REMOVE_INNER
-	clip(-(color1.a > cutoff && color2.a >= cutoff &&
+	clip(-(!color1IsZero && !color2IsZero &&
 		   uv.x > 0 && uv2.x < 1 && uv2.y > 0 && uv.y < 1));
 #endif
 
-	float4 result = color1.a > color2.b ? color1 : color2;
+	float4 result = color2IsZero ? color1 : color2;
 
 #if ADD_NOISE
 	// Noise is 64x64, one noise color per 2 grid cells
@@ -105,15 +108,15 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 technique Technique1
 {
-    pass Pass1
-    {
+	pass Pass1
+	{
 		// Premultiplied Alpha
 		AlphaBlendEnable = True;
 		SrcBlend = One;
 		DestBlend = InvSrcAlpha;
 		CullMode = None;
 
-        VertexShader = compile vs_2_0 VertexShaderFunction();
-        PixelShader = compile ps_2_0 PixelShaderFunction();
-    }
+		VertexShader = compile vs_2_0 VertexShaderFunction();
+		PixelShader = compile ps_2_0 PixelShaderFunction();
+	}
 }

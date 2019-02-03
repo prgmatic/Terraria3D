@@ -40,7 +40,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float4 color = tex2D(_MainTexSampler, input.UV);
 	//color.a *= 0.5;
-	if (color.a == 0)
+	if (color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0)
 		clip(-1);
 	return color;
 }
