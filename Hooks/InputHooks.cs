@@ -42,7 +42,7 @@ namespace Terraria3D
                     return result;
                 }
                 else if (self.ScaleType == InterfaceScaleType.Game)
-                    return true;
+                    return !Main.hideUI;
                 return orig(self);
             };
 

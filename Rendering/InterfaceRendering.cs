@@ -13,6 +13,7 @@ namespace Terraria3D
 
         public static void RenderGameInterfaces()
         {
+            if (Main.hideUI) return;
             Drawing3D = true;
             var oldX = Main.mouseX;
             var oldY = Main.mouseY;

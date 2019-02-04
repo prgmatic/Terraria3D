@@ -219,6 +219,7 @@ namespace Terraria3D
 
         public static void DrawChatOverPlayerHeads()
         {
+            if (Main.hideUI) return;
             for (int m = 0; m < 255; m++)
             {
                 if (Main.player[m].active && Main.player[m].chatOverhead.timeLeft > 0 && !Main.player[m].dead)
@@ -242,6 +243,7 @@ namespace Terraria3D
 
         public static void DrawCombatText()
         {
+            if (Main.hideUI) return;
             float scale = 1;
             for (int n = 0; n < 100; n++)
             {
@@ -309,6 +311,7 @@ namespace Terraria3D
 
         public static void DrawItemText()
         {
+            if (Main.hideUI) return;
             var scale = 1f;
             for (int num78 = 0; num78 < 20; num78++)
             {
