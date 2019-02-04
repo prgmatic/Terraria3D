@@ -90,7 +90,7 @@ namespace Terraria3D
                 // Items Gore
                 new Layer3D()
                 {
-                    Name = "Gore",
+                    Name = "Gore - Weather - Items",
                     ZPos = -12,
                     Depth = 6,
                     NoiseAmount = 0,
@@ -104,11 +104,6 @@ namespace Terraria3D
                         Rendering.DrawMoonLordDeath();
                         Rendering.DrawMoonlordDeathFront();
                         Rendering.DrawItems();
-                        Rendering.DrawHitTileAnimation();
-                        Rendering.DrawItemText();
-                        Rendering.DrawCombatText();
-                        Rendering.DrawChatOverPlayerHeads();
-                        InterfaceRendering.RenderGameInterfaces();
                     }
                 },
                 new Layer3D()
@@ -122,10 +117,18 @@ namespace Terraria3D
                 },
                 new Layer3D()
                 {
-                    Name = "Wires",
+                    Name = "Wires - UI",
                     ZPos = -32,
                     Depth = 4,
-                    RenderFunction = () => Rendering.DrawWires()
+                    RenderFunction = () =>
+                    {
+                        Rendering.DrawWires();
+                        Rendering.DrawHitTileAnimation();
+                        Rendering.DrawItemText();
+                        Rendering.DrawCombatText();
+                        Rendering.DrawChatOverPlayerHeads();
+                        InterfaceRendering.RenderGameInterfaces();
+                    }
                 }
             };
         }
