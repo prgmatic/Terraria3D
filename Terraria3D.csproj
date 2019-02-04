@@ -41,6 +41,7 @@
     <Compile Include="3DUtils\Screen.cs" />
     <Compile Include="3DUtils\Transfrom.cs" />
     <Compile Include="Hooks\DrawHooks.cs" />
+    <Compile Include="Hooks\DrawTileHooks.cs" />
     <Compile Include="Hooks\InputHooks.cs" />
     <Compile Include="Hooks\WaterHooks.cs" />
     <Compile Include="Input\Cursor3D.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Rendering\GridRenderer.cs" />
     <Compile Include="Rendering\InterfaceRendering.cs" />
     <Compile Include="Rendering\RTManager.cs" />
+    <Compile Include="Rendering\TileSolidOverrides.cs" />
     <Compile Include="Scene\Layer3D.cs" />
     <Compile Include="Rendering\Reflection.cs" />
     <Compile Include="Rendering\InnerPixelRenderer.cs" />

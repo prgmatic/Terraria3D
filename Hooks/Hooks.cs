@@ -6,6 +6,7 @@
         {
             ApplyDrawHooks();
             ApplyMouseHook();
+            ApplyDrawTileHooks();
         }
     }
 }
