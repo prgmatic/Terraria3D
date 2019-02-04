@@ -75,11 +75,10 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float4 color2 = tex2D(_MainTexSampler, uv + input.Normal.xy * PixelOffset);
 #endif
 
-	// If both pixels are transparent, clip it.
-	float4 zero = 0;
-	bool color1IsZero = color1 == zero;
-	bool color2IsZero = color2 == zero;
+	bool color1IsZero = color1.r == 0 && color1.g == 0 && color1.b == 0 && color1.a == 0;
+	bool color2IsZero = color2.r == 0 && color2.g == 0 && color2.b == 0 && color2.a == 0;
 
+	// If both pixels are transparent, clip it.
 	clip(-(color1IsZero && color2IsZero));
 
 #if REMOVE_INNER
