@@ -17,11 +17,18 @@ namespace Terraria3D
 
         public override void Load()
         {
+            if (Main.dedServ) return;
             Instance = this;
             Enabled = true;
             Loading.Load(this);
         }
-        public override void Unload() => Loading.Unload(this);
+        public override void Unload()
+        {
+            if (Main.dedServ) return;
+            Instance = null;
+            Enabled = false;
+            Loading.Unload(this);
+        }
 
         // Drawing
         public void RenderLayersTargets() => Scene.RenderLayers(LayerManager.Layers);
@@ -32,8 +39,6 @@ namespace Terraria3D
         {
             UITerraria3D.Update(gameTime);
             Scene.Update(gameTime);
-            if (Main.keyState.IsKeyDown(Keys.P))
-                LayerManager.Rebuild();
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
     }
