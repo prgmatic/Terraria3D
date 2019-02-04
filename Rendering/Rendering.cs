@@ -242,7 +242,7 @@ namespace Terraria3D
 
         public static void DrawCombatText()
         {
-            float scale = CombatText.TargetScale;
+            float scale = 1;
             for (int n = 0; n < 100; n++)
             {
                 if (Main.combatText[n].active)
@@ -309,9 +309,7 @@ namespace Terraria3D
 
         public static void DrawItemText()
         {
-            var scale = ItemText.TargetScale;
-            if (scale == 0f)
-                scale = 1f;
+            var scale = 1f;
             for (int num78 = 0; num78 < 20; num78++)
             {
                 if (Main.itemText[num78].active)

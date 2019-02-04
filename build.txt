@@ -1,5 +1,5 @@
 author = Matt Thompson - chatrat12
-version = 0.0.8
+version = 0.0.9
 displayName = Terraria3D
 includePDB = false
 modReferences = TerrariaHooks
