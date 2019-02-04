@@ -1,4 +1,11 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Mono.Cecil.Cil;
+using MonoMod.RuntimeDetour.HookGen;
+using System;
+using System.IO;
+using System.Text;
+using Terraria;
+using Terraria.UI;
 
 namespace Terraria3D
 {
@@ -14,10 +21,59 @@ namespace Terraria3D
                 il.At(0).EmitDelegate(() =>
                 {
                     if (!Terraria3D.Enabled) return;
-                    var screenPos = Cursor3D.Get3DScreenPos();
-                    Main.mouseX = (int)screenPos.X;
-                    Main.mouseY = (int)screenPos.Y;
+                    Main.mouseX = (int)Cursor3D.MousePos3D.X;
+                    Main.mouseY = (int)Cursor3D.MousePos3D.Y;
                 });
+            };
+
+            On.Terraria.UI.GameInterfaceLayer.Draw += (orig, self) =>
+            {
+                if (!Terraria3D.Enabled || InterfaceRendering.Drawing3D) return orig(self);
+                if (self.Name.Equals("Vanilla: Mouse Over") ||
+                   self.Name.Equals("Vanilla: Interface Logic 4"))
+                {
+                    var oldX = Main.mouseX;
+                    var oldY = Main.mouseY;
+                    Main.mouseX = (int)Cursor3D.MousePos3D.X;
+                    Main.mouseY = (int)Cursor3D.MousePos3D.Y;
+                    var result = orig(self);
+                    Main.mouseX = oldX;
+                    Main.mouseY = oldY;
+                    return result;
+                }
+                else if (self.ScaleType == InterfaceScaleType.Game)
+                    return true;
+                return orig(self);
+            };
+
+            IL.Terraria.Main.DrawMouseOver += (il) =>
+            {
+                var cursor = il.At(0);
+
+                if(cursor.TryGotoNext(i => i.MatchCall<IngameFancyUI>("MouseOver")))
+                {
+                    cursor.Index++;
+                    
+                    // Modify X component
+                    cursor.Emit(OpCodes.Ldloca_S, il.Body.Variables[0]);
+                    cursor.EmitDelegate<Func<int>>(() =>
+                    {
+                        return (int)(Cursor3D.MousePos3D.X + Main.screenPosition.X);
+                    });
+                    var x = il.Module.Import(typeof(Rectangle).GetField("X"));
+                    cursor.Emit(OpCodes.Stfld, x);
+
+                    // Modify Y component
+                    cursor.Emit(OpCodes.Ldloca_S, il.Body.Variables[0]);
+                    cursor.EmitDelegate<Func<int>>(() =>
+                    {
+                        if (Main.player[Main.myPlayer].gravDir == -1f)
+                            return (int)(Main.screenPosition.Y + Main.screenHeight - Cursor3D.MousePos3D.Y);
+                        return (int)(Cursor3D.MousePos3D.Y + Main.screenPosition.Y);
+                    });
+                    var y = il.Module.Import(typeof(Rectangle).GetField("Y"));
+                    cursor.Emit(OpCodes.Stfld, y);
+                }
             };
         }
     }

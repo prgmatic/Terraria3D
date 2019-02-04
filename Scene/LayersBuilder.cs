@@ -108,6 +108,7 @@ namespace Terraria3D
                         Rendering.DrawItemText();
                         Rendering.DrawCombatText();
                         Rendering.DrawChatOverPlayerHeads();
+                        InterfaceRendering.RenderGameInterfaces();
                     }
                 },
                 new Layer3D()

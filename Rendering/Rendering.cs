@@ -6,6 +6,7 @@ using Terraria.GameContent.Events;
 using Terraria.GameContent.UI;
 using Terraria.UI.Chat;
 using ReLogic.Graphics;
+using Terraria.ModLoader;
 
 namespace Terraria3D
 {
@@ -385,7 +386,7 @@ namespace Terraria3D
         public static void PostDrawTiles()
         {
             using (_sb.End())
-                Reflection.PostDrawTiles();
+                WorldHooks.PostDrawTiles();
         }
     }
 

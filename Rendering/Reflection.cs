@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Terraria3D
 {
     public static class Reflection
     {
         private static FieldInfo _currentGraphicsProfile => GetField("_currentGraphicsProfile", BindingFlags.Static);
+        private static FieldInfo _gameInterfaceLayers => GetField("_gameInterfaceLayers", BindingFlags.Instance);
 
         private static MethodInfo _drawWaters         = GetMethod("drawWaters",         BindingFlags.Instance);
         private static MethodInfo _drawBackground     = GetMethod("DrawBackground",     BindingFlags.Instance);
@@ -32,9 +34,12 @@ namespace Terraria3D
         private static MethodInfo _drawWires          = GetMethod("DrawWires",          BindingFlags.Instance);
 
         private static MethodInfo _postDrawTiles = typeof(Mod).Assembly.GetType("Terraria.ModLoader.WorldHooks")
-                .GetMethod("PostDrawTiles", BindingFlags.Public | BindingFlags.Instance);
+                .GetMethod("PostDrawTiles", BindingFlags.NonPublic | BindingFlags.Static);
+        private static MethodInfo _modifyInterfaceLayers = typeof(Mod).Assembly.GetType("Terraria.ModLoader.ModHooks")
+                .GetMethod("ModifyInterfaceLayers", BindingFlags.NonPublic | BindingFlags.Static);
 
         public static GraphicsProfile CurrentGraphicsProfile => (GraphicsProfile)_currentGraphicsProfile.GetValue(null);
+        public static List<GameInterfaceLayer> GameInterfaceLayers => (List<GameInterfaceLayer>)_gameInterfaceLayers.GetValue(Main.instance);
 
         public static void DrawWaters(bool bg = false, int styleOverride = -1, bool allowUpdate = true)
             => _drawWaters.Invoke(Main.instance, new object[] { bg, styleOverride, allowUpdate });
@@ -59,7 +64,7 @@ namespace Terraria3D
         public static void DrawDust() => _drawDust.Invoke(Main.instance, null);
         public static void DrawWires() => _drawWires.Invoke(Main.instance, null);
 
-        public static void PostDrawTiles() => WorldHooks.PostDrawTiles();
+        public static void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => _modifyInterfaceLayers.Invoke(null, new object[] { layers });
 
         private static FieldInfo GetField(string fieldName, BindingFlags bindingFlags)
              => typeof(Main).GetField(fieldName, BindingFlags.NonPublic | bindingFlags);

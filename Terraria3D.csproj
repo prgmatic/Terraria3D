@@ -48,6 +48,7 @@
     <Compile Include="Geometry\PixelGrid.cs" />
     <Compile Include="Geometry\Quad.cs" />
     <Compile Include="Rendering\GridRenderer.cs" />
+    <Compile Include="Rendering\InterfaceRendering.cs" />
     <Compile Include="Rendering\RTManager.cs" />
     <Compile Include="Scene\Layer3D.cs" />
     <Compile Include="Rendering\Reflection.cs" />

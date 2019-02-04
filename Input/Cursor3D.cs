@@ -7,6 +7,9 @@ namespace Terraria3D
     public static class Cursor3D
     {
         private static Plane _tilePlane = new Plane(Vector3.Backward, 0);
+        public static Vector2 MousePos3D { get; private set; }
+
+        public static void UpdateMousePos3D() => MousePos3D = Get3DScreenPos();
 
         public static Vector2 Get3DScreenPos()
             => Get3DScreenPos(Terraria3D.Instance.Scene.Camera, Terraria3D.Instance.Scene.ModelTransform.LocalToWorld);

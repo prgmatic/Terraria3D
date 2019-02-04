@@ -7,6 +7,8 @@ namespace Terraria3D
 {
     public static class Utils
     {
+        private static float _prevZoom;
+
         public static RenderTarget2D CreateRenderTarget(bool PoT = false) 
             => CreateRenderTarget(Screen.Width, Screen.Height, PoT);
 
@@ -38,7 +40,13 @@ namespace Terraria3D
 
         public static void SetZoom(float zoom)
         {
+            _prevZoom = Main.GameZoomTarget;
             Main.GameZoomTarget = zoom;
+            UpdateGameViewMatrixZoom();
+        }
+        public static void RestoreOldZoom()
+        {
+            Main.GameZoomTarget = _prevZoom;
             UpdateGameViewMatrixZoom();
         }
         public static void UpdateGameViewMatrixZoom()

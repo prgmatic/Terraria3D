@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.GameInput;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -49,6 +50,7 @@ namespace Terraria3D
 
         public static void Update(GameTime gameTime)
         {
+            Cursor3D.UpdateMousePos3D();
             if (Visible)
                 _interface.Update(gameTime);
             // Hack to fix scroll bug.
