@@ -9,12 +9,13 @@ namespace Terraria3D
         public bool Enable { get; private set; } = true;
         public Camera Camera { get; private set; } = new Camera();
         public Transfrom ModelTransform { get; private set; } = new Transfrom();
+        public bool AmbientOcclusion { get; set; } = true;
 
         private bool _canSkipDrawing => Main.gameMenu || Main.mapFullscreen;
 
         public Scene3D()
         {
-            Camera.Transfrom.Position = Vector3.Backward * 0.6f;
+            Camera.Transfrom.Position = new Vector3(0, 0.08f, 0.4f);
         }
 
         public void Update(GameTime gameTime)
@@ -44,7 +45,7 @@ namespace Terraria3D
         private void DrawExtrusions(Layer3D[] layers)
         {
             foreach (var layer in layers)
-                layer.DrawExtrusion(Camera, _extrusionMatrix);
+                layer.DrawExtrusion(Camera, AmbientOcclusion, _extrusionMatrix);
         }
 
         private void DrawCaps(Layer3D[] layers)
@@ -57,7 +58,7 @@ namespace Terraria3D
         {
             foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
             {
-                layer.DrawExtrusion(Camera, _extrusionMatrix);
+                layer.DrawExtrusion(Camera, AmbientOcclusion, _extrusionMatrix);
                 layer.DrawCap(Camera, _capMatrix);
             }
         }

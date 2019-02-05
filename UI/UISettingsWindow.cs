@@ -10,6 +10,8 @@ namespace Terraria3D
     {
         private UIListScrollView _scrollView = new UIListScrollView();
         private UIText _resetButton = new UIText("Reset");
+        private UIText _toggleAOButton = new UIText("Toggle AO");
+
 
         public UISettingsWindow(string text)
         {
@@ -21,9 +23,16 @@ namespace Terraria3D
             _resetButton.VAlign = 1;
             _resetButton.Top.Set(-5, 0);
             _resetButton.OnClick += (evt, listener) => Resest();
-            
+
+            _toggleAOButton.VAlign = 1;
+            _toggleAOButton.Top = _resetButton.Top;
+            _toggleAOButton.Left.Pixels = 60;
+            _toggleAOButton.OnClick += (evt, listener) => Terraria3D.Instance.Scene.AmbientOcclusion = !Terraria3D.Instance.Scene.AmbientOcclusion;
+
+
             Append(_scrollView);
             Append(_resetButton);
+            Append(_toggleAOButton);
         }
 
         public override void OnActivate()

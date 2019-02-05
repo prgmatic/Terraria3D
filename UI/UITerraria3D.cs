@@ -18,6 +18,7 @@ namespace Terraria3D
         private static ModHotKey _settingsKeyBinding;
         private static ModHotKey _toggleCameraControlsKeyBinding;
         private static ModHotKey _toggle3DKeyBinding;
+        private static ModHotKey _toggleAOBinding;
 
 
         public static void Load()
@@ -34,6 +35,7 @@ namespace Terraria3D
             _settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
             _toggleCameraControlsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle Camera Controls", "Multiply");
             _toggle3DKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D", "K");
+            _toggleAOBinding = Terraria3D.Instance.RegisterHotKey("Toggle AO", "None");
         }
 
         public static void Unload()
@@ -82,6 +84,8 @@ namespace Terraria3D
                 CameraContolsEnabled = !CameraContolsEnabled;
             if (_toggle3DKeyBinding.JustPressed)
                 Terraria3D.Enabled = !Terraria3D.Enabled;
+            if (_toggleAOBinding.JustPressed)
+                Terraria3D.Instance.Scene.AmbientOcclusion = !Terraria3D.Instance.Scene.AmbientOcclusion;
         }
     }
 }

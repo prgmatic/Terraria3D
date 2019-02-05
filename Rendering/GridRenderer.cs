@@ -41,7 +41,7 @@ namespace Terraria3D
             _gridBuffer.SetData(_grid);
         }
 
-        public void Draw(Texture2D texture, Camera camera, float depth, float noiseAmount = 1, Matrix? modelMatrix = null)
+        public void Draw(Texture2D texture, Camera camera, float depth, float noiseAmount = 1, bool ao = true, Matrix? modelMatrix = null)
         {
             if (modelMatrix == null)
                 modelMatrix = Matrix.Identity;
@@ -55,6 +55,7 @@ namespace Terraria3D
             _effect.Parameters["Depth"].SetValue(depth);
             _effect.Parameters["NoiseAmount"].SetValue(noiseAmount);
             _effect.Parameters["CameraPosition"].SetValue(new Vector2(-Main.screenPosition.X, Main.screenPosition.Y));
+            _effect.Parameters["AO"].SetValue(ao);
 
             // Read from z buffer when determining the what pixel to render on top
             _graphicsDevice.DepthStencilState = DepthStencilState.Default;

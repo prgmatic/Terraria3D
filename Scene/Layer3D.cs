@@ -46,11 +46,11 @@ namespace Terraria3D
             _innerPixelTarget?.Dispose();
         }
 
-        public void DrawExtrusion(Camera camera, Matrix matrix)
+        public void DrawExtrusion(Camera camera, bool ao, Matrix matrix)
         {
             if (!Enabled) return;
             matrix = Matrix.CreateScale(1, 1, Depth) * Matrix.CreateTranslation(0, 0, Depth - ZPos) * matrix;
-            Renderers.GridRenderer.Draw(UseInnerPixel ? _innerPixelTarget : _renderTarget, camera, Depth, NoiseAmount, matrix);
+            Renderers.GridRenderer.Draw(UseInnerPixel ? _innerPixelTarget : _renderTarget, camera, Depth, NoiseAmount, ao, matrix);
         }
         public void DrawCap(Camera camera, Matrix matrix)
         {

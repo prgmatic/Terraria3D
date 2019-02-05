@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
+    <None Include="Effects\GridFunctions.fxh" />
     <Content Include="Effects\Grid.fx" />
     <Content Include="Effects\InnerPixel.fx" />
     <Content Include="Effects\Texture.fx" />
@@ -129,7 +130,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>cd /d "$(ProjectDir)Effects
-call "Compiler\fxcompiler.exe"
+rem call "Compiler\fxcompiler.exe"
 
 "E:\Program Files\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
