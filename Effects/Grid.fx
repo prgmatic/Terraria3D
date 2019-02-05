@@ -7,6 +7,7 @@ float4x4 Projection;
 float2 PixelOffset;
 float2 CameraPosition;
 float Depth;
+bool AO;
 
 #if ADD_NOISE
 float NoiseAmount;
@@ -61,6 +62,43 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	return output;
 }
 
+float slerp(float x)
+{
+	return x * x * 3 - x * x * x * 2;
+}
+
+float GetAO(float pos)
+{
+	return lerp(0.5, 1, slerp(pow(frac(pos), 1)));
+}
+
+float DoAOTwoPixel(float localPos, float2 direction, float2 start, float2 uv)
+{
+	float2 offset = float2(start);
+	offset += direction;
+	float4 offsetPixel = tex2D(_MainTexSampler, uv + offset * PixelOffset);
+	if (offsetPixel.a > 0.1)
+		return GetAO(frac(localPos) * 0.5);
+	else
+	{
+		offset += direction;
+		offsetPixel = tex2D(_MainTexSampler, uv + offset * PixelOffset);
+		if (offsetPixel.a > 0.1)
+			return GetAO(frac(localPos) * 0.5 + 0.5);
+	}
+	return 1;
+}
+
+float DoAOOnePixel(float localPos, float2 direction, float2 start, float2 uv)
+{
+	float2 offset = float2(start);
+	offset += direction;
+	float4 offsetPixel = tex2D(_MainTexSampler, uv + offset * PixelOffset);
+	if (offsetPixel.a > 0.1)
+		return GetAO(localPos);
+	return 1;
+}
+
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
@@ -74,6 +112,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float4 color1 = tex2D(_MainTexSampler, uv);
 	float4 color2 = tex2D(_MainTexSampler, uv + input.Normal.xy * PixelOffset);
 #endif
+	const float epsilon = 0.0001;
+	bool onEdge = input.UV.x < epsilon || input.UV.x > 1 - epsilon ||
+				  input.UV.y < epsilon || input.UV.y > 1 - epsilon;
 
 	bool color1IsZero = color1.r == 0 && color1.g == 0 && color1.b == 0 && color1.a == 0;
 	bool color2IsZero = color2.r == 0 && color2.g == 0 && color2.b == 0 && color2.a == 0;
@@ -82,11 +123,30 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	clip(-(color1IsZero && color2IsZero));
 
 #if REMOVE_INNER
-	clip(-(!color1IsZero && !color2IsZero &&
-		   uv.x > 0 && uv2.x < 1 && uv2.y > 0 && uv.y < 1));
+	clip(-(!color1IsZero && !color2IsZero && !onEdge));
 #endif
 
 	float4 result = color2IsZero ? color1 : color2;
+
+	if (AO && !onEdge)
+	{
+		float2 start;
+		float2 dir;
+		if (input.Normal.y < -0.5)
+		{
+			start = float2(0, color2IsZero ? -1 : 0);
+			dir = float2(-1, 0);
+			result.rgb *= DoAOTwoPixel(input.LocalPosition.x, dir, start, uv);
+			result.rgb *= DoAOTwoPixel(-input.LocalPosition.x, -dir, start, uv);
+		}
+		else
+		{
+			start = float2(color2IsZero ? 1 : 0, 0);
+			dir = float2(0, -1);
+			result.rgb *= DoAOTwoPixel(-input.LocalPosition.y, dir, start, uv);
+			result.rgb *= DoAOTwoPixel(input.LocalPosition.y, -dir, start, uv);
+		}
+	}
 
 #if ADD_NOISE
 	// Noise is 64x64, one noise color per 2 grid cells
@@ -115,7 +175,7 @@ technique Technique1
 		DestBlend = InvSrcAlpha;
 		CullMode = None;
 
-		VertexShader = compile vs_2_0 VertexShaderFunction();
-		PixelShader = compile ps_2_0 PixelShaderFunction();
+		VertexShader = compile vs_3_0 VertexShaderFunction();
+		PixelShader = compile ps_3_0 PixelShaderFunction();
 	}
 }
