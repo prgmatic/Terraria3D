@@ -8,6 +8,7 @@ namespace Terraria3D
     {
         public bool Enable { get; private set; } = true;
         public Camera Camera { get; private set; } = new Camera();
+		public CameraDriver CameraDriver { get; private set; }
         public Transfrom ModelTransform { get; private set; } = new Transfrom();
         public bool AmbientOcclusion { get; set; } = true;
 
@@ -15,13 +16,15 @@ namespace Terraria3D
 
         public Scene3D()
         {
-            Camera.Transfrom.Position = new Vector3(0, 0.08f, 0.4f);
+			CameraDriver = new CameraDriver(Camera);
+            Camera.Transform.Position = new Vector3(0, 0.08f, 0.4f);
         }
 
         public void Update(GameTime gameTime)
         {
-            if (UITerraria3D.CameraContolsEnabled)
-                CameraDriver.Drive(Camera, 0.2f, 5f, (float)gameTime.ElapsedGameTime.TotalSeconds);
+			if (!Terraria3D.Enabled) return;
+            if (InputTerraria3D.CameraControlsEnabled)
+                CameraDriver.Drive((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public void RenderLayers(Layer3D[] layers)

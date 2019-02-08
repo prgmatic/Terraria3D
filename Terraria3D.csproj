@@ -45,6 +45,7 @@
     <Compile Include="Hooks\InputHooks.cs" />
     <Compile Include="Hooks\WaterHooks.cs" />
     <Compile Include="Input\Cursor3D.cs" />
+    <Compile Include="Input\InputTerraria3D.cs" />
     <Compile Include="Rendering\CapRenderer.cs" />
     <Compile Include="Geometry\PixelGrid.cs" />
     <Compile Include="Geometry\Quad.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="UI\UITerraria3D.cs" />
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="Hooks\Hooks.cs" />
-    <Compile Include="Utils\Input.cs" />
+    <Compile Include="Utils\InputUtil.cs" />
     <Compile Include="Utils\Loading.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
@@ -106,6 +107,7 @@
       <HintPath>..\tModLoader\src\tModLoader\bin\x86\WindowsRelease\ReLogic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="Terraria">
       <HintPath>E:\Program Files\steamapps\common\Terraria\Terraria.exe</HintPath>
     </Reference>

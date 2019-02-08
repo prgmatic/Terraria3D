@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameInput;
@@ -17,7 +16,7 @@ namespace Terraria3D
 
         public override void Load()
         {
-            if (Main.dedServ) return;
+			if (Main.dedServ) return;
             Instance = this;
             Enabled = true;
             Loading.Load(this);
@@ -37,14 +36,16 @@ namespace Terraria3D
         // UI
         public override void UpdateUI(GameTime gameTime)
         {
+			InputTerraria3D.Update(gameTime);
             UITerraria3D.Update(gameTime);
             Scene.Update(gameTime);
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
     }
 
-    public class PlayerHooks : ModPlayer
-    {
-        public override void ProcessTriggers(TriggersSet triggersSet) => UITerraria3D.ProcessInput();
-    }
+	public class PlayerHooks : ModPlayer
+	{
+		public override void ProcessTriggers(TriggersSet triggersSet) => InputTerraria3D.ProcessInput();
+		public override void SetControls() => InputTerraria3D.SetControls(player);
+	}
 }

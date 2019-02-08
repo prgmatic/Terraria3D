@@ -5,7 +5,7 @@ namespace Terraria3D
 {
     public class Camera
     {
-        public Transfrom Transfrom { get; private set; } = new Transfrom();
+        public Transfrom Transform { get; private set; } = new Transfrom();
         public float FieldOfView { get; private set; } = 60;
         public float NearClipPlane { get; private set; } = 0.001f;
         public float FarClipPlane { get; private set; } = 200f;
@@ -13,11 +13,11 @@ namespace Terraria3D
 
         public void LookAt(Vector3 position, Vector3 up)
         {
-            Transfrom.Rotation = MathUtils.LookRotation(position - Transfrom.Position, up);
+            Transform.Rotation = MathUtils.LookRotation(Transform.Position - position, up);
         }
 
         public Matrix Projection => Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FieldOfView), Screen.Aspect, NearClipPlane, FarClipPlane);
-        public Matrix View => Matrix.Invert(Transfrom.LocalToWorld);
+        public Matrix View => Matrix.Invert(Transform.LocalToWorld);
         public Ray ScreenPointToRay(Vector2 screenPosition)
         {
             Vector3 nearPoint = new Vector3(screenPosition, 0); //new Vector3(screenPosition.X, screenPosition.Y, 0);
