@@ -16,8 +16,6 @@ namespace Terraria3D
 		public float MoveSpeed { get; set; } = 1f;
 		public float LookSensitivity { get; set; } = 1f;
 
-		private float _time = 0;
-
 		public CameraDriver(Camera camera)
 		{
 			Camera = camera;

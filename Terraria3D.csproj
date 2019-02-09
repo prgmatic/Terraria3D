@@ -70,7 +70,9 @@
     <Compile Include="UI\UITerraria3D.cs" />
     <Compile Include="UI\UIWindow.cs" />
     <Compile Include="Hooks\Hooks.cs" />
-    <Compile Include="Utils\InputUtil.cs" />
+    <Compile Include="UI\UserInterfaces\GenericUserInterface.cs" />
+    <Compile Include="UI\UserInterfaces\UserInterfaceOverlay.cs" />
+    <Compile Include="UI\UserInterfaces\UserInterfaceSettings.cs" />
     <Compile Include="Utils\Loading.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
@@ -103,12 +105,16 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ReLogic">
       <HintPath>..\tModLoader\src\tModLoader\bin\x86\WindowsRelease\ReLogic.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="Terraria">
+    <Reference Include="Terraria, Version=1.3.5.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Program Files\steamapps\common\Terraria\Terraria.exe</HintPath>
     </Reference>
     <Reference Include="TerrariaHooks">
@@ -131,7 +137,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>cd /d "$(ProjectDir)Effects
+    <PostBuildEvent>rem cd /d "$(ProjectDir)Effects
 rem call "Compiler\fxcompiler.exe"
 
 "E:\Program Files\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>

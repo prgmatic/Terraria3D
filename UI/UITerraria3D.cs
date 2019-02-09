@@ -6,58 +6,33 @@ namespace Terraria3D
 {
     public static class UITerraria3D
     {
-        public static bool Visible { get; set; } = false;
-
-        private static UserInterface _interface;
-        private static UIState _state;
-        private static UISettingsWindow _settingsWindow;
+        public static UserInterfaceSettings SettingsInterface { get; private set; }
+        public static UserInterfaceOverlay  OverlayInterface  { get; private set; }
 
 
         public static void Load()
         {
-            _interface = new UserInterface();
-            _state = new UIState();
-            _settingsWindow = new UISettingsWindow("Settings");
-
-            _interface.SetState(_state);
-            _state.Append(_settingsWindow);
-            _state.Activate();
+			SettingsInterface = new UserInterfaceSettings("Settings");
+			OverlayInterface = new UserInterfaceOverlay("Overlay");
         }
 
         public static void Unload()
         {
-            _interface.SetState(null);
-            _state.Deactivate();
-
-            _settingsWindow = null;
-            _state = null;
-            _interface = null;
-
+			SettingsInterface.Dispose();
+			OverlayInterface.Dispose();
+			SettingsInterface = null;
+			OverlayInterface = null;
         }
 
         public static void Update(GameTime gameTime)
         {
-            if (Visible)
-                _interface.Update(gameTime);
+			SettingsInterface.UpdateIfVisible(gameTime);
         }
-
-        public static void Draw()
-            => _interface.Draw(Terraria.Main.spriteBatch, new GameTime());
 
         public static void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-            if (inventoryIndex != -1)
-            {
-                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-                    "ExampleMod: Example Person UI", () =>
-                    {
-                        if (Visible) Draw();
-                        return true;
-                    }, InterfaceScaleType.UI)
-                );
-            }
-        }
-        
+			SettingsInterface.InsertIntoLayers("Vanilla: Mouse Text", layers);
+			OverlayInterface.InsertIntoLayers("Vanilla: Mouse Text", layers);
+		}
     }
 }

@@ -66,7 +66,7 @@ namespace Terraria3D
 			if (_toggle3DKeyBinding.JustPressed)
 				Terraria3D.Enabled = !Terraria3D.Enabled;
 			if (_settingsKeyBinding.JustPressed)
-				UITerraria3D.Visible = !UITerraria3D.Visible;
+				UITerraria3D.SettingsInterface.Visible = !UITerraria3D.SettingsInterface.Visible;
 			if (!Terraria3D.Enabled) return;
 			if (_toggleCameraControlsKeyBinding.JustPressed)
 				CameraControlsEnabled = !CameraControlsEnabled;
