@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -16,7 +15,14 @@ namespace Terraria3D
         public Scene3D Scene { get; set; }
         public LayerManager LayerManager { get; set; }
 
-        public override void Load()
+		public Terraria3D()
+		{
+			// Huge thanks to 0x0ade for this fix. It allows uses with displays 1920x1200 or
+			// small to run SM3 shaders :D
+			XNAHacks.Apply();
+		}
+
+		public override void Load()
         {
 			if (Main.dedServ) return;
             Instance = this;
@@ -33,13 +39,7 @@ namespace Terraria3D
 
         public override void LoadResourceFromStream(string path, int len, BinaryReader reader)
         {
-            if (Main.dedServ) return;
-			// Huge thanks to 0x0ade for this fix. It allows uses with displays 1920x1200 or
-			// small to run SM3 shaders :D
-			// Apply all XNA fixes before loading any resource from this mod.
-			// XNAFixes.Apply() only runs once internally, and it needs to run earlier than Mod.Load()
-			XNAHacks.Apply();
-            if (Main.graphics.GraphicsProfile == GraphicsProfile.Reach && path.StartsWith("Effects/HiDef/")) return;
+            if (Main.dedServ || !Renderers.SM3Enabled) return;
             base.LoadResourceFromStream(path, len, reader);
         }
 

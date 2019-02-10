@@ -15,12 +15,26 @@ namespace Terraria3D
 {
 	internal static class XNAHacks
 	{
+		public static bool Applied { get; private set; } = false;
 
 		// Check if we're actually running on XNA by checking the Game assembly name.
 		// FNA doesn't care about graphics profiles.
 		static readonly bool IsXNA = typeof(Game).Assembly.FullName.Contains("Microsoft.Xna.Framework");
+		
 
 		public static void Apply()
+		{
+			// Apply all XNA fixes before loading any resource from this mod.
+			// XNAFixes.Apply() only runs once internally, and it needs to run earlier than Mod.Load()
+			if (Main.dedServ || 
+				Main.graphics.GraphicsProfile == GraphicsProfile.HiDef ||
+				!Main.graphics.GraphicsDevice.Adapter.IsProfileSupported(GraphicsProfile.HiDef))
+				return;
+			ApplySM3Fix();
+			Applied = true;
+		}
+
+		private static void ApplySM3Fix()
 		{
 			// Only apply the fix if we need to apply it.
 			const string AppliedName = "Terraria3D.XNAHacks.Applied";
