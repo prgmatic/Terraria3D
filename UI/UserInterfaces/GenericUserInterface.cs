@@ -13,11 +13,13 @@ namespace Terraria3D
 
 		public GenericUserInterface(string layerName)
 		{
-			State = new UIState();
+			State = CreateState();
 			SetState(State);
 			State.Activate();
 			LayerName = string.Format("{0}: {1}", Terraria3D.Instance.DisplayName, layerName);
 		}
+
+		protected virtual UIState CreateState() => new UIState();
 
 		public virtual void Dispose()
 		{

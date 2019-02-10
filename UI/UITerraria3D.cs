@@ -27,6 +27,7 @@ namespace Terraria3D
         public static void Update(GameTime gameTime)
         {
 			SettingsInterface.UpdateIfVisible(gameTime);
+			OverlayInterface.UpdateIfVisible(gameTime);
         }
 
         public static void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

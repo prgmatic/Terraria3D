@@ -16,7 +16,11 @@ namespace Terraria3D
         public UISettingsWindow(string text)
         {
             Width.Set(600, 0);
-            Height.Set(400, 0);
+            Height.Set(- 200, 1);
+			VAlign = 0.5f;
+			HAlign = 0.5f;
+
+
             _scrollView.Width.Set(0, 1);
             _scrollView.Height.Set(-30, 1);
 

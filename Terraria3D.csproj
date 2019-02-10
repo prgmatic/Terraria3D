@@ -62,6 +62,7 @@
     <Compile Include="Scene\LayersBuilder.cs" />
     <Compile Include="Scene\Scene3D.cs" />
     <Compile Include="Terraria3D.cs" />
+    <Compile Include="UI\Elements\UICameraControlsPanel.cs" />
     <Compile Include="UI\Elements\UILayerEntry.cs" />
     <Compile Include="UI\Elements\UIListModifiedScrollAmount.cs" />
     <Compile Include="UI\Elements\UIListScrollView.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="UI\UserInterfaces\UserInterfaceSettings.cs" />
     <Compile Include="Utils\Loading.cs" />
     <Compile Include="Utils\Utils.cs" />
+    <Compile Include="Utils\XNAHacks.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
@@ -94,16 +96,16 @@
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Xact\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Xact.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.dll</HintPath>
+      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -123,10 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="build.txt" />
-    <None Include="Effects\GridFunctions.fxh" />
     <Content Include="Effects\Grid.fx" />
     <Content Include="Effects\InnerPixel.fx" />
     <Content Include="Effects\Texture.fx" />
+    <Content Include="Images\CameraIcon.png" />
     <Content Include="Images\Noise.png" />
     <Content Include="Images\Player.png" />
   </ItemGroup>

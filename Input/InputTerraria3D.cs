@@ -7,7 +7,7 @@ namespace Terraria3D
 {
 	public class InputTerraria3D
 	{
-		public static bool CameraControlsEnabled { get; private set; } = false;
+		public static bool CameraControlsEnabled { get; set; } = false;
 
 		private static ModHotKey _settingsKeyBinding;
 		private static ModHotKey _toggleCameraControlsKeyBinding;
@@ -18,7 +18,7 @@ namespace Terraria3D
 		{
 			// Why 'L'? No clue, I hope it's not already bound to something xD
 			_settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
-			_toggleCameraControlsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle Camera Controls", "Multiply");
+			_toggleCameraControlsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle Camera Controls", "C");
 			_toggle3DKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D", "K");
 			_toggleAOBinding = Terraria3D.Instance.RegisterHotKey("Toggle AO", "None");
 		}
