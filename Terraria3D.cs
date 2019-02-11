@@ -18,8 +18,23 @@ namespace Terraria3D
 		public Terraria3D()
 		{
 			// Huge thanks to 0x0ade for this fix. It allows uses with displays 1920x1200 or
-			// small to run SM3 shaders :D
+			// smaller to run SM3 shaders :D
 			XNAHacks.Apply();
+		}
+
+		public async void Toggle()
+		{
+			if (Scene.DollyController.DollyInProgress) return;
+			if(Enabled)
+			{
+				await Scene.DollyController.TransitionOutAsync();
+				Enabled = false;
+			}
+			else
+			{
+				Enabled = true;
+				Scene.DollyController.TransitionIn();
+			}
 		}
 
 		public override void Load()
@@ -39,7 +54,7 @@ namespace Terraria3D
 
         public override void LoadResourceFromStream(string path, int len, BinaryReader reader)
         {
-            if (Main.dedServ || !Renderers.SM3Enabled) return;
+            if (Main.dedServ || (!Renderers.SM3Enabled && path.StartsWith("Effects/HiDef"))) return;
             base.LoadResourceFromStream(path, len, reader);
         }
 

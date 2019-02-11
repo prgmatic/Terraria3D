@@ -9,6 +9,7 @@ namespace Terraria3D
         public bool Enable { get; private set; } = true;
         public Camera Camera { get; private set; } = new Camera();
 		public CameraDriver CameraDriver { get; private set; }
+		public DollyController DollyController { get; private set; }
         public Transfrom ModelTransform { get; private set; } = new Transfrom();
         public bool AmbientOcclusion { get; set; } = true;
 
@@ -17,13 +18,14 @@ namespace Terraria3D
         public Scene3D()
         {
 			CameraDriver = new CameraDriver(Camera);
-            Camera.Transform.Position = new Vector3(0, 0.08f, 0.4f);
+			DollyController = new DollyController(Camera);
         }
 
         public void Update(GameTime gameTime)
         {
 			if (!Terraria3D.Enabled) return;
-            if (InputTerraria3D.CameraControlsEnabled)
+			DollyController.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (InputTerraria3D.CameraControlsEnabled && !DollyController.DollyInProgress)
                 CameraDriver.Drive((float)gameTime.ElapsedGameTime.TotalSeconds);
         }
 

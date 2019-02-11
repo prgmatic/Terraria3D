@@ -20,7 +20,8 @@ namespace Terraria3D
 			_settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
 			_toggleCameraControlsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle Camera Controls", "C");
 			_toggle3DKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D", "K");
-			_toggleAOBinding = Terraria3D.Instance.RegisterHotKey("Toggle AO", "None");
+			if (Renderers.SM3Enabled)
+				_toggleAOBinding = Terraria3D.Instance.RegisterHotKey("Toggle AO", "None");
 		}
 
 		public static void Unload()
@@ -64,14 +65,17 @@ namespace Terraria3D
 		public static void ProcessInput()
 		{
 			if (_toggle3DKeyBinding.JustPressed)
-				Terraria3D.Enabled = !Terraria3D.Enabled;
+				Terraria3D.Instance.Toggle();
 			if (_settingsKeyBinding.JustPressed)
 				UITerraria3D.SettingsInterface.Visible = !UITerraria3D.SettingsInterface.Visible;
 			if (!Terraria3D.Enabled) return;
 			if (_toggleCameraControlsKeyBinding.JustPressed)
 				CameraControlsEnabled = !CameraControlsEnabled;
-			if (_toggleAOBinding.JustPressed)
-				Terraria3D.Instance.Scene.AmbientOcclusion = !Terraria3D.Instance.Scene.AmbientOcclusion;
+			if (Renderers.SM3Enabled)
+			{
+				if (_toggleAOBinding.JustPressed)
+					Terraria3D.Instance.Scene.AmbientOcclusion = !Terraria3D.Instance.Scene.AmbientOcclusion;
+			}
 		}
 	}
 }

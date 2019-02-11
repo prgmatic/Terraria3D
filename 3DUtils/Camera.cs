@@ -6,11 +6,11 @@ namespace Terraria3D
     public class Camera
     {
         public Transfrom Transform { get; private set; } = new Transfrom();
-        public float FieldOfView { get; private set; } = 60;
-        public float NearClipPlane { get; private set; } = 0.001f;
-        public float FarClipPlane { get; private set; } = 200f;
-        
+        public float FieldOfView { get; set; } = 60;
+        public float NearClipPlane { get; set; } = 0.001f;
+        public float FarClipPlane { get; set; } = 200f;
 
+		public void LookAt(Vector3 position) => LookAt(position, Vector3.Up);
         public void LookAt(Vector3 position, Vector3 up)
         {
             Transform.Rotation = MathUtils.LookRotation(Transform.Position - position, up);

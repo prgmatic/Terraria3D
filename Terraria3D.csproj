@@ -37,6 +37,9 @@
   <ItemGroup>
     <Compile Include="3DUtils\Camera.cs" />
     <Compile Include="3DUtils\CameraDriver.cs" />
+    <Compile Include="3DUtils\CameraDriverTransformations.cs" />
+    <Compile Include="3DUtils\DollyController.cs" />
+    <Compile Include="3DUtils\DollyTransition.cs" />
     <Compile Include="3DUtils\MathUtils.cs" />
     <Compile Include="3DUtils\Screen.cs" />
     <Compile Include="3DUtils\Transfrom.cs" />
@@ -44,6 +47,7 @@
     <Compile Include="Hooks\DrawTileHooks.cs" />
     <Compile Include="Hooks\InputHooks.cs" />
     <Compile Include="Hooks\WaterHooks.cs" />
+    <Compile Include="Input\CameraDriverBindings.cs" />
     <Compile Include="Input\Cursor3D.cs" />
     <Compile Include="Input\InputTerraria3D.cs" />
     <Compile Include="Rendering\CapRenderer.cs" />
@@ -126,6 +130,7 @@
   <ItemGroup>
     <Content Include="build.txt" />
     <Content Include="Effects\Grid.fx" />
+    <Content Include="Effects\HiDef\Grid.fx" />
     <Content Include="Effects\InnerPixel.fx" />
     <Content Include="Effects\Texture.fx" />
     <Content Include="Images\CameraIcon.png" />
