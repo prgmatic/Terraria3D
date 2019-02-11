@@ -103,13 +103,8 @@ namespace Terraria3D
 			var offset = Vector3.Lerp(_startPos, _targetPos, t) - (_movingIn ? _startPos : _targetPos);
 			_camera.Transform.Position = Vector3.Backward * DistFromFov(fov, 1f / Main.GameZoomTarget) + offset;
 
-			if (_movingIn)
-				t = (t - 0.5f) * 2;
-			else
-				t *= 2;
-			t = MathHelper.Clamp(t, 0, 1);
 			var t2 = _movingIn ? CircleEaseIn(t) : CircleEaseOut(t);
-			_camera.Transform.Rotation = Quaternion.Lerp(_startRot, _targetRot, t);
+			_camera.Transform.Rotation = Quaternion.Lerp(_startRot, _targetRot, t2);
 		}
 
 		public void Update(float deltaTime)
