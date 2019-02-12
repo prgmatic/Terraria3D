@@ -16,8 +16,7 @@ namespace Terraria3D
 
         public static Vector2 Get3DScreenPos(Camera camera, Matrix modelMatrix)
         {
-            var mousePos = new Vector2(Main.mouseX, Main.mouseY);
-            return Get3DScreenPos(camera, mousePos, modelMatrix);
+            return Get3DScreenPos(camera, Main.MouseScreen * Main.UIScale, modelMatrix);
         }
 
         public static Vector2 Get3DScreenPos(Camera camera, Vector2 mousePos, Matrix modelMatrix)
@@ -31,7 +30,7 @@ namespace Terraria3D
 
             // Find intersection with front plane
             SetTilePlanDistance(solidLayer.Depth, solidLayer.ZPos, modelMatrix);
-            var ray = camera.ScreenPointToRay(new Vector2(Main.mouseX, Main.mouseY));
+            var ray = camera.ScreenPointToRay(new Vector2(mousePos.X, mousePos.Y));
             var invMatrix = Matrix.Invert(modelMatrix);
 
             var intersectPos = GetPlaneIntersectOnScreen(ray, _tilePlane, invMatrix);
