@@ -30,12 +30,12 @@ namespace Terraria3D
 
 		public void TransitionIn()
 		{
-			_transition.TransitionIn(5, 3, _entertargetFov, _enterTargetPos, _enterTargetRot);
+			_transition.TransitionIn(TRANSITION_TIME, 3, _entertargetFov, _enterTargetPos, _enterTargetRot);
 		}
 		public async Task TransitionOutAsync()
 		{
 			UpdateEnterPos();
-			await _transition.TransitionOutAsync(5, 3);
+			await _transition.TransitionOutAsync(TRANSITION_TIME, 3);
 		}
 
 		private void UpdateEnterPos()

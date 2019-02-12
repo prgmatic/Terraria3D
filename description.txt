@@ -1,1 +1,12 @@
-Words cannot describe. Just kidding, I'll do it later.
+Alpha version of Terraria3D.
+
+Thank you for checking out Terraria3D. This mod is still in alpha. I'd like to give a huge shout out to 0x0ade for creating TerrariaHooks and for writing a fix that enables SM3. This mod would not be possible on tML without TerrariaHooks. I'd also like to thank everyone who helped out testing the mod.
+
+Known Issues:
+- Does not play well with all mods. Currently not playing nice with Overhaul.
+
+FAQ
+Q: How do I move the camera?
+A: You can either bind the 'Toggle Camera Controls' hotkey or you can open up your inventory and then click the camera icon on the bottom left of the screen.
+Q: This sucks! My FPS went in toilet! Optimize your mod!
+A: I'm sorry to hear that. Unfortunately the 3D does not come free. You will need a decent dedicated graphics processor to run this mod effectively. There is not much head room for optimization unfortunately.
