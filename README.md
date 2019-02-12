@@ -1,13 +1,16 @@
 # Terraria3D - Alpha (WIP)
-Terraria3D is a mod that adds a little more depth to your world. This mod used tModLoader. The current state of the mod is rough around the edges. I have spent most of my time developing and very little time testing. You'll certainly come across things that don't look right. Please report issues to the issue tracker.
-## Usage
-Copy mod to mod directory. Terraria3D depends on TerrariaHooks. Install that from the mod browser if it is not downloaded automatically. Requires 0.10.1.5.
+Terraria3D is a mod that adds a little more depth to your world. This mod is installed via tModLoader. You can find it in the mod browser. Please report issues to the issue tracker.
 
-Once in game, you need to map the setting window keybinding in the keybinding window. You can use that key to bring up the settings window. 
-## Camera Control
-- Right click - Rotate Camera
-- NUM4 & NUM6 - Move Left Right
-- NUM8 & NUM5 - Move Forward Backward
-- NUM7 & NUM9 - Move Up Down
+Join our [discord](https://discord.gg/3QdTHrV)!
+## Usage
+This mod requires tModLoader 0.10.1.5. Can be found in the mod browser.
+
+Once in game, you need to map the toggle 3D, settings window, and camera control toggle in the controls window.
+
+To move the camera press the 'Toggle Camera Controls' key or open your inventory and click the camera icon on bottom left of the screen.
+
 ## Keep in mind
-This is an early version of the mod, the user experience is far from optimal but I would like to start testing core features now.
+The mod is still a work in progress. There is more I would like to polish and you may come across some things that are broken. Bug reports are appreciated :D
+
+## Roadmap
+- User ability to define layers and what is rendered on them

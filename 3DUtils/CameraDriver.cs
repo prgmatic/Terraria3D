@@ -12,7 +12,7 @@ namespace Terraria3D
 		public float MoveSpeed { get; set; } = 1f;
 		public float LookSensitivity { get; set; } = 1f;
 		public bool CameraRelativeMode { get; set; } = true;
-		public bool CameraStartYOffset { get; set; } = true;
+		public bool CameraStartYOffset { get; set; } = false;
 
 		private Vector3 _forwardAxis => CameraRelativeMode ? Camera.Transform.Forward : Vector3.Forward;
 		private Vector3 _rightAxis => CameraRelativeMode ? Camera.Transform.Right : Vector3.Right;
