@@ -1,4 +1,6 @@
 # Terraria3D - Alpha (WIP)
+![Screenshot](https://i.imgur.com/c2JSdYU.png)
+
 Terraria3D is a mod that adds a little more depth to your world. This mod is installed via tModLoader. You can find it in the mod browser. Please report issues to the issue tracker.
 
 Join our [discord](https://discord.gg/3QdTHrV)!
