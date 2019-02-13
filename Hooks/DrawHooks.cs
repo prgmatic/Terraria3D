@@ -5,6 +5,8 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Mono.Cecil.Cil;
 using System;
+using System.IO;
+using System.Text;
 
 namespace Terraria3D
 {
@@ -39,11 +41,11 @@ namespace Terraria3D
         // ======================================
         private static void PreRenderHook(HookILCursor cursor)
         {
-            // Find TimeLogger.DetailedDrawTime(4) call.
-            if (cursor.TryGotoNext(i => i.MatchLdcI4(4),
-                                   i => i.MatchCall("Terraria.TimeLogger", "DetailedDrawTime")))
-            {
-                cursor.Index += 3;
+			//{IL_14f8: stfld System.Double Terraria.Main::bgParallax}
+			// Find TimeLogger.DetailedDrawTime(4) call.
+			if (cursor.TryGotoNext(i => i.MatchCallvirt<GraphicsDevice>("Clear")))
+			{
+                cursor.Index += 1;
                 // Render layers to targets
                 cursor.EmitDelegate(() =>
                 {
@@ -114,8 +116,8 @@ namespace Terraria3D
                     // that we just created with cursor 2.
                     cursor.EmitDelegate<Func<bool>>(() =>
                     {
-                        var result = Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
-                        if (result && !Main.drawToScreen)
+						var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
+                        if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
                             Filters.Scene.EndCapture();
                         return result;
                     });

@@ -31,7 +31,7 @@ namespace Terraria3D
 			if (Main.keyState.IsKeyDown(_resetKey))
 				ResetCameraPosition();
 
-			if (Main.keyState.IsKeyDown(Keys.LeftAlt))
+			if (Main.keyState.IsKeyDown(Keys.LeftAlt) && !Main.LocalPlayer.mouseInterface)
 			{
 				if (Main.mouseLeft)
 					MouseOrbit(LookSensitivity * 5f, mouseDelta, deltaTime);
@@ -43,7 +43,8 @@ namespace Terraria3D
 			else
 			{
 				FlyCamera(MoveSpeed * 0.2f, deltaTime);
-				Rotate(LookSensitivity * 5f, mouseDelta, deltaTime);
+				if (!Main.LocalPlayer.mouseInterface)
+					Rotate(LookSensitivity * 5f, mouseDelta, deltaTime);
 				ArrowKeyOrbit(45, deltaTime);
 			}
 		}

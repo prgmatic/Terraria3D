@@ -76,5 +76,12 @@ namespace Terraria3D
 	{
 		public override void ProcessTriggers(TriggersSet triggersSet) => InputTerraria3D.ProcessInput();
 		public override void SetControls() => InputTerraria3D.SetControls(player);
+		public override void OnEnterWorld(Player player)
+		{
+			// Hack for overhaul to stop black tiles from persisting.
+			Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
+			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+			Main.graphics.GraphicsDevice.SetRenderTarget(null);
+		}
 	}
 }
