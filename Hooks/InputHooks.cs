@@ -26,6 +26,22 @@ namespace Terraria3D
                 });
             };
 
+			On.Terraria.UI.LegacyGameInterfaceLayer.DrawSelf += (orig, self) =>
+			{
+				if (InterfaceRendering.Drawing3D)
+				{
+					var oldX = Main.mouseX;
+					var oldY = Main.mouseY;
+					Main.mouseX = (int)Cursor3D.MousePos3D.X;
+					Main.mouseY = (int)Cursor3D.MousePos3D.Y;
+					var result = orig(self);
+					Main.mouseX = oldX;
+					Main.mouseY = oldY;
+					return result;
+				}
+				return orig(self);
+			};
+
             On.Terraria.UI.GameInterfaceLayer.Draw += (orig, self) =>
             {
                 if (!Terraria3D.Enabled || InterfaceRendering.Drawing3D) return orig(self);
