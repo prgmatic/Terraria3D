@@ -11,12 +11,14 @@ namespace Terraria3D
 		public float LookAtDistance { get; private set; }
 		public float MoveSpeed { get; set; } = 1f;
 		public float LookSensitivity { get; set; } = 1f;
-		public bool CameraRelativeMode { get; set; } = true;
-		public bool CameraStartYOffset { get; set; } = false;
+		public CameraMoveMode MoveMode { get; set; } = CameraMoveMode.Relative;
+		public CameraYStart YStartPosition { get; set; } = CameraYStart.Center;
 
-		private Vector3 _forwardAxis => CameraRelativeMode ? Camera.Transform.Forward : Vector3.Forward;
-		private Vector3 _rightAxis => CameraRelativeMode ? Camera.Transform.Right : Vector3.Right;
-		private Vector3 _upAxis => CameraRelativeMode ? Camera.Transform.Up : Vector3.Up;
+		private bool _moveModeRelative => MoveMode == CameraMoveMode.Relative;
+
+		private Vector3 _forwardAxis => _moveModeRelative ? Camera.Transform.Forward : Vector3.Forward;
+		private Vector3 _rightAxis   => _moveModeRelative ? Camera.Transform.Right   : Vector3.Right;
+		private Vector3 _upAxis      => _moveModeRelative ? Camera.Transform.Up      : Vector3.Up;
 
 		public CameraDriver(Camera camera)
 		{
@@ -50,5 +52,16 @@ namespace Terraria3D
 		}
 
 		private Vector3 GetLookAtPoint() => Camera.Transform.Position + Camera.Transform.Forward * LookAtDistance;
+
+		public enum CameraMoveMode
+		{
+			Relative,
+			World
+		}
+		public enum CameraYStart
+		{
+			Center,
+			Offset
+		}
 	}
 }

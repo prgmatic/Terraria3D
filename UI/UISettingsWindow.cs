@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
+using Terraria3D.Serialization;
 using Terraria3D.UI.Elements;
 
 namespace Terraria3D
@@ -26,7 +27,7 @@ namespace Terraria3D
 
 			_resetButton.VAlign = 1;
 			_resetButton.Top.Set(-5, 0);
-			_resetButton.OnClick += (evt, listener) => Resest();
+			_resetButton.OnClick += (evt, listener) => Reset();
 
 			_toggleAOButton.VAlign = 1;
 			_toggleAOButton.Top = _resetButton.Top;
@@ -38,6 +39,8 @@ namespace Terraria3D
 			Append(_resetButton);
 			if (Renderers.SM3Enabled)
 				Append(_toggleAOButton);
+
+			Settings.SettingsLoaded += SettingsLoaded;
 		}
 
 		public override void OnActivate()
@@ -45,6 +48,10 @@ namespace Terraria3D
 			base.OnActivate();
 			RebuildLayerList();
 		}
+
+		public void Dispose() => Settings.SettingsLoaded -= SettingsLoaded;
+
+		private void SettingsLoaded(SettingsData data) => RebuildLayerList();
 
 		private void RebuildLayerList()
 		{
@@ -54,7 +61,7 @@ namespace Terraria3D
 				_scrollView.List.Add(new UILayerEntry(i) { Layer = layers[i] });
 		}
 
-		private void Resest()
+		private void Reset()
 		{
 			Terraria3D.Instance.LayerManager.Rebuild();
 			RebuildLayerList();

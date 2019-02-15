@@ -16,6 +16,7 @@ namespace Terraria3D
 		public override void Dispose()
 		{
 			base.Dispose();
+			_settingsWindow?.Dispose();
 			_settingsWindow = null;
 		}
 	}

@@ -63,7 +63,7 @@ namespace Terraria3D
 			Append(_toggleControlsPanelButton);
 		}
 
-		public void Dispose() { }
+		public void Dispose() => _controlsPanel.Dispose();
 
 		protected override void DrawChildren(SpriteBatch spriteBatch)
 		{

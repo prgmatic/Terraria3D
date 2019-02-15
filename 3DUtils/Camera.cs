@@ -10,6 +10,15 @@ namespace Terraria3D
         public float NearClipPlane { get; set; } = 0.001f;
         public float FarClipPlane { get; set; } = 200f;
 
+		public Camera() { }
+
+		public Camera(Camera sourceCamera)
+		{
+			FieldOfView = sourceCamera.FieldOfView;
+			NearClipPlane = sourceCamera.NearClipPlane;
+			FarClipPlane = sourceCamera.FarClipPlane;
+		}
+
 		public void LookAt(Vector3 position) => LookAt(position, Vector3.Up);
         public void LookAt(Vector3 position, Vector3 up)
         {

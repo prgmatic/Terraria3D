@@ -65,6 +65,12 @@
     <Compile Include="Scene\LayerManager.cs" />
     <Compile Include="Scene\LayersBuilder.cs" />
     <Compile Include="Scene\Scene3D.cs" />
+    <Compile Include="Serialization\CameraData.cs" />
+    <Compile Include="Serialization\FileUtils.cs" />
+    <Compile Include="Serialization\LayerData.cs" />
+    <Compile Include="Serialization\SceneData.cs" />
+    <Compile Include="Serialization\Settings.cs" />
+    <Compile Include="Serialization\SettingsData.cs" />
     <Compile Include="Terraria3D.cs" />
     <Compile Include="UI\Elements\UICameraControlsPanel.cs" />
     <Compile Include="UI\Elements\UILayerEntry.cs" />
@@ -136,10 +142,6 @@
     <Content Include="Images\CameraIcon.png" />
     <Content Include="Images\Noise.png" />
     <Content Include="Images\Player.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

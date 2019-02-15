@@ -30,7 +30,9 @@ namespace Terraria3D
 			{
 				if (evt.Target == _moveCameraModeButton)
 				{
-					_cameraDriver.CameraRelativeMode = !_cameraDriver.CameraRelativeMode;
+					_cameraDriver.MoveMode = _cameraDriver.MoveMode == CameraDriver.CameraMoveMode.Relative ?
+																	   CameraDriver.CameraMoveMode.World :
+																	   CameraDriver.CameraMoveMode.Relative;
 					UpdateMoveCameraModeButtonText();
 				}
 			};
@@ -40,7 +42,10 @@ namespace Terraria3D
 			{
 				if(evt.Target == _startYOffsetButton)
 				{
-					_cameraDriver.CameraStartYOffset = !_cameraDriver.CameraStartYOffset;
+					_cameraDriver.YStartPosition = _cameraDriver.YStartPosition == CameraDriver.CameraYStart.Center ?
+																				   CameraDriver.CameraYStart.Offset :
+																				   CameraDriver.CameraYStart.Center;
+					
 					_cameraDriver.ResetCameraPosition();
 					UpdateStartYOffsetButtonText();
 				}
@@ -48,6 +53,16 @@ namespace Terraria3D
 
 			Width.Pixels = 250;
 			Height.Pixels = _height + PaddingTop + PaddingBottom;
+
+			Settings.SettingsLoaded += SettingsLoaded;
+		}
+
+		public void Dispose() => Settings.SettingsLoaded -= SettingsLoaded;
+
+		public void SettingsLoaded(Serialization.SettingsData settings)
+		{
+			UpdateMoveCameraModeButtonText();
+			UpdateStartYOffsetButtonText();
 		}
 
 		private void AddLine(string text, float textScale = 1, bool large = false)
@@ -93,9 +108,9 @@ namespace Terraria3D
 		}
 
 		private void UpdateMoveCameraModeButtonText()
-			=> _moveCameraModeButton.SetText(_cameraDriver.CameraRelativeMode ? "Camera" : "World");
+			=> _moveCameraModeButton.SetText(_cameraDriver.MoveMode == CameraDriver.CameraMoveMode.Relative ? "Camera" : "World");
 		private void UpdateStartYOffsetButtonText()
-			=> _startYOffsetButton.SetText(_cameraDriver.CameraStartYOffset ? "Offset" : "Center");
+			=> _startYOffsetButton.SetText(_cameraDriver.YStartPosition == CameraDriver.CameraYStart.Offset ? "Offset" : "Center");
 
 		public override void Update(GameTime gameTime)
 		{

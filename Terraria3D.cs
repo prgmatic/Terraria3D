@@ -4,6 +4,7 @@ using System.IO;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace Terraria3D
@@ -62,13 +63,13 @@ namespace Terraria3D
         public void RenderLayersTargets() => Scene.RenderLayers(LayerManager.Layers);
         public void DrawScene() => Scene.DrawToScreen(LayerManager.Layers);
 
-        // UI
-        public override void UpdateUI(GameTime gameTime)
-        {
+		// UI
+		public override void UpdateUI(GameTime gameTime)
+		{
 			InputTerraria3D.Update(gameTime);
-            UITerraria3D.Update(gameTime);
-            Scene.Update(gameTime);
-        }
+			UITerraria3D.Update(gameTime);
+			Scene.Update(gameTime);
+		}
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
     }
 
@@ -79,9 +80,15 @@ namespace Terraria3D
 		public override void OnEnterWorld(Player player)
 		{
 			// Hack for overhaul to stop black tiles from persisting.
+			Settings.Load();
 			Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 			Main.graphics.GraphicsDevice.SetRenderTarget(null);
+		}
+		public override TagCompound Save()
+		{
+			Settings.Save();
+			return base.Save();
 		}
 	}
 }

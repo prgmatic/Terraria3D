@@ -6,14 +6,14 @@ namespace Terraria3D
 {
     public class Scene3D
     {
-        public bool Enable { get; private set; } = true;
         public Camera Camera { get; private set; } = new Camera();
 		public CameraDriver CameraDriver { get; private set; }
 		public DollyController DollyController { get; private set; }
         public Transfrom ModelTransform { get; private set; } = new Transfrom();
         public bool AmbientOcclusion { get; set; } = true;
+		public Camera ActiveCamera => DollyController.DollyInProgress ? DollyController.TransitionCamera : Camera;
 
-        private bool _canSkipDrawing => Main.gameMenu || Main.mapFullscreen;
+		private bool _canSkipDrawing => Main.gameMenu || Main.mapFullscreen;
 
         public Scene3D()
         {
@@ -31,7 +31,7 @@ namespace Terraria3D
 
         public void RenderLayers(Layer3D[] layers)
         {
-            if (!Enable || _canSkipDrawing) return;
+            if (!Terraria3D.Enabled || _canSkipDrawing) return;
             // Disable zoom
             Utils.SetZoom(1);
             Rendering.PreRenderSetup();
@@ -43,28 +43,28 @@ namespace Terraria3D
 
         public void DrawToScreen(Layer3D[] layers)
         {
-            if (!Enable || _canSkipDrawing) return;
+            if (!Terraria3D.Enabled || _canSkipDrawing) return;
             DrawExtrusionAndCap(layers);
         }
 
         private void DrawExtrusions(Layer3D[] layers)
         {
             foreach (var layer in layers)
-                layer.DrawExtrusion(Camera, AmbientOcclusion, _extrusionMatrix);
+                layer.DrawExtrusion(ActiveCamera, AmbientOcclusion, _extrusionMatrix);
         }
 
         private void DrawCaps(Layer3D[] layers)
         {
             foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
-                layer.DrawCap(Camera, _capMatrix);
+                layer.DrawCap(ActiveCamera, _capMatrix);
         }
 
         private void DrawExtrusionAndCap(Layer3D[] layers)
         {
             foreach (var layer in layers.OrderBy(l => l.Depth - l.ZPos))
             {
-                layer.DrawExtrusion(Camera, AmbientOcclusion, _extrusionMatrix);
-                layer.DrawCap(Camera, _capMatrix);
+                layer.DrawExtrusion(ActiveCamera, AmbientOcclusion, _extrusionMatrix);
+                layer.DrawCap(ActiveCamera, _capMatrix);
             }
         }
 

@@ -8,8 +8,9 @@ namespace Terraria3D
 	{
 		public void ResetCameraPosition()
 		{
-			Camera.Transform.Position = CameraStartYOffset ? new Vector3(0, 0.08f, 0.4f) : Vector3.Backward * 0.4f;
+			Camera.Transform.Position = YStartPosition == CameraYStart.Offset ? new Vector3(0, 0.08f, 0.4f) : Vector3.Backward * 0.4f;
 			Camera.LookAt(Vector3.Zero, Vector3.Up);
+			Camera.FieldOfView = 60;
 			LookAtDistance = Vector3.Distance(Camera.Transform.Position, Vector3.Zero);
 		}
 
