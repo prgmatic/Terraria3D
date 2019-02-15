@@ -244,7 +244,7 @@ namespace Terraria3D
         public static void DrawCombatText()
         {
             if (Main.hideUI) return;
-            float scale = 1;
+            float scale = 1f;
             for (int n = 0; n < 100; n++)
             {
                 if (Main.combatText[n].active)
@@ -256,7 +256,7 @@ namespace Terraria3D
                     }
                     Vector2 vector6 = Main.fontCombatText[num68].MeasureString(Main.combatText[n].text);
                     Vector2 origin = new Vector2(vector6.X * 0.5f, vector6.Y * 0.5f);
-                    float num69 = Main.combatText[n].scale / scale;
+                    float num69 = 1f;
                     float num70 = (float)Main.combatText[n].color.R;
                     float num71 = (float)Main.combatText[n].color.G;
                     float num72 = (float)Main.combatText[n].color.B;
@@ -298,11 +298,11 @@ namespace Terraria3D
                         {
                             float num77 = Main.combatText[n].position.Y - Main.screenPosition.Y;
                             num77 = (float)Main.screenHeight - num77;
-                            Main.spriteBatch.DrawString(Main.fontCombatText[num68], Main.combatText[n].text, new Vector2(Main.combatText[n].position.X - Main.screenPosition.X + num75 + origin.X, num77 + num76 + origin.Y), color9, Main.combatText[n].rotation, origin, Main.combatText[n].scale, SpriteEffects.None, 0f);
+                            Main.spriteBatch.DrawString(Main.fontCombatText[num68], Main.combatText[n].text, new Vector2(Main.combatText[n].position.X - Main.screenPosition.X + num75 + origin.X, num77 + num76 + origin.Y), color9, Main.combatText[n].rotation, origin, scale, SpriteEffects.None, 0f);
                         }
                         else
                         {
-                            Main.spriteBatch.DrawString(Main.fontCombatText[num68], Main.combatText[n].text, new Vector2(Main.combatText[n].position.X - Main.screenPosition.X + num75 + origin.X, Main.combatText[n].position.Y - Main.screenPosition.Y + num76 + origin.Y), color9, Main.combatText[n].rotation, origin, Main.combatText[n].scale, SpriteEffects.None, 0f);
+                            Main.spriteBatch.DrawString(Main.fontCombatText[num68], Main.combatText[n].text, new Vector2(Main.combatText[n].position.X - Main.screenPosition.X + num75 + origin.X, Main.combatText[n].position.Y - Main.screenPosition.Y + num76 + origin.Y), color9, Main.combatText[n].rotation, origin, scale, SpriteEffects.None, 0f);
                         }
                     }
                 }
@@ -330,7 +330,7 @@ namespace Terraria3D
                     }
                     Vector2 vector7 = Main.fontMouseText.MeasureString(text);
                     Vector2 origin2 = new Vector2(vector7.X * 0.5f, vector7.Y * 0.5f);
-                    float num79 = Main.itemText[num78].scale / scale;
+                    float num79 = 1f;
                     float num80 = (float)Main.itemText[num78].color.R;
                     float num81 = (float)Main.itemText[num78].color.G;
                     float num82 = (float)Main.itemText[num78].color.B;
@@ -378,7 +378,7 @@ namespace Terraria3D
                         {
                             num87 = (float)Main.screenHeight - num87;
                         }
-                        Main.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(Main.itemText[num78].position.X - Main.screenPosition.X + num85 + origin2.X, num87 + origin2.Y), color10, Main.itemText[num78].rotation, origin2, Main.itemText[num78].scale, SpriteEffects.None, 0f);
+                        Main.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(Main.itemText[num78].position.X - Main.screenPosition.X + num85 + origin2.X, num87 + origin2.Y), color10, Main.itemText[num78].rotation, origin2, scale, SpriteEffects.None, 0f);
                     }
                 }
             }
