@@ -81,9 +81,12 @@ namespace Terraria3D
 		{
 			// Hack for overhaul to stop black tiles from persisting.
 			Settings.Load();
-			Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
-			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-			Main.graphics.GraphicsDevice.SetRenderTarget(null);
+			if (Main.instance.blackTarget != null && !Main.instance.blackTarget.IsDisposed)
+			{
+				Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
+				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+				Main.graphics.GraphicsDevice.SetRenderTarget(null);
+			}
 		}
 		public override TagCompound Save()
 		{
