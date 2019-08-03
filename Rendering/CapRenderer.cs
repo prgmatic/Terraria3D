@@ -20,7 +20,7 @@ namespace Terraria3D
 
         public void Dispose()
         {
-            _effect?.Dispose();
+            //_effect?.Dispose();
             _buffer?.Dispose();
         }
 

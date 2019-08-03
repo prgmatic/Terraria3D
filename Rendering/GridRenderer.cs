@@ -28,7 +28,7 @@ namespace Terraria3D
 
 		public void Dispose()
 		{
-			_effect?.Dispose();
+			//_effect?.Dispose();
 			_noiseTexture?.Dispose();
 			_gridBuffer?.Dispose();
 		}

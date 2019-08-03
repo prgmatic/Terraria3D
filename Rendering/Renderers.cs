@@ -8,7 +8,7 @@ namespace Terraria3D
         public static GridRenderer GridRenderer { get; private set; }
         public static CapRenderer CapRenderer { get; private set; }
         public static InnerPixelRenderer InnerPixelRenderer { get; private set; }
-		public static bool SM3Enabled => Main.graphics.GraphicsProfile == GraphicsProfile.HiDef || XNAHacks.Applied;
+		public static bool SM3Enabled => Main.graphics.GraphicsProfile == GraphicsProfile.HiDef;
 
 		private static Effect _gridEffect => SM3Enabled ? GetEffect("Effects/HiDef/Grid") : GetEffect("Effects/Grid");
 

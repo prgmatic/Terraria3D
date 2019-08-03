@@ -86,7 +86,6 @@
     <Compile Include="UI\UserInterfaces\UserInterfaceSettings.cs" />
     <Compile Include="Utils\Loading.cs" />
     <Compile Include="Utils\Utils.cs" />
-    <Compile Include="Utils\XNAHacks.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
@@ -105,17 +104,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_32\Microsoft.Xna.Framework.Xact\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Xact.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.dll</HintPath>
+    <Reference Include="Mono.Cecil, Version=0.10.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.3\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.3\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.3\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>packages\Mono.Cecil.0.9.6.0\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.3.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.10.3\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>lib\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>lib\MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -129,8 +134,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Program Files\steamapps\common\Terraria\Terraria.exe</HintPath>
     </Reference>
-    <Reference Include="TerrariaHooks">
-      <HintPath>lib\TerrariaHooks.dll</HintPath>
+    <Reference Include="TerrariaHooks.XNA">
+      <HintPath>lib\TerrariaHooks.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -143,12 +148,15 @@
     <Content Include="Images\Noise.png" />
     <Content Include="Images\Player.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rem cd /d "$(ProjectDir)Effects
 rem call "Compiler\fxcompiler.exe"
 
-"E:\Program Files\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
+"C:\Program Files (x86)\Steam\steamapps\common\Terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
 </Project>

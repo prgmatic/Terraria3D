@@ -1,8 +1,7 @@
 author = Matt Thompson - chatrat12
-version = 0.0.17.2
+version = 0.0.17.3
 displayName = Terraria3D
 includePDB = false
-modReferences = TerrariaHooks
 languageVersion = 6
 side = Client
 homepage = https://github.com/chatrat12/Terraria3D

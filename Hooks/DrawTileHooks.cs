@@ -1,5 +1,5 @@
 ﻿using Mono.Cecil.Cil;
-using MonoMod.RuntimeDetour.HookGen;
+using MonoMod.Cil;
 using System;
 using Terraria;
 
@@ -11,7 +11,8 @@ namespace Terraria3D
         {
             IL.Terraria.Main.DrawTiles += (il) =>
             {
-                var cursor = il.At(0);
+                var cursor = new ILCursor(il);
+                cursor.Goto(0);
 
                 // Find if(tile.active()...
                 if(cursor.TryGotoNext(i => i.MatchCallvirt<Tile>("active")))
@@ -22,7 +23,7 @@ namespace Terraria3D
 
                     // Get variable 'flag' which determines if tile
                     // is solid.
-                    var vProbeCursor = new HookILCursor(cursor);
+                    var vProbeCursor = new ILCursor(cursor);
                     if(vProbeCursor.TryGotoPrev(i => i.MatchLdsfld<Main>("tileSolid")))
                     {
                         vProbeCursor.Index += 3;

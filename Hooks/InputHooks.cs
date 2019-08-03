@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
-using MonoMod.RuntimeDetour.HookGen;
+using MonoMod.Cil;
 using System;
-using System.IO;
-using System.Text;
 using Terraria;
 using Terraria.UI;
 
@@ -18,7 +16,8 @@ namespace Terraria3D
             // TerrariaHooks.dll
             IL.Terraria.GameContent.PortalHelper.UpdatePortalPoints += (il) =>
             {
-                il.At(0).EmitDelegate(() =>
+                var cursor = new ILCursor(il);
+                cursor.Goto(0).EmitDelegate<Action>(() =>
                 {
                     if (!Terraria3D.Enabled) return;
                     Main.mouseX = (int)Cursor3D.MousePos3D.X;
@@ -64,7 +63,8 @@ namespace Terraria3D
 
             IL.Terraria.Main.DrawMouseOver += (il) =>
             {
-                var cursor = il.At(0);
+                var cursor = new ILCursor(il);
+                cursor.Goto(0);
 
                 if(cursor.TryGotoNext(i => i.MatchCall<IngameFancyUI>("MouseOver")))
                 {
@@ -76,7 +76,7 @@ namespace Terraria3D
                     {
                         return (int)(Cursor3D.MousePos3D.X + Main.screenPosition.X);
                     });
-                    var x = il.Module.Import(typeof(Rectangle).GetField("X"));
+                    var x = il.Module.ImportReference(typeof(Rectangle).GetField("X"));
                     cursor.Emit(OpCodes.Stfld, x);
 
                     // Modify Y component
@@ -87,7 +87,7 @@ namespace Terraria3D
                             return (int)(Main.screenPosition.Y + Main.screenHeight - Cursor3D.MousePos3D.Y);
                         return (int)(Cursor3D.MousePos3D.Y + Main.screenPosition.Y);
                     });
-                    var y = il.Module.Import(typeof(Rectangle).GetField("Y"));
+                    var y = il.Module.ImportReference(typeof(Rectangle).GetField("Y"));
                     cursor.Emit(OpCodes.Stfld, y);
                 }
             };

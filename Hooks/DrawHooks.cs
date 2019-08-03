@@ -1,12 +1,10 @@
 ﻿using Terraria.GameInput;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour.HookGen;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Mono.Cecil.Cil;
 using System;
-using System.IO;
-using System.Text;
+using MonoMod.Cil;
 
 namespace Terraria3D
 {
@@ -14,9 +12,10 @@ namespace Terraria3D
     {
         private static void ApplyDrawHooks()
         {
-            IL.Terraria.Main.do_Draw += (il) =>
+            IL.Terraria.Main.DoDraw += (il) =>
             {
-                var cursor = il.At(0);
+                var cursor = new ILCursor(il);
+                cursor.Goto(0);
 
                 PreRenderHook(cursor);
                 DrawSceneHook(cursor);
@@ -39,7 +38,7 @@ namespace Terraria3D
         // <!---- HOOK HERE ------>
         // this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosit ...
         // ======================================
-        private static void PreRenderHook(HookILCursor cursor)
+        private static void PreRenderHook(ILCursor cursor)
         {
 			//{IL_14f8: stfld System.Double Terraria.Main::bgParallax}
 			// Find TimeLogger.DetailedDrawTime(4) call.
@@ -47,7 +46,7 @@ namespace Terraria3D
 			{
                 cursor.Index += 1;
                 // Render layers to targets
-                cursor.EmitDelegate(() =>
+                cursor.EmitDelegate<Action>(() =>
                 {
                     if (Terraria3D.Enabled)
                         Terraria3D.Instance.RenderLayersTargets();
@@ -81,7 +80,7 @@ namespace Terraria3D
         // PlayerInput.SetZoom_UI();
         // this.DrawFPS();
         // ======================================
-        public static void DrawSceneHook(HookILCursor cursor)
+        public static void DrawSceneHook(ILCursor cursor)
         {
             // Find Overlays.Scene.Draw(Main.spriteBatch, RenderLayers.Landscape, true) call.
             if (cursor.TryGotoNext(i => i.MatchLdcI4(1),
@@ -91,7 +90,7 @@ namespace Terraria3D
                 // Move to after Scene.Draw
                 cursor.Index += 3;
                 // Make a new cursor so we keep track of where we currently are
-                var cursor2 = new HookILCursor(cursor);
+                var cursor2 = new ILCursor(cursor);
 
                 // Find PlayerInpug.SetZoom_UI() call and then the spriteBatch.End()
                 // preceding it.
@@ -101,7 +100,7 @@ namespace Terraria3D
                     // Move to after spriteBatch.End();
                     cursor2.Index++;
                     // Inject a method that draws the 3D scene.
-                    cursor2.EmitDelegate(() =>
+                    cursor2.EmitDelegate<Action>(() =>
                     {
                         // Render the 3D scene
                         if (Terraria3D.Enabled)

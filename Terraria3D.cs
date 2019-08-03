@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Terraria;
 using Terraria.GameInput;
@@ -16,13 +18,6 @@ namespace Terraria3D
         public Scene3D Scene { get; set; }
         public LayerManager LayerManager { get; set; }
 
-		public Terraria3D()
-		{
-			// Huge thanks to 0x0ade for this fix. It allows uses with displays 1920x1200 or
-			// smaller to run SM3 shaders :D
-			XNAHacks.Apply();
-		}
-
 		public async void Toggle()
 		{
 			if (Scene.DollyController.DollyInProgress) return;
@@ -36,6 +31,7 @@ namespace Terraria3D
 				Enabled = true;
 				Scene.DollyController.TransitionIn();
 			}
+
 		}
 
 		public override void Load()
@@ -53,10 +49,10 @@ namespace Terraria3D
             Loading.Unload(this);
         }
 
-        public override void LoadResourceFromStream(string path, int len, BinaryReader reader)
+        public override bool LoadResource(string path, int length, Func<Stream> getStream)
         {
-            if (Main.dedServ || (!Renderers.SM3Enabled && path.StartsWith("Effects/HiDef"))) return;
-            base.LoadResourceFromStream(path, len, reader);
+            if (Main.dedServ || (!Renderers.SM3Enabled && path.StartsWith("Effects/HiDef"))) return false;
+            return base.LoadResource(path, length, getStream);
         }
 
         // Drawing

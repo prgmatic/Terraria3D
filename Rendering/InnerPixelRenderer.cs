@@ -13,7 +13,7 @@ namespace Terraria3D
 
         public void Dispose()
         {
-            _effect?.Dispose();
+            //_effect?.Dispose();
         }
 
         public void Draw(RenderTarget2D target, Texture2D texture)
