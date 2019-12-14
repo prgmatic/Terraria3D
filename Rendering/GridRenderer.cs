@@ -54,7 +54,7 @@ namespace Terraria3D
 			_effect.Parameters["World"].SetValue(modelMatrix.Value);
 			_effect.Parameters["Depth"].SetValue(depth);
 			_effect.Parameters["NoiseAmount"].SetValue(noiseAmount);
-			_effect.Parameters["CameraPosition"].SetValue(new Vector2(-Main.screenPosition.X, Main.screenPosition.Y));
+            _effect.Parameters["CameraPosition"].SetValue(new Vector2(-Main.screenPosition.X, Main.screenPosition.Y + 1));
 			if (Renderers.SM3Enabled)
 				_effect.Parameters["AO"].SetValue(ao);
 
