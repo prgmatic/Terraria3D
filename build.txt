@@ -5,4 +5,4 @@ includePDB = false
 languageVersion = 6
 side = Client
 homepage = https://github.com/chatrat12/Terraria3D
-buildIgnore = build.txt, README.md, LICENSE, packages/*, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, lib/*, Effects/Compiler/*, Thumbs.db, C: .csproj, .cs, .sln, .fx, .config
+buildIgnore = README.md, LICENSE, packages/*, properties/*, .gitattributes, .gitignore, .git/, .vs/, .idea/, bin/, obj/, lib/*, Effects/Compiler/*, Thumbs.db, *.csproj, *.fx, *.config, *.user
