@@ -92,7 +92,7 @@ namespace Terraria3D
                 // Make a new cursor so we keep track of where we currently are
                 var cursor2 = new ILCursor(cursor);
 
-                // Find PlayerInput.SetZoom_UI() call and then the spriteBatch.End()
+                // Find this.DrawInterface(gameTime) call and then the spriteBatch.End()
                 // preceding it.
                 if (cursor2.TryGotoNext(i => i.MatchCall<Main>("DrawInterface")) &&
                    cursor2.TryGotoPrev(i => i.MatchCallvirt<SpriteBatch>("End")))
@@ -111,7 +111,7 @@ namespace Terraria3D
                     cursor2.Index -= 3;
 
                     // Back at our original cursor, we inject a branch.
-                    // If we want ot skip drawing 2D, we jump the functions
+                    // If we want to skip drawing 2D, we jump the functions
                     // that we just created with cursor 2.
                     cursor.EmitDelegate<Func<bool>>(() =>
                     {
