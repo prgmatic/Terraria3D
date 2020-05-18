@@ -92,9 +92,9 @@ namespace Terraria3D
                 // Make a new cursor so we keep track of where we currently are
                 var cursor2 = new ILCursor(cursor);
 
-                // Find PlayerInpug.SetZoom_UI() call and then the spriteBatch.End()
+                // Find PlayerInput.SetZoom_UI() call and then the spriteBatch.End()
                 // preceding it.
-                if (cursor2.TryGotoNext(i => i.MatchCall<PlayerInput>("SetZoom_UI")) &&
+                if (cursor2.TryGotoNext(i => i.MatchCall<Main>("DrawInterface")) &&
                    cursor2.TryGotoPrev(i => i.MatchCallvirt<SpriteBatch>("End")))
                 {
                     // Move to after spriteBatch.End();
