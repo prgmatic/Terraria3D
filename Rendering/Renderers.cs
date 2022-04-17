@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,17 +30,19 @@ namespace Terraria3D
             GridRenderer?.Dispose();
             CapRenderer?.Dispose();
             InnerPixelRenderer?.Dispose();
-
+            
             GridRenderer = null;
             CapRenderer = null;
             InnerPixelRenderer = null;
-
+            
             RTManager.ResolutionChanged -= ResolutionChanged;
             RTManager.Unload();
         }
 
-        private static Effect GetEffect(string name) => ModContent.Request<Effect>(name).Value;
-        private static Texture2D GetTexture(string name) => ModContent.Request<Texture2D>(name).Value;
+        private static Effect GetEffect(string name) 
+            => ModContent.Request<Effect>(name, AssetRequestMode.ImmediateLoad).Value;
+        private static Texture2D GetTexture(string name) 
+            => ModContent.Request<Texture2D>(name, AssetRequestMode.ImmediateLoad).Value;
         private static void ResolutionChanged(int w, int h, int rtW, int rtH) => GridRenderer.SetGridSize(w, h, rtW, rtH);
     }
 }

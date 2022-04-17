@@ -40,6 +40,7 @@ namespace Terraria3D
             Enabled = true;
             Loading.Load(this);
         }
+		
         public override void Unload()
         {
             if (Main.dedServ) return;
