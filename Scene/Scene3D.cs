@@ -9,7 +9,7 @@ namespace Terraria3D
         public Camera Camera { get; private set; } = new Camera();
 		public CameraDriver CameraDriver { get; private set; }
 		public DollyController DollyController { get; private set; }
-        public Transfrom ModelTransform { get; private set; } = new Transfrom();
+        public Transform ModelTransform { get; private set; } = new Transform();
         public bool AmbientOcclusion { get; set; } = true;
 		public Camera ActiveCamera => DollyController.DollyInProgress ? DollyController.TransitionCamera : Camera;
 
