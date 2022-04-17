@@ -6,7 +6,7 @@ namespace Terraria3D
 {
     public static class TileSolidOverrides
     {
-        private static Dictionary<int, bool> _overrides = new Dictionary<int, bool>()
+        private static readonly Dictionary<int, bool> _overrides = new Dictionary<int, bool>()
         {
             {TileID.OpenDoor, false }
         };
@@ -15,18 +15,18 @@ namespace Terraria3D
 
         public static bool IsTileSolid(Tile tile)
         {
-            var result = Main.tileSolid[tile.type];
-            if (tile.type == 11)
+            var result = Main.tileSolid[tile.TileType];
+            if (tile.TileType == 11)
                 result = true;
 
             if (MoveSolidTopToSolid)
             {
-                if (Main.tileSolidTop[tile.type])
+                if (Main.tileSolidTop[tile.TileType])
                     result = true;
             }
 
-            if (_overrides.ContainsKey(tile.type))
-                return _overrides[tile.type];
+            if (_overrides.ContainsKey(tile.TileType))
+                return _overrides[tile.TileType];
             return result;
         }
     }

@@ -2,35 +2,35 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Graphics;
+using Terraria.ModLoader;
 
 namespace Terraria3D.UI.Elements
 {
     public class UILayerEntry : UIPanel
     {
-        private static Texture2D _dividerTexture = TextureManager.Load("Images/UI/Divider");
-        private static Texture2D _innerPanelTexture = TextureManager.Load("Images/UI/InnerPanelBackground");
+        private static Texture2D _dividerTexture = ModContent.Request<Texture2D>("Images/UI/Divider").Value;
 
         public Layer3D Layer
         {
-            get { return _layer; }
-            set { SetLayer(value); }
+            get => _layer;
+            set => SetLayer(value);
         }
 
         private Layer3D _layer;
 
-        private UIText _layerName = new UIText(string.Empty);
-        private UISlider _depthSlider = new UISlider(0, 128);
-        private UISlider _zPosSlider = new UISlider(-64, 64);
-        private UISlider _noiseSlider = new UISlider();
+        private UIText _layerName = new(string.Empty);
+        private UISlider _depthSlider = new(0, 128);
+        private UISlider _zPosSlider = new(-64, 64);
+        private UISlider _noiseSlider = new();
 
-        private UIText _depthText = new UIText("Depth");
-        private UIText _zPosText = new UIText("ZPos");
-        private UIText _noiseText = new UIText("Noise");
+        private UIText _depthText = new("Depth");
+        private UIText _zPosText = new("ZPos");
+        private UIText _noiseText = new("Noise");
 
-        private UIText _innerPixelText = new UIText("Inner Pixel");
+        private UIText _innerPixelText = new("Inner Pixel");
 
-        private UITextPanel<string> _enableButton = new UITextPanel<string>("Enabled");
-        private UITextPanel<string> _innerPixelButton = new UITextPanel<string>("On");
+        private UITextPanel<string> _enableButton = new("Enabled");
+        private UITextPanel<string> _innerPixelButton = new("On");
 
         private int _index;
 
@@ -93,15 +93,15 @@ namespace Terraria3D.UI.Elements
             Append(_zPosText);
             Append(_noiseText);
 
-            _depthSlider.ValueChanged += (sender, value) => { if (_layer != null) _layer.Depth = value; };
-            _zPosSlider .ValueChanged += (sender, value) => { if (_layer != null) _layer.ZPos = value; };
-            _noiseSlider.ValueChanged += (sender, value) => { if (_layer != null) _layer.NoiseAmount = value; };
-            _enableButton.OnClick += (evt, listener) =>
+            _depthSlider.ValueChanged += (_, value) => { if (_layer != null) _layer.Depth = value; };
+            _zPosSlider .ValueChanged += (_, value) => { if (_layer != null) _layer.ZPos = value; };
+            _noiseSlider.ValueChanged += (_, value) => { if (_layer != null) _layer.NoiseAmount = value; };
+            _enableButton.OnClick += (_, _) =>
             {
                 _layer.Enabled = !_layer.Enabled;
                 _enableButton.SetText(_layer.Enabled ? "Enabled" : "Disabled");
             };
-            _innerPixelButton.OnClick += (evt, listener) =>
+            _innerPixelButton.OnClick += (_, _) =>
             {
                 _layer.UseInnerPixel = !_layer.UseInnerPixel;
                 _innerPixelButton.SetText(_layer.UseInnerPixel ? "On" : "Off");

@@ -33,7 +33,7 @@ namespace Terraria3D
             var ray = camera.ScreenPointToRay(new Vector2(mousePos.X, mousePos.Y));
             var invMatrix = Matrix.Invert(modelMatrix);
 
-            var intersectPos = GetPlaneIntersectOnScreen(ray, _tilePlane, invMatrix);
+            var intersectPos = GetPlaneIntersectOnScreen(ray, invMatrix);
             if (intersectPos.HasValue)
             {
                 var iPos = new Vector2(intersectPos.Value.X, intersectPos.Value.Y);
@@ -46,7 +46,7 @@ namespace Terraria3D
                     if (!TileIsCollider(tilePos))
                     {
                         SetTilePlanDistance(nonSolidLayer.Depth, nonSolidLayer.ZPos, modelMatrix);
-                        intersectPos = GetPlaneIntersectOnScreen(ray, _tilePlane, invMatrix);
+                        intersectPos = GetPlaneIntersectOnScreen(ray, invMatrix);
                         if (intersectPos.HasValue)
                             iPos = new Vector2(intersectPos.Value.X, intersectPos.Value.Y);
                     }
@@ -60,9 +60,9 @@ namespace Terraria3D
             => _tilePlane.D = Vector3.Transform(Vector3.Forward * (depth - zPos), matrix).Z;
 
         // Apply matrix and flip y
-        private static Vector2? GetPlaneIntersectOnScreen(Ray ray, Plane plane, Matrix? matrix)
+        private static Vector2? GetPlaneIntersectOnScreen(Ray ray, Matrix? matrix)
         {
-            var intersect = GetPlaneIntersectPosition(ray, plane);
+            var intersect = GetPlaneIntersectPosition(ray);
             if (intersect.HasValue)
             {
                 var r = new Vector2(intersect.Value.X, intersect.Value.Y);
@@ -74,7 +74,7 @@ namespace Terraria3D
             return null;
         }
 
-        private static Vector3? GetPlaneIntersectPosition(Ray ray, Plane plane)
+        private static Vector3? GetPlaneIntersectPosition(Ray ray)
         {
             var dist = ray.Intersects(_tilePlane);
             if (dist.HasValue)
@@ -90,8 +90,10 @@ namespace Terraria3D
 
         private static bool TileIsCollider(Vector2 tilePos)
         {
-            Tile tile = Main.tile[(int)tilePos.X, (int)tilePos.Y];
-            return tile != null && tile.collisionType > 0;
+            // TODO: find alternative for tile.collisionType
+            //Tile tile = Main.tile[(int)tilePos.X, (int)tilePos.Y];
+            //return tile != null && tile.collisionType > 0;
+            return false;
         }
     }
 }

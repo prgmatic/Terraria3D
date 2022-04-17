@@ -1,9 +1,7 @@
-﻿using Terraria.GameInput;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Mono.Cecil.Cil;
-using System;
 using MonoMod.Cil;
 
 namespace Terraria3D
@@ -46,7 +44,7 @@ namespace Terraria3D
 			{
                 cursor.Index += 1;
                 // Render layers to targets
-                cursor.EmitDelegate<Action>(() =>
+                cursor.EmitDelegate(() =>
                 {
                     if (Terraria3D.Enabled)
                         Terraria3D.Instance.RenderLayersTargets();
@@ -57,7 +55,7 @@ namespace Terraria3D
         // HOOK LOCATION:
         // This is a two part hook. Pre draw scene and post draw scene.
         // Pre draw scene: Right after the bg is drawn to the back buffer.
-        // Post draw scene: After world space UI is drawn to the sceen.
+        // Post draw scene: After world space UI is drawn to the screen.
 
         // HOOK FUNCTION:
         // We inject a branch into in the pre draw hook that allows us to
@@ -100,7 +98,7 @@ namespace Terraria3D
                     // Move to after spriteBatch.End();
                     cursor2.Index++;
                     // Inject a method that draws the 3D scene.
-                    cursor2.EmitDelegate<Action>(() =>
+                    cursor2.EmitDelegate(() =>
                     {
                         // Render the 3D scene
                         if (Terraria3D.Enabled)
@@ -113,11 +111,12 @@ namespace Terraria3D
                     // Back at our original cursor, we inject a branch.
                     // If we want to skip drawing 2D, we jump the functions
                     // that we just created with cursor 2.
-                    cursor.EmitDelegate<Func<bool>>(() =>
+                    cursor.EmitDelegate(() =>
                     {
+                        // TODO: Fix end capture 
 						var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
-                        if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
-                            Filters.Scene.EndCapture();
+                        //if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
+                            //Filters.Scene.EndCapture();
                         return result;
                     });
                     cursor.Emit(OpCodes.Brtrue_S, cursor2.Next);

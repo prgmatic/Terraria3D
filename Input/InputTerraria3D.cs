@@ -1,27 +1,25 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.GameInput;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace Terraria3D
 {
 	public class InputTerraria3D
 	{
-		public static bool CameraControlsEnabled { get; set; } = false;
+		public static bool CameraControlsEnabled { get; set; }
 
-		private static ModHotKey _settingsKeyBinding;
-		private static ModHotKey _toggleCameraControlsKeyBinding;
-		private static ModHotKey _toggle3DKeyBinding;
-		private static ModHotKey _toggleAOBinding;
+		private static ModKeybind _settingsKeyBinding;
+		private static ModKeybind _toggleCameraControlsKeyBinding;
+		private static ModKeybind _toggle3DKeyBinding;
+		private static ModKeybind _toggleAOBinding;
 
 		public static void Load()
 		{
 			// Why 'L'? No clue, I hope it's not already bound to something xD
-			_settingsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D Settings", "L");
-			_toggleCameraControlsKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle Camera Controls", "C");
-			_toggle3DKeyBinding = Terraria3D.Instance.RegisterHotKey("Toggle 3D", "K");
+			_settingsKeyBinding = KeybindLoader.RegisterKeybind(Terraria3D.Instance, "Toggle 3D Settings", "L");
+			_toggleCameraControlsKeyBinding = KeybindLoader.RegisterKeybind(Terraria3D.Instance, "Toggle Camera Controls", "C");
+			_toggle3DKeyBinding = KeybindLoader.RegisterKeybind(Terraria3D.Instance, "Toggle 3D", "K");
 			if (Renderers.SM3Enabled)
-				_toggleAOBinding = Terraria3D.Instance.RegisterHotKey("Toggle AO", "None");
+				_toggleAOBinding = KeybindLoader.RegisterKeybind(Terraria3D.Instance, "Toggle AO", "None");
 		}
 
 		public static void Unload()
@@ -32,11 +30,11 @@ namespace Terraria3D
 			_toggleAOBinding = null;
 		}
 
-		public static void Update(GameTime gameTime)
+		public static void Update()
 		{
 			Cursor3D.UpdateMousePos3D();
 			// Hack to fix scroll bug.
-			PlayerInput.ScrollWheelDeltaForUI = 0;
+			//PlayerInput.ScrollWheelDeltaForUI = 0;
 		}
 
 		public static void SetControls(Player player)

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Terraria3D
@@ -20,7 +21,7 @@ namespace Terraria3D
 
 	class OverlayState : UIState
 	{
-		private static Texture2D _cameraIcon => Terraria3D.Instance.GetTexture("Images/CameraIcon");
+		private static Texture2D _cameraIcon => ModContent.Request<Texture2D>("Images/CameraIcon").Value;
 
 		private UIImage _editCameraIcon = new UIImage(_cameraIcon);
 		private UICameraControlsPanel _controlsPanel = new UICameraControlsPanel();

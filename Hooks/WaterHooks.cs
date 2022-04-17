@@ -32,10 +32,13 @@ namespace Terraria3D
                             jumpToWaterDrawCursor.Index++;
                             jumpToWaterDrawCursor.EmitDelegate<Func<bool>>(() =>
                             {
-                                    Main.NewText("hi?");
-                                if (Rendering.RenderHalfBlockWaterHack)
-                                    Main.NewText("jump to water!");
-                                return Rendering.RenderHalfBlockWaterHack;
+                                // TODO: Fix Rendering Call
+                                
+                                // if (Rendering.RenderHalfBlockWaterHack)
+                                //     Main.NewText("jump to water!");
+                                //return Rendering.RenderHalfBlockWaterHack;
+                                
+                                return false;
                             });
                             jumpToWaterDrawCursor.Emit(OpCodes.Brtrue_S, preSetupWaterTileCursor.Next);
                         }
@@ -45,7 +48,8 @@ namespace Terraria3D
                     if (postDrawWaterCursor.TryGotoNext(i => i.MatchCallvirt<SpriteBatch>("Draw")))
                     {
                         postDrawWaterCursor.Index++;
-                        preDrawWaterCursor.EmitDelegate<Func<bool>>(() => Rendering.RenderHalfBlockWaterHack);
+                        // TODO: Fix rendering call
+                        //preDrawWaterCursor.EmitDelegate<Func<bool>>(() => Rendering.RenderHalfBlockWaterHack);
                         preDrawWaterCursor.Emit(OpCodes.Brfalse_S, postDrawWaterCursor.Next);
                     }
                 }

@@ -2,20 +2,22 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Terraria3D.UI.Elements
 {
     public class UISlider : UIElement
     {
-        protected static Texture2D _handleTexture = Terraria.Main.colorSliderTexture;
-        protected static Texture2D _barTexture = TextureManager.Load("Images/UI/ScrollbarInner");
+        // TODO: Load correct texture here
+        protected static Texture2D _handleTexture = ModContent.Request<Texture2D>("Images/UI/ScrollbarInner").Value;
+        protected static Texture2D _barTexture = ModContent.Request<Texture2D>("Images/UI/ScrollbarInner").Value;
 
         public delegate void UISliderValueEvent(UISlider sender, float value);
         public event UISliderValueEvent ValueChanged;
 
-        public float MinValue { get; private set; } = 0;
-        public float MaxValue { get; private set; } = 1;
+        public float MinValue { get; } = 0;
+        public float MaxValue { get; } = 1;
         public float Value
         {
             get { return _value; }
