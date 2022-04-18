@@ -91,8 +91,7 @@ public static class Cursor3D
     private static bool TileIsCollider(Vector2 tilePos)
     {
         // TODO: find alternative for tile.collisionType
-        //Tile tile = Main.tile[(int)tilePos.X, (int)tilePos.Y];
-        //return tile != null && tile.collisionType > 0;
-        return false;
+        Tile tile = Main.tile[(int)tilePos.X, (int)tilePos.Y];
+        return tile != null && Main.tileSolid[tile.TileType];
     }
 }

@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System.Drawing;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using static Microsoft.Xna.Framework.Color;
 
 namespace Terraria3D;
 
@@ -112,15 +114,15 @@ public static partial class Hooks
                 // Back at our original cursor, we inject a branch.
                 // If we want to skip drawing 2D, we jump the functions
                 // that we just created with cursor 2.
-                // cursor.EmitDelegate(() =>
-                // {
-                //     // TODO: Fix end capture 
-                //     var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
-                //     //if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
-                //     //Filters.Scene.EndCapture();
-                //     return result;
-                // });
-                // cursor.Emit(OpCodes.Brtrue_S, cursor2.Next);
+                cursor.EmitDelegate(() =>
+                {
+                    // TODO: Fix end capture 
+                    var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
+                    if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
+                        Filters.Scene.EndCapture(null, Main.screenTarget, Main.screenTargetSwap, Black);
+                    return result;
+                });
+                cursor.Emit(OpCodes.Brtrue_S, cursor2.Next);
             }
         }
     }
