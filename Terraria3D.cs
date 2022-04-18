@@ -17,6 +17,8 @@ public class Terraria3D : Mod
 	public Scene3D Scene { get; set; }
 	public LayerManager LayerManager { get; set; }
 
+	private Test _t = new Test();
+
 	public async void Toggle()
 	{
 		if (Scene.DollyController.DollyInProgress) return;
@@ -39,6 +41,7 @@ public class Terraria3D : Mod
 		Instance = this;
 		Enabled = true;
 		Loading.Load(this);
+		_t.Load();
 	}
 		
 	public override void Unload()
@@ -49,48 +52,41 @@ public class Terraria3D : Mod
 		Loading.Unload(this);
 	}
 
-	// TODO: figure out what this is for
-	// public override bool LoadResource(string path, int length, Func<Stream> getStream)
-	// {
-	//     if (Main.dedServ || (!Renderers.SM3Enabled && path.StartsWith("Effects/HiDef"))) return false;
-	//     return base.LoadResource(path, length, getStream);
-	// }
-
 	// Drawing
 	public void RenderLayersTargets() => Scene.RenderLayers(LayerManager.Layers);
 	public void DrawScene() => Scene.DrawToScreen(LayerManager.Layers);
-
-	// TODO: Render UI
-	// UI
-	// public override void UpdateUI(GameTime gameTime)
-	// {
-	// 	InputTerraria3D.Update();
-	// 	UITerraria3D.Update(gameTime);
-	// 	Scene.Update(gameTime);
-	// }
-	//public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
 }
 
-    
-// TODO: re-implement
-// public class PlayerHooks : ModPlayer
-// {
-// 	public override void ProcessTriggers(TriggersSet triggersSet) => InputTerraria3D.ProcessInput();
-// 	public override void SetControls() => InputTerraria3D.SetControls(player);
-// 	public override void OnEnterWorld(Player player)
-// 	{
-// 		// Hack for overhaul to stop black tiles from persisting.
-// 		Settings.Load();
-// 		if (Main.instance.blackTarget != null && !Main.instance.blackTarget.IsDisposed)
-// 		{
-// 			Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
-// 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-// 			Main.graphics.GraphicsDevice.SetRenderTarget(null);
-// 		}
-// 	}
-// 	public override TagCompound Save()
-// 	{
-// 		Settings.Save();
-// 		return base.Save();
-// 	}
-// }
+public class Test : ModSystem
+{
+	public override void UpdateUI(GameTime gameTime)
+	{
+		InputTerraria3D.Update();
+		UITerraria3D.Update(gameTime);
+		Terraria3D.Instance.Scene.Update(gameTime);
+	}
+
+	public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) => UITerraria3D.ModifyInterfaceLayers(layers);
+}
+
+public class PlayerHooks : ModPlayer
+{
+	public override void ProcessTriggers(TriggersSet triggersSet) => InputTerraria3D.ProcessInput();
+	public override void SetControls() => InputTerraria3D.SetControls(Player);
+	public override void OnEnterWorld(Player player)
+	{
+		// Hack for overhaul to stop black tiles from persisting.
+		//Settings.Load();
+		if (Main.instance.blackTarget != null && !Main.instance.blackTarget.IsDisposed)
+		{
+			Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
+			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+			Main.graphics.GraphicsDevice.SetRenderTarget(null);
+		}
+	}
+	// public override TagCompound Save()
+	// {
+	// 	Settings.Save();
+	// 	return base.Save();
+	// }
+}

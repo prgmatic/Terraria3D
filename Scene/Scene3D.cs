@@ -34,7 +34,7 @@ namespace Terraria3D
             if (!Terraria3D.Enabled || _canSkipDrawing) return;
             // Disable zoom
             Utils.SetZoom(1);
-            //Rendering.PreRenderSetup();
+            Rendering.PreRenderSetup();
             foreach (var layer in layers)
                 layer.RenderToTarget();
             // Restore zoom

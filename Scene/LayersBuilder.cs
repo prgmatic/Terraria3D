@@ -1,4 +1,6 @@
 ﻿
+using SDL2;
+
 namespace Terraria3D;
 
 public static class LayerBuilder
@@ -19,10 +21,10 @@ public static class LayerBuilder
                 Depth = 4,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawBlack();
-                    // Rendering.DrawBackgroundWater();
-                    // Rendering.DrawSceneBackground();
-                    // Rendering.DrawWalls();
+                    Rendering.DrawBlack();
+                    Rendering.DrawBackgroundWater();
+                    Rendering.DrawSceneBackground();
+                    Rendering.DrawWalls();
                 }
             },
             // Solid tiles
@@ -33,7 +35,8 @@ public static class LayerBuilder
                 InputPlane = Layer3D.InputPlaneType.SolidTiles,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawSolidTiles();
+                    Rendering.DrawSolidTiles();
+                    //TileRenderReflection.DrawSolidLayers();
                 }
             },
             // Non Solid tiles
@@ -44,8 +47,9 @@ public static class LayerBuilder
                 InputPlane = Layer3D.InputPlaneType.NoneSolidTiles,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawNonSolidTiles();
-                    // Rendering.DrawWaterFalls();
+                    Rendering.DrawNonSolidTiles();
+                    Rendering.DrawWaterFalls();
+                    TileRenderReflection.DrawNonSolidLayers();
 
                 }
             },
@@ -59,13 +63,14 @@ public static class LayerBuilder
                 RenderFunction = () =>
                 {
                     // Rendering.DrawMoonMoon();
-                    // Rendering.DrawNPCsBehindTiles();
+                    Rendering.DrawNPCsBehindTiles();
                     // Rendering.SortDrawCacheWorm();
                     // Rendering.DrawWallOfFlesh();
-                    // Rendering.DrawNPCsBehindNonSoldTiles();
-                    // Rendering.DrawNPCsInfrontOfTiles();
-                    // Rendering.DrawPlayers();
-                    // Rendering.DrawNPCsOverPlayer();
+                    Rendering.DrawNPCsBehindNonSoldTiles();
+                    Rendering.DrawNPCsInfrontOfTiles();
+                    Rendering.DrawPlayersBehindNPCs();
+                    Rendering.DrawPlayersAfterProjs();
+                    Rendering.DrawNPCsOverPlayer();
                 }
             },
             // Proj

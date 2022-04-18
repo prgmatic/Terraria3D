@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ public class UserInterfaceOverlay : GenericUserInterface
 
 class OverlayState : UIState
 {
-	private static Texture2D _cameraIcon => ModContent.Request<Texture2D>("Images/CameraIcon").Value;
+	private static Texture2D _cameraIcon => ModContent.Request<Texture2D>("Terraria3D/Images/CameraIcon", AssetRequestMode.ImmediateLoad).Value;
 
 	private UIImage _editCameraIcon = new UIImage(_cameraIcon);
 	private UICameraControlsPanel _controlsPanel = new UICameraControlsPanel();

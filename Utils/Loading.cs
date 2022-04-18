@@ -11,9 +11,9 @@ public static class Loading
             Renderers.Load();
             instance.Scene = new Scene3D();
             instance.LayerManager = new LayerManager();
-            //          UITerraria3D.Load();
-            //          Hooks.Initialize();
-            // InputTerraria3D.Load();
+            UITerraria3D.Load();
+            Hooks.Initialize();
+            InputTerraria3D.Load();
         });
             
     }
@@ -22,12 +22,12 @@ public static class Loading
     {
         Main.QueueMainThreadAction(() =>
         {
-            //UITerraria3D.Unload();
+            UITerraria3D.Unload();
             instance.Scene = null;
             instance.LayerManager?.Dispose();
             instance.LayerManager = null;
             Renderers.Unload();
-            // InputTerraria3D.Unload();
+            InputTerraria3D.Unload();
         });
     }
 }

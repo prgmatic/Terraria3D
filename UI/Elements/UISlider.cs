@@ -1,17 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using On.Terraria.GameContent;
+using ReLogic.Content;
 using Terraria;
 using Terraria.Graphics;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Terraria3D.UI.Elements;
 
 public class UISlider : UIElement
 {
-    // TODO: Load correct texture here
-    protected static Texture2D _handleTexture = ModContent.Request<Texture2D>("Images/UI/ScrollbarInner").Value;
-    protected static Texture2D _barTexture = ModContent.Request<Texture2D>("Images/UI/ScrollbarInner").Value;
+    protected static Texture2D _handleTexture = Terraria.GameContent.TextureAssets.ColorSlider.Value;
+    protected static Texture2D _barTexture = Main.Assets.Request<Texture2D>("Images/UI/ScrollbarInner", AssetRequestMode.ImmediateLoad).Value;
 
     public delegate void UISliderValueEvent(UISlider sender, float value);
     public event UISliderValueEvent ValueChanged;

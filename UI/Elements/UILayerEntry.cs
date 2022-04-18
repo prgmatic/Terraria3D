@@ -1,14 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Graphics;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
 
 namespace Terraria3D.UI.Elements;
 
 public class UILayerEntry : UIPanel
 {
-    private static Texture2D _dividerTexture = ModContent.Request<Texture2D>("Images/UI/Divider").Value;
+    private static Texture2D _dividerTexture = UICommon.DividerTexture.Value;
 
     public Layer3D Layer
     {

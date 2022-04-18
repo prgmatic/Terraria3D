@@ -33,8 +33,6 @@ public class InputTerraria3D
 	public static void Update()
 	{
 		Cursor3D.UpdateMousePos3D();
-		// Hack to fix scroll bug.
-		//PlayerInput.ScrollWheelDeltaForUI = 0;
 	}
 
 	public static void SetControls(Player player)

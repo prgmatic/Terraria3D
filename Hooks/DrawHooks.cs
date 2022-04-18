@@ -16,7 +16,7 @@ public static partial class Hooks
             cursor.Goto(0);
 
             // TODO: add pre render hook back
-            //PreRenderHook(cursor);
+            PreRenderHook(cursor);
             DrawSceneHook(cursor);
         };
     }
@@ -33,9 +33,9 @@ public static partial class Hooks
     //         TimeLogger.DetailedDrawTime(4);
     //     }
     // }
-    // this.bgParallax = 0.1;
+    // bgParallax = 0.1;
     // <!---- HOOK HERE ------>
-    // this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosit ...
+    // bgStartX = (int)(0.0 - Math.IEEERemainder((double)screenPosition.X ...
     // ======================================
     private static void PreRenderHook(ILCursor cursor)
     {
@@ -112,15 +112,15 @@ public static partial class Hooks
                 // Back at our original cursor, we inject a branch.
                 // If we want to skip drawing 2D, we jump the functions
                 // that we just created with cursor 2.
-                cursor.EmitDelegate(() =>
-                {
-                    // TODO: Fix end capture 
-                    var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
-                    //if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
-                    //Filters.Scene.EndCapture();
-                    return result;
-                });
-                cursor.Emit(OpCodes.Brtrue_S, cursor2.Next);
+                // cursor.EmitDelegate(() =>
+                // {
+                //     // TODO: Fix end capture 
+                //     var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
+                //     //if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
+                //     //Filters.Scene.EndCapture();
+                //     return result;
+                // });
+                // cursor.Emit(OpCodes.Brtrue_S, cursor2.Next);
             }
         }
     }
