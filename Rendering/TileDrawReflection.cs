@@ -4,7 +4,7 @@ using Terraria.GameContent.Drawing;
 
 namespace Terraria3D;
 
-public static class TileRenderReflection
+public static class TileDrawReflection
 {
     private static MethodInfo _drawMultiTileVines = GetMethod("DrawMultiTileVines", BindingFlags.Instance);
     private static MethodInfo _drawMultiTileGrass = GetMethod("DrawMultiTileGrass", BindingFlags.Instance);

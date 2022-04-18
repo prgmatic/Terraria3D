@@ -49,7 +49,7 @@ public static class LayerBuilder
                 {
                     Rendering.DrawNonSolidTiles();
                     Rendering.DrawWaterFalls();
-                    TileRenderReflection.DrawNonSolidLayers();
+                    TileDrawReflection.DrawNonSolidLayers();
 
                 }
             },

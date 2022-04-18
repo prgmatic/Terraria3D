@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 
 namespace Terraria3D;
@@ -13,20 +14,21 @@ public static class TileSolidOverrides
 
     public static bool MoveSolidTopToSolid { get; set; } = true;
 
-    public static bool IsTileSolid(Tile tile)
+    public static bool IsTileSolid(ushort tileType)
     {
-        var result = Main.tileSolid[tile.TileType];
-        if (tile.TileType == 11)
-            result = true;
+        var result = Main.tileSolid[tileType];
 
+        if (TileID.Sets.DrawTileInSolidLayer[tileType].HasValue)
+            result = TileID.Sets.DrawTileInSolidLayer[tileType].Value;
+        
         if (MoveSolidTopToSolid)
         {
-            if (Main.tileSolidTop[tile.TileType])
+            if (Main.tileSolidTop[tileType])
                 result = true;
         }
 
-        if (_overrides.ContainsKey(tile.TileType))
-            return _overrides[tile.TileType];
+        if (_overrides.ContainsKey(tileType))
+            return _overrides[tileType];
         return result;
     }
 }
