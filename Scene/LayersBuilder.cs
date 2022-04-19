@@ -1,5 +1,4 @@
 ﻿
-using SDL2;
 
 namespace Terraria3D;
 
@@ -25,6 +24,7 @@ public static class LayerBuilder
                     Rendering.DrawBackgroundWater();
                     Rendering.DrawSceneBackground();
                     Rendering.DrawWalls();
+                    
                 }
             },
             // Solid tiles
@@ -62,10 +62,10 @@ public static class LayerBuilder
                 NoiseAmount = 0,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawMoonMoon();
+                    Rendering.DrawMoonMoon();
                     Rendering.DrawNPCsBehindTiles();
-                    // Rendering.SortDrawCacheWorm();
-                    // Rendering.DrawWallOfFlesh();
+                    Rendering.SortDrawCacheWorm();
+                    Rendering.DrawWallOfFlesh();
                     Rendering.DrawNPCsBehindNonSoldTiles();
                     Rendering.DrawNPCsInfrontOfTiles();
                     Rendering.DrawPlayersBehindNPCs();
@@ -82,13 +82,13 @@ public static class LayerBuilder
                 NoiseAmount = 0,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawProjsBehindNPCsAndTiles();
-                    // Rendering.DrawProjsBehindNPCs();
-                    // Rendering.DrawProjsBehindProjectiles();
-                    // Rendering.DrawProjectiles();
-                    // Rendering.DrawInfernoRings();
-                    // Rendering.DrawProjsOverWireUI();
-                    // Rendering.DrawNPCProjectiles();
+                    Rendering.DrawProjsBehindNPCsAndTiles();
+                    Rendering.DrawProjsBehindNPCs();
+                    Rendering.DrawProjsBehindProjectiles();
+                    Rendering.DrawProjectiles();
+                    Rendering.DrawInfernoRings();
+                    Rendering.DrawProjsOverWireUI();
+                    Rendering.DrawNPCProjectiles();
                 }
             },
             // Items Gore
@@ -100,24 +100,20 @@ public static class LayerBuilder
                 NoiseAmount = 0,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawGoreBehind();
-                    // Rendering.DrawGore();
-                    // Rendering.DrawDust();
-                    // Rendering.DrawRain();
-                    // Rendering.DrawSandstorm();
-                    // Rendering.DrawMoonLordDeath();
-                    // Rendering.DrawMoonlordDeathFront();
-                    // Rendering.DrawItems();
+                    Rendering.DrawGoreBehind();
+                    Rendering.DrawGore();
+                    Rendering.DrawDust();
+                    Rendering.DrawRain();
+                    Rendering.DrawMoonLordDeath();
+                    Rendering.DrawMoonlordDeathFront();
+                    Rendering.DrawItems();
                 }
             },
             new Layer3D()
             {
                 Name = "Water Foreground",
                 Depth = 32,
-                RenderFunction = () =>
-                {
-                    // Rendering.DrawForegroundWater();
-                }
+                RenderFunction = Rendering.DrawForegroundWater
             },
             new Layer3D()
             {
@@ -126,12 +122,12 @@ public static class LayerBuilder
                 Depth = 4,
                 RenderFunction = () =>
                 {
-                    // Rendering.DrawWires();
-                    // Rendering.DrawHitTileAnimation();
-                    // Rendering.DrawItemText();
-                    // Rendering.DrawCombatText();
-                    // Rendering.DrawChatOverPlayerHeads();
-                    // InterfaceRendering.RenderGameInterfaces();
+                    Rendering.DrawWires();
+                    Rendering.DrawHitTileAnimation();
+                    Rendering.DrawItemText();
+                    Rendering.DrawCombatText();
+                    Rendering.DrawChatOverPlayerHeads();
+                    InterfaceRendering.RenderGameInterfaces();
                 }
             }
         };

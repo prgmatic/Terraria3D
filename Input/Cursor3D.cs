@@ -29,7 +29,7 @@ public static class Cursor3D
             return Vector2.Zero;
 
         // Find intersection with front plane
-        SetTilePlanDistance(solidLayer.Depth, solidLayer.ZPos, modelMatrix);
+        SetTilePlaneDistance(solidLayer.Depth, solidLayer.ZPos, modelMatrix);
         var ray = camera.ScreenPointToRay(new Vector2(mousePos.X, mousePos.Y));
         var invMatrix = Matrix.Invert(modelMatrix);
 
@@ -45,7 +45,7 @@ public static class Cursor3D
             {
                 if (!TileIsCollider(tilePos))
                 {
-                    SetTilePlanDistance(nonSolidLayer.Depth, nonSolidLayer.ZPos, modelMatrix);
+                    SetTilePlaneDistance(nonSolidLayer.Depth, nonSolidLayer.ZPos, modelMatrix);
                     intersectPos = GetPlaneIntersectOnScreen(ray, invMatrix);
                     if (intersectPos.HasValue)
                         iPos = new Vector2(intersectPos.Value.X, intersectPos.Value.Y);
@@ -56,7 +56,7 @@ public static class Cursor3D
         return Vector2.Zero;
     }
 
-    private static void SetTilePlanDistance(float depth, float zPos, Matrix matrix)
+    private static void SetTilePlaneDistance(float depth, float zPos, Matrix matrix)
         => _tilePlane.D = Vector3.Transform(Vector3.Forward * (depth - zPos), matrix).Z;
 
     // Apply matrix and flip y
@@ -92,6 +92,6 @@ public static class Cursor3D
     {
         // TODO: find alternative for tile.collisionType
         Tile tile = Main.tile[(int)tilePos.X, (int)tilePos.Y];
-        return tile != null && Main.tileSolid[tile.TileType];
+        return tile != null && tile.HasTile && Main.tileSolid[tile.TileType];
     }
 }
