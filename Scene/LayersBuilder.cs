@@ -62,6 +62,7 @@ public static class LayerBuilder
                 NoiseAmount = 0,
                 RenderFunction = () =>
                 {
+                    Rendering.DrawFirstFractals();
                     Rendering.DrawMoonMoon();
                     Rendering.DrawNPCsBehindTiles();
                     Rendering.SortDrawCacheWorm();
@@ -71,6 +72,7 @@ public static class LayerBuilder
                     Rendering.DrawPlayersBehindNPCs();
                     Rendering.DrawPlayersAfterProjs();
                     Rendering.DrawNPCsOverPlayer();
+                    Rendering.DrawProjsOverPlayers();
                 }
             },
             // Proj
