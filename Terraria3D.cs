@@ -76,7 +76,7 @@ public class PlayerHooks : ModPlayer
 	public override void OnEnterWorld(Player player)
 	{
 		// Hack for overhaul to stop black tiles from persisting.
-		//Settings.Load();
+		Settings.Load();
 		if (Main.instance.blackTarget != null && !Main.instance.blackTarget.IsDisposed)
 		{
 			Main.graphics.GraphicsDevice.SetRenderTarget(Main.instance.blackTarget);
@@ -84,9 +84,14 @@ public class PlayerHooks : ModPlayer
 			Main.graphics.GraphicsDevice.SetRenderTarget(null);
 		}
 	}
-	// public override TagCompound Save()
-	// {
-	// 	Settings.Save();
-	// 	return base.Save();
-	// }
+
+	public override void SaveData(TagCompound tag)
+	{
+		Settings.Save();
+		//return base.SaveData(tag);
+	}
+	public override void LoadData(TagCompound tag)
+	{
+		//Settings.Load();
+	}
 }
