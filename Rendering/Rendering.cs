@@ -339,9 +339,6 @@ public static class Rendering
 
     public static void DrawItemText()
     {
-        //  if (Main.hideUI) return;
-        //  Reflection.DrawItemTextPopups();
-
         if (Main.hideUI) return;
         var scale = 1f;
         for (int num78 = 0; num78 < 20; num78++)
