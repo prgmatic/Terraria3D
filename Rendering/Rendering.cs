@@ -102,6 +102,9 @@ public static class Rendering
     public static void DrawMoonMoon()
         => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsMoonMoon, true);
 
+    public static void DrawFirstFractals()
+        => Reflection.DrawCachedNPCs(Main.instance.DrawCacheFirstFractals, true);
+
     public static void DrawBlack()
     {
         if (Main.drawToScreen)
@@ -176,6 +179,8 @@ public static class Rendering
     }
 
     public static void DrawNPCsInfrontOfTiles() => Reflection.DrawNPCs(false);
+
+    public static void DrawProjsOverPlayers() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverPlayers, false);
 
     public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
 
@@ -335,6 +340,75 @@ public static class Rendering
     public static void DrawItemText()
     {
         if (Main.hideUI) return;
-        Reflection.DrawItemTextPopups();
+        var scale = 1f;
+        for (int num78 = 0; num78 < 20; num78++)
+        {
+            if (Main.popupText[num78].active)
+            {
+                string text = Main.popupText[num78].name;
+                if (Main.popupText[num78].stack > 1)
+                {
+                    text = string.Concat(new object[]
+                        {
+                                        text,
+                                        " (",
+                                        Main.popupText[num78].stack,
+                                        ")"
+                        });
+                }
+                Vector2 vector7 = ((DynamicSpriteFont)FontAssets.MouseText).MeasureString(text);
+                Vector2 origin2 = new Vector2(vector7.X * 0.5f, vector7.Y * 0.5f);
+                float num79 = 1f;
+                float num80 = (float)Main.popupText[num78].color.R;
+                float num81 = (float)Main.popupText[num78].color.G;
+                float num82 = (float)Main.popupText[num78].color.B;
+                float num83 = (float)Main.popupText[num78].color.A;
+                num80 *= num79 * Main.popupText[num78].alpha * 0.3f;
+                num82 *= num79 * Main.popupText[num78].alpha * 0.3f;
+                num81 *= num79 * Main.popupText[num78].alpha * 0.3f;
+                num83 *= num79 * Main.popupText[num78].alpha;
+                Microsoft.Xna.Framework.Color color10 = new Microsoft.Xna.Framework.Color((int)num80, (int)num81, (int)num82, (int)num83);
+                for (int num84 = 0; num84 < 5; num84++)
+                {
+                    float num85 = 0f;
+                    float num86 = 0f;
+                    if (num84 == 0)
+                    {
+                        num85 -= scale * 2f;
+                    }
+                    else if (num84 == 1)
+                    {
+                        num85 += scale * 2f;
+                    }
+                    else if (num84 == 2)
+                    {
+                        num86 -= scale * 2f;
+                    }
+                    else if (num84 == 3)
+                    {
+                        num86 += scale * 2f;
+                    }
+                    else
+                    {
+                        num80 = (float)Main.popupText[num78].color.R * num79 * Main.popupText[num78].alpha;
+                        num82 = (float)Main.popupText[num78].color.B * num79 * Main.popupText[num78].alpha;
+                        num81 = (float)Main.popupText[num78].color.G * num79 * Main.popupText[num78].alpha;
+                        num83 = (float)Main.popupText[num78].color.A * num79 * Main.popupText[num78].alpha;
+                        color10 = new Microsoft.Xna.Framework.Color((int)num80, (int)num81, (int)num82, (int)num83);
+                    }
+                    if (num84 < 4)
+                    {
+                        num83 = (float)Main.popupText[num78].color.A * num79 * Main.popupText[num78].alpha;
+                        color10 = new Microsoft.Xna.Framework.Color(0, 0, 0, (int)num83);
+                    }
+                    float num87 = Main.popupText[num78].position.Y - Main.screenPosition.Y + num86;
+                    if (Main.player[Main.myPlayer].gravDir == -1f)
+                    {
+                        num87 = (float)Main.screenHeight - num87;
+                    }
+                    Main.spriteBatch.DrawString((DynamicSpriteFont)FontAssets.MouseText, text, new Vector2(Main.popupText[num78].position.X - Main.screenPosition.X + num85 + origin2.X, num87 + origin2.Y), color10, Main.popupText[num78].rotation, origin2, scale, SpriteEffects.None, 0f);
+                }
+            }
+        }
     }
 }

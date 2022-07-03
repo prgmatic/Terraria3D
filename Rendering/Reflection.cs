@@ -10,7 +10,8 @@ namespace Terraria3D;
 public static class Reflection
 {
     private static FieldInfo _currentGraphicsProfile => GetField("_currentGraphicsProfile", BindingFlags.Static);
-    //
+    private static FieldInfo _gameInterfaceLayers => GetField("_gameInterfaceLayers", BindingFlags.Instance);
+
     private static MethodInfo _drawWaters            = GetMethod("drawWaters",                    BindingFlags.Instance);
     private static MethodInfo _drawBackground        = GetMethod("DrawBackground",                BindingFlags.Instance);
     private static MethodInfo _cacheNPCDraws         = GetMethod("CacheNPCDraws",                 BindingFlags.Instance);
@@ -35,9 +36,12 @@ public static class Reflection
     private static MethodInfo _drawPlayerChatBubbles = GetMethod("DrawPlayerChatBubbles",         BindingFlags.Instance);
     private static MethodInfo _drawItemTextPopups = GetMethod("DrawItemTextPopups",               BindingFlags.NonPublic | BindingFlags.Static);
     private static readonly object[] _itemTextParams = { 2 };
-    
-    
+
+
+
     public static GraphicsProfile CurrentGraphicsProfile => (GraphicsProfile)_currentGraphicsProfile.GetValue(null);
+     public static List<GameInterfaceLayer> GameInterfaceLayers =>
+     (List<GameInterfaceLayer>)_gameInterfaceLayers.GetValue(Main.instance);
     public static void DrawWaters(bool bg = false, int styleOverride = -1, bool allowUpdate = true)
         => _drawWaters.Invoke(Main.instance, new object[] { bg, styleOverride, allowUpdate });
     
