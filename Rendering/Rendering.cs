@@ -102,6 +102,9 @@ public static class Rendering
     public static void DrawMoonMoon()
         => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsMoonMoon, true);
 
+    public static void DrawFirstFractals()
+        => Reflection.DrawCachedNPCs(Main.instance.DrawCacheFirstFractals, true);
+
     public static void DrawBlack()
     {
         if (Main.drawToScreen)
@@ -176,6 +179,8 @@ public static class Rendering
     }
 
     public static void DrawNPCsInfrontOfTiles() => Reflection.DrawNPCs(false);
+
+    public static void DrawProjsOverPlayers() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverPlayers, false);
 
     public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
 
@@ -334,7 +339,7 @@ public static class Rendering
 
     public static void DrawItemText()
     {
-        if (Main.hideUI) return;
-        Reflection.DrawItemTextPopups();
+          if (Main.hideUI) return;
+          Reflection.DrawItemTextPopups();
     }
 }
