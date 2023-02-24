@@ -1,6 +1,12 @@
 Alpha version of Terraria3D.
 
-Thank you for checking out Terraria3D. This mod is still in alpha. I'd like to give a huge shout out to 0x0ade for creating TerrariaHooks and for writing a fix that enables SM3. This mod would not be possible on tML without TerrariaHooks. I'd also like to thank everyone who helped out testing the mod.
+Thank you for checking out Terraria3D. This mod has been updated for 1.4 but has issues. It's hard to find time to work on this.
+
+Issues:
+ - Crashes with certain lighting modes
+ - Jitters if resolution has an odd number in it.
+ - Visual glitches if terraria start limiting blocks on screen for high resolution monitors.
+ - Reports that the layer sliders currently do not work.
 
 FAQ
 Q: How do I move the camera?
