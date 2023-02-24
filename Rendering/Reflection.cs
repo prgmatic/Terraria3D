@@ -53,8 +53,8 @@ public static class Reflection
     public static void DrawWalls() => _drawWalls.Invoke(Main.instance, null);
     public static void DrawWoF() => _drawWoF.Invoke(Main.instance, null);
     public static void DrawGoreBehind() => _drawGoreBehind.Invoke(Main.instance, null);
-    public static void DrawTiles(bool solidOnly = true, bool forRenderTarget = true, int waterStyleOverride = -1) 
-        => _drawTiles.Invoke(Main.instance, new object[] { solidOnly, forRenderTarget, forRenderTarget, waterStyleOverride });
+    public static void DrawTiles(bool solidOnly = true, int waterStyleOverride = -1) 
+        => _drawTiles.Invoke(Main.instance, new object[] { solidOnly, false, true, waterStyleOverride });
     public static void DrawCachedProjs(List<int> projCache, bool startSpriteBatch = true) => _drawCachedProjs.Invoke(Main.instance, new object[] { projCache, startSpriteBatch });
     public static void DrawNPCs(bool behindTiles) => _drawNPCs.Invoke(Main.instance, new object[] { behindTiles });
     public static void SortDrawCashWorms() => _sortDrawCacheWorms.Invoke(Main.instance, null);

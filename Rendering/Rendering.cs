@@ -146,7 +146,10 @@ public static class Rendering
     public static void DrawNonSolidTiles()
     {
         if (Main.drawToScreen)
+        {
+            Main.instance.TilesRenderer.PreDrawTiles(false, false, true);
             Reflection.DrawTiles(false);
+        }
         else
             Main.spriteBatch.Draw(Main.instance.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
     }
@@ -164,7 +167,10 @@ public static class Rendering
     public static void DrawSolidTiles()
     {
         if (Main.drawToScreen)
+        {
+            Main.instance.TilesRenderer.PreDrawTiles(false, false, true);
             Reflection.DrawTiles(true);
+        }
         else
             Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
     }
