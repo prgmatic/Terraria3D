@@ -1,12 +1,11 @@
-Alpha version of Terraria3D.
-
 Thank you for checking out Terraria3D. This mod has been updated for 1.4 but has issues. It's hard to find time to work on this.
 
 Issues:
- - Crashes with certain lighting modes
  - Jitters if resolution has an odd number in it.
  - Visual glitches if terraria start limiting blocks on screen for high resolution monitors.
- - Reports that the layer sliders currently do not work.
+ - Some things may not render accurately. Mileage may very in different color modes.
+ 
+ Check out keybindings to open the settings menu.
 
 FAQ
 Q: How do I move the camera?
