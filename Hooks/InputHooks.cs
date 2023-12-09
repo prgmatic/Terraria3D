@@ -14,7 +14,7 @@ public static partial class Hooks
         // TODO: Hook should happen after this function is called, not in it
         // Can't hook DoUpdate, guessing because I don't have the v0.16
         // TerrariaHooks.dll
-        IL.Terraria.GameContent.PortalHelper.UpdatePortalPoints += (il) =>
+        Terraria.GameContent.IL_PortalHelper.UpdatePortalPoints += (il) =>
         {
             var cursor = new ILCursor(il);
             cursor.Goto(0).EmitDelegate<Action>(() =>
@@ -25,7 +25,7 @@ public static partial class Hooks
             });
         };
 
-        On.Terraria.UI.LegacyGameInterfaceLayer.DrawSelf += (orig, self) =>
+        Terraria.UI.On_LegacyGameInterfaceLayer.DrawSelf += (orig, self) =>
         {
             if (InterfaceRendering.Drawing3D)
             {
@@ -41,7 +41,7 @@ public static partial class Hooks
             return orig(self);
         };
 
-        On.Terraria.UI.GameInterfaceLayer.Draw += (orig, self) =>
+        Terraria.UI.On_GameInterfaceLayer.Draw += (orig, self) =>
         {
             if (!Terraria3D.Enabled || InterfaceRendering.Drawing3D) return orig(self);
             if (self.Name.Equals("Vanilla: Mouse Over") ||
@@ -61,7 +61,7 @@ public static partial class Hooks
             return orig(self);
         };
 
-        IL.Terraria.Main.DrawMouseOver += (il) =>
+        Terraria.IL_Main.DrawMouseOver += (il) =>
         {
             var cursor = new ILCursor(il);
             cursor.Goto(0);

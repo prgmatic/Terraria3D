@@ -15,8 +15,8 @@ public class UIWindow : UIPanel
     public UIWindow()
     {
         Draggable = true;
-        OnMouseDown += UIWindow_OnMouseDown;
-        OnMouseUp += UIWindow_OnMouseUp;
+        OnLeftMouseDown += UIWindow_OnMouseDown;
+        OnLeftMouseUp += UIWindow_OnMouseUp;
         Activate();
     }
 

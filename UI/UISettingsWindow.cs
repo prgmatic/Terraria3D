@@ -27,12 +27,12 @@ public class UISettingsWindow : UIWindow
 
 		_resetButton.VAlign = 1;
 		_resetButton.Top.Set(-5, 0);
-		_resetButton.OnClick += (evt, listener) => Reset();
+		_resetButton.OnLeftClick += (evt, listener) => Reset();
 
 		_toggleAOButton.VAlign = 1;
 		_toggleAOButton.Top = _resetButton.Top;
 		_toggleAOButton.Left.Pixels = 60;
-		_toggleAOButton.OnClick += (evt, listener) => Terraria3D.Instance.Scene.AmbientOcclusion = !Terraria3D.Instance.Scene.AmbientOcclusion;
+		_toggleAOButton.OnLeftClick += (evt, listener) => Terraria3D.Instance.Scene.AmbientOcclusion = !Terraria3D.Instance.Scene.AmbientOcclusion;
 
 
 		Append(_scrollView);

@@ -12,7 +12,7 @@ public static class Reflection
     private static FieldInfo _currentGraphicsProfile => GetField("_currentGraphicsProfile", BindingFlags.Static);
     private static FieldInfo _gameInterfaceLayers => GetField("_gameInterfaceLayers", BindingFlags.Instance);
 
-    private static MethodInfo _drawWaters            = GetMethod("drawWaters",                    BindingFlags.Instance);
+    private static MethodInfo _drawWaters            = GetMethod("DrawWaters",                    BindingFlags.Instance);
     private static MethodInfo _drawBackground        = GetMethod("DrawBackground",                BindingFlags.Instance);
     private static MethodInfo _cacheNPCDraws         = GetMethod("CacheNPCDraws",                 BindingFlags.Instance);
     private static MethodInfo _cacheProjDraws        = GetMethod("CacheProjDraws",                BindingFlags.Instance);
@@ -42,8 +42,8 @@ public static class Reflection
     public static GraphicsProfile CurrentGraphicsProfile => (GraphicsProfile)_currentGraphicsProfile.GetValue(null);
      public static List<GameInterfaceLayer> GameInterfaceLayers =>
      (List<GameInterfaceLayer>)_gameInterfaceLayers.GetValue(Main.instance);
-    public static void DrawWaters(bool bg = false, int styleOverride = -1, bool allowUpdate = true)
-        => _drawWaters.Invoke(Main.instance, new object[] { bg, styleOverride, allowUpdate });
+    public static void DrawWaters(bool bg = false)
+        => _drawWaters.Invoke(Main.instance, new object[] { bg });
     
     public static void DrawBackground() => _drawBackground.Invoke(Main.instance, null);
     public static void CacheNPCDraws() => _cacheNPCDraws.Invoke(Main.instance, null);
@@ -53,7 +53,8 @@ public static class Reflection
     public static void DrawWalls() => _drawWalls.Invoke(Main.instance, null);
     public static void DrawWoF() => _drawWoF.Invoke(Main.instance, null);
     public static void DrawGoreBehind() => _drawGoreBehind.Invoke(Main.instance, null);
-    public static void DrawTiles(bool solidOnly = true, int waterStyleOverride = -1) => _drawTiles.Invoke(Main.instance, new object[] { solidOnly, waterStyleOverride });
+    public static void DrawTiles(bool solidOnly = true, int waterStyleOverride = -1) 
+        => _drawTiles.Invoke(Main.instance, new object[] { solidOnly, false, true, waterStyleOverride });
     public static void DrawCachedProjs(List<int> projCache, bool startSpriteBatch = true) => _drawCachedProjs.Invoke(Main.instance, new object[] { projCache, startSpriteBatch });
     public static void DrawNPCs(bool behindTiles) => _drawNPCs.Invoke(Main.instance, new object[] { behindTiles });
     public static void SortDrawCashWorms() => _sortDrawCacheWorms.Invoke(Main.instance, null);

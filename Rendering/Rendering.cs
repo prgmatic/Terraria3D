@@ -5,9 +5,7 @@ using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.UI;
 using Terraria.GameContent;
-using Terraria.UI.Chat;
 using ReLogic.Graphics;
-using Terraria.ModLoader;
 
 namespace Terraria3D;
 
@@ -66,7 +64,7 @@ public static class Rendering
     public static void DrawBackgroundWater()
     {
         if (Main.drawToScreen)
-            Reflection.DrawWaters(true, -1, true);
+            Reflection.DrawWaters(true);
         else
         {
             Main.spriteBatch.Draw(Main.instance.backWaterTarget, Main.sceneBackgroundPos - Main.screenPosition,
@@ -148,7 +146,10 @@ public static class Rendering
     public static void DrawNonSolidTiles()
     {
         if (Main.drawToScreen)
+        {
+            Main.instance.TilesRenderer.PreDrawTiles(false, false, true);
             Reflection.DrawTiles(false);
+        }
         else
             Main.spriteBatch.Draw(Main.instance.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
     }
@@ -166,7 +167,10 @@ public static class Rendering
     public static void DrawSolidTiles()
     {
         if (Main.drawToScreen)
+        {
+            Main.instance.TilesRenderer.PreDrawTiles(false, false, true);
             Reflection.DrawTiles(true);
+        }
         else
             Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
     }
@@ -236,7 +240,7 @@ public static class Rendering
     public static void DrawForegroundWater()
     {
         if (Main.drawToScreen)
-            Reflection.DrawWaters(false, -1, true);
+            Reflection.DrawWaters(false);
         else
             Main.spriteBatch.Draw(Main.waterTarget, Main.sceneWaterPos - Main.screenPosition, Color.White);
     }

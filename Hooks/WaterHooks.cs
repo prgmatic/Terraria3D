@@ -11,7 +11,7 @@ public static class WaterHooks
 {
     public static void ApplyWaterHook()
     {
-        IL.Terraria.Main.DrawTiles += (il) =>
+        IL_Main.DrawTiles += (il) =>
         {
             var loadTextureInstruction = il.Body.Instructions.FirstOrDefault(i => i != null && i.Operand != null && i.Operand.ToString() == "Microsoft.Xna.Framework.Graphics.Texture2D[] Terraria.Main::liquidTexture");
             if (loadTextureInstruction != null)

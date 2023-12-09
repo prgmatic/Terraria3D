@@ -41,7 +41,7 @@ public static partial class Hooks
     // ======================================
     public static void ApplyDrawTileHooks()
     {
-        IL.Terraria.GameContent.Drawing.TileDrawing.Draw += (il) =>
+        Terraria.GameContent.Drawing.IL_TileDrawing.Draw += (il) =>
         {
             var cursor = new ILCursor(il);
             cursor.Goto(0);

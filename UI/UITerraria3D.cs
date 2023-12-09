@@ -13,7 +13,7 @@ public static class UITerraria3D
 
 	public static void Load()
 	{
-		Console.Write("Adding interface");
+		//Console.Write("Adding interface");
 		SettingsInterface = new UserInterfaceSettings("Settings");
 		OverlayInterface = new UserInterfaceOverlay("Overlay");
 	}
@@ -34,7 +34,7 @@ public static class UITerraria3D
 
 	public static void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 	{
-		Console.Write("Adding interface");
+		//Console.Write("Adding interface");
 		SettingsInterface.InsertIntoLayers("Vanilla: Mouse Text", layers);
 		OverlayInterface.InsertIntoLayers("Vanilla: Mouse Text", layers);
 	}

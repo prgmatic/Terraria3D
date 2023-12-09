@@ -26,7 +26,7 @@ public class UICameraControlsPanel : UIPanel
 		AddControlLine("Arrow Keys", "Orbit");
 		_moveCameraModeButton = AddButtonWithLabel("Move Mode");
 		UpdateMoveCameraModeButtonText();
-		_moveCameraModeButton.OnClick += (evt, listener) =>
+		_moveCameraModeButton.OnLeftClick += (evt, listener) =>
 		{
 			if (evt.Target == _moveCameraModeButton)
 			{
@@ -38,7 +38,7 @@ public class UICameraControlsPanel : UIPanel
 		};
 		_startYOffsetButton = AddButtonWithLabel("Start Y Pos");
 		UpdateStartYOffsetButtonText();
-		_startYOffsetButton.OnClick += (evt, listener) =>
+		_startYOffsetButton.OnLeftClick += (evt, listener) =>
 		{
 			if(evt.Target == _startYOffsetButton)
 			{
