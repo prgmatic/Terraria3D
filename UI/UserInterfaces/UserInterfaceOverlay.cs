@@ -35,7 +35,7 @@ class OverlayState : UIState
 		_editCameraIcon.VAlign = 1;
 		_editCameraIcon.Left.Pixels = 20;
 		_editCameraIcon.Top.Pixels = -20;
-		_editCameraIcon.OnClick += (evt, listener) =>
+		_editCameraIcon.OnLeftClick += (evt, listener) =>
 			InputTerraria3D.CameraControlsEnabled = !InputTerraria3D.CameraControlsEnabled;
 
 		_controlsPanel.VAlign = 1;
@@ -49,7 +49,7 @@ class OverlayState : UIState
 		_toggleControlsPanelButton.VAlign = 1;
 		_toggleControlsPanelButton.Left.Pixels = 80;
 		_toggleControlsPanelButton.Top.Pixels = -15;
-		_toggleControlsPanelButton.OnClick += (evt, listener) =>
+		_toggleControlsPanelButton.OnLeftClick += (evt, listener) =>
 		{
 			if (InputTerraria3D.CameraControlsEnabled)
 			{

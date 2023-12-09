@@ -98,12 +98,12 @@ public class UILayerEntry : UIPanel
         _depthSlider.ValueChanged += (_, value) => { if (_layer != null) _layer.Depth = value; };
         _zPosSlider .ValueChanged += (_, value) => { if (_layer != null) _layer.ZPos = value; };
         _noiseSlider.ValueChanged += (_, value) => { if (_layer != null) _layer.NoiseAmount = value; };
-        _enableButton.OnClick += (_, _) =>
+        _enableButton.OnLeftClick += (_, _) =>
         {
             _layer.Enabled = !_layer.Enabled;
             _enableButton.SetText(_layer.Enabled ? "Enabled" : "Disabled");
         };
-        _innerPixelButton.OnClick += (_, _) =>
+        _innerPixelButton.OnLeftClick += (_, _) =>
         {
             _layer.UseInnerPixel = !_layer.UseInnerPixel;
             _innerPixelButton.SetText(_layer.UseInnerPixel ? "On" : "Off");

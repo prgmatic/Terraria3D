@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using On.Terraria.GameContent;
+using Terraria.GameContent;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Graphics;
@@ -66,16 +66,16 @@ public class UISlider : UIElement
         DrawHandle(spriteBatch, dimensions);
     }
 
-    public override void MouseDown(UIMouseEvent evt)
+    public override void LeftMouseDown(UIMouseEvent evt)
     {
-        base.MouseDown(evt);
+        base.LeftMouseDown(evt);
         _isDragging = true;
         MoveSliderUnderMouse();
     }
 
-    public override void MouseUp(UIMouseEvent evt)
+    public override void LeftMouseUp(UIMouseEvent evt)
     {
-        base.MouseUp(evt);
+        base.LeftMouseUp(evt);
         _isDragging = false;
     }
 

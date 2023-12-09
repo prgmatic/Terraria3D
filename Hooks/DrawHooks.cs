@@ -5,6 +5,8 @@ using Terraria.Graphics.Effects;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using static Microsoft.Xna.Framework.Color;
+using System;
+using Terraria.ID;
 
 namespace Terraria3D;
 
@@ -12,12 +14,12 @@ public static partial class Hooks
 {
     private static void ApplyDrawHooks()
     {
-        IL.Terraria.Main.DoDraw += (il) =>
+        IL_Main.DoDraw += (il) =>
         {
             var cursor = new ILCursor(il);
             cursor.Goto(0);
-
-            // TODO: add pre render hook back
+            //
+            //// TODO: add pre render hook back
             PreRenderHook(cursor);
             DrawSceneHook(cursor);
         };
@@ -109,8 +111,8 @@ public static partial class Hooks
                 });
                 // Move cursor to the starting instruction of our 
                 // newly injected code.
-                cursor2.Index -= 3;
-
+                cursor2.Index -= 4;
+               
                 // Back at our original cursor, we inject a branch.
                 // If we want to skip drawing 2D, we jump the functions
                 // that we just created with cursor 2.
@@ -118,7 +120,7 @@ public static partial class Hooks
                 {
                     // TODO: Fix end capture 
                     var result =  Terraria3D.Enabled && !Main.gameMenu && !Main.mapFullscreen;
-                    if (result && !Main.drawToScreen && Main.netMode != 2 && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
+                    if (result && !Main.drawToScreen && Main.netMode != NetmodeID.Server && !Main.gameMenu && !Main.mapFullscreen && Lighting.NotRetro && Filters.Scene.CanCapture())
                         Filters.Scene.EndCapture(null, Main.screenTarget, Main.screenTargetSwap, Black);
                     return result;
                 });

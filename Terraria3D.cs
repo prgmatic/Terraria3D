@@ -73,7 +73,7 @@ public class PlayerHooks : ModPlayer
 {
 	public override void ProcessTriggers(TriggersSet triggersSet) => InputTerraria3D.ProcessInput();
 	public override void SetControls() => InputTerraria3D.SetControls(Player);
-	public override void OnEnterWorld(Player player)
+	public override void OnEnterWorld()
 	{
 		// Hack for overhaul to stop black tiles from persisting.
 		Settings.Load();
@@ -92,6 +92,6 @@ public class PlayerHooks : ModPlayer
 	}
 	public override void LoadData(TagCompound tag)
 	{
-		//Settings.Load();
+		Settings.Load();
 	}
 }
