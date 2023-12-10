@@ -13,6 +13,7 @@ public static class Loading
             instance.Scene = new Scene3D();
             instance.LayerManager = new LayerManager();
             UITerraria3D.Load();
+            Settings.Load();
             Hooks.Initialize();
             InputTerraria3D.Load();
         });
