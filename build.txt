@@ -1,5 +1,5 @@
-author = Matt Thompson - chatrat12
-version = 1.0.5
+author = Matt Thompson - chatrat12 & SimonR - DoctorBones
+version = 1.0.6
 displayName = Terraria3D
 includePDB = false
 languageVersion = 10

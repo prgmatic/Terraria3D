@@ -41,7 +41,7 @@ public class Terraria3D : Mod
 		Instance = this;
 		Enabled = true;
 		Loading.Load(this);
-		_t.Load();
+		//_t.Load();
 	}
 		
 	public override void Unload()
