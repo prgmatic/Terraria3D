@@ -1,12 +1,11 @@
-﻿namespace Terraria3D
+﻿namespace Terraria3D;
+
+public static partial class Hooks
 {
-    public static partial class Hooks
+    public static void Initialize()
     {
-        public static void Initialize()
-        {
-            ApplyDrawHooks();
-            ApplyMouseHook();
-            ApplyDrawTileHooks();
-        }
+        ApplyDrawHooks();
+        ApplyMouseHook();
+        ApplyDrawTileHooks();
     }
 }

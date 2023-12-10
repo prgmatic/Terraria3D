@@ -4,418 +4,415 @@ using System;
 using Terraria;
 using Terraria.GameContent.Events;
 using Terraria.GameContent.UI;
-using Terraria.UI.Chat;
+using Terraria.GameContent;
 using ReLogic.Graphics;
-using Terraria.ModLoader;
 
-namespace Terraria3D
+namespace Terraria3D;
+
+public static class Rendering
 {
-    public static class Rendering
+    public static bool RenderHalfBlockWaterHack { get; set; } = false;
+
+    public static void PreRenderSetup()
     {
-        private static SB _sb = new SB(Main.spriteBatch);
+        DoLighting();
+        UpdateState();
+        CacheDraws();
+    }
 
-        public static bool RenderHalfBlockWaterHack { get; set; } = false;
-
-        public static void PreRenderSetup()
+    public static void UpdateState()
+    {
+        if (Main.magmaBGFrameCounter >= 8)
         {
-            DoLighting();
-            UpdateState();
-            CacheDraws();
-        }
-
-        public static void UpdateState()
-        {
-            if (Main.magmaBGFrameCounter >= 8)
+            Main.magmaBGFrameCounter = 0;
+            Main.magmaBGFrame++;
+            if (Main.magmaBGFrame >= 3)
             {
-                Main.magmaBGFrameCounter = 0;
-                Main.magmaBGFrame++;
-                if (Main.magmaBGFrame >= 3)
-                {
-                    Main.magmaBGFrame = 0;
-                }
-            }
-            if (!Main.gamePaused)
-            {
-                Main.essScale += (float)Main.essDir * 0.01f;
-                if (Main.essScale > 1f)
-                {
-                    Main.essDir = -1;
-                    Main.essScale = 1f;
-                }
-                if ((double)Main.essScale < 0.7)
-                {
-                    Main.essDir = 1;
-                    Main.essScale = 0.7f;
-                }
+                Main.magmaBGFrame = 0;
             }
         }
 
-        public static void DoLighting()
+        if (!Main.gamePaused)
         {
-            var firstTileX = (int)Math.Floor((double)(Main.screenPosition.X / 16f)) - 1;
-            var lastTileX = (int)Math.Floor((double)((Main.screenPosition.X + (float)Main.screenWidth) / 16f)) + 2;
-            var firstTileY = (int)Math.Floor((double)(Main.screenPosition.Y / 16f)) - 1;
-            var lastTileY = (int)Math.Floor((double)((Main.screenPosition.Y + (float)Main.screenHeight) / 16f)) + 2;
-            if (!Main.drawSkip)
+            Main.essScale += (float) Main.essDir * 0.01f;
+            if (Main.essScale > 1f)
             {
-                Lighting.LightTiles(firstTileX, lastTileX, firstTileY, lastTileY);
+                Main.essDir = -1;
+                Main.essScale = 1f;
             }
-        }
 
-        public static void DrawBackgroundWater()
-        {
-            if (Main.drawToScreen)
-                Reflection.DrawWaters(true, -1, true);
-            else
+            if ((double) Main.essScale < 0.7)
             {
-                Main.spriteBatch.Draw(Main.instance.backWaterTarget, Main.sceneBackgroundPos - Main.screenPosition, Microsoft.Xna.Framework.Color.White);
-                TimeLogger.DetailedDrawTime(11);
+                Main.essDir = 1;
+                Main.essScale = 0.7f;
             }
-        }
-
-        public static void DrawSceneBackground()
-        {
-            float x = (Main.sceneBackgroundPos.X - Main.screenPosition.X + (float)Main.offScreenRange) * Main.caveParallax - (float)Main.offScreenRange;
-            if (Main.drawToScreen)
-            {
-                Main.tileBatch.Begin();
-                Reflection.DrawBackground();
-                Main.tileBatch.End();
-            }
-            else
-                Main.spriteBatch.Draw(Main.instance.backgroundTarget, new Vector2(x, Main.sceneBackgroundPos.Y - Main.screenPosition.Y), Color.White);
-        }
-
-        public static void DrawSandstorm() => Sandstorm.DrawGrains(Main.spriteBatch);
-
-        public static void CacheDraws()
-        {
-            Reflection.CacheNPCDraws();
-            Reflection.CacheProjDraws();
-        }
-
-        public static void DrawMoonMoon()
-            => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsMoonMoon, true);
-
-        public static void DrawBlack()
-        {
-            if (Main.drawToScreen)
-                Reflection.DrawBlack();
-            else
-                Main.spriteBatch.Draw(Main.instance.blackTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
-        }
-
-        public static void DrawWalls()
-        {
-            if (Main.drawToScreen)
-            {
-                Main.tileBatch.Begin();
-                Reflection.DrawWalls();
-                Main.tileBatch.End();
-            }
-            else
-                Main.spriteBatch.Draw(Main.instance.wallTarget, Main.sceneWallPos - Main.screenPosition, Color.White);
-        }
-
-        public static void DrawWallOfFlesh() => Reflection.DrawWoF();
-
-        public static void DrawGoreBehind()
-        {
-            if (Main.drawBackGore)
-                Reflection.DrawGoreBehind();
-        }
-
-        public static void DrawMoonLordDeath()
-        {
-            MoonlordDeathDrama.DrawPieces(Main.spriteBatch);
-            MoonlordDeathDrama.DrawExplosions(Main.spriteBatch);
-        }
-
-        public static void DrawNPCsBehindNonSoldTiles()
-            => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsBehindNonSolidTiles, true);
-
-        public static void DrawNonSolidTiles()
-        {
-            if (Main.drawToScreen)
-                Reflection.DrawTiles(false);
-            else
-                Main.spriteBatch.Draw(Main.instance.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
-        }
-
-        public static void DrawWaterFalls()
-        {
-            Main.instance.waterfallManager.Draw(Main.spriteBatch);
-        }
-
-        public static void DrawProjsBehindNPCsAndTiles() =>
-            Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindNPCsAndTiles, false);
-
-        public static void DrawNPCsBehindTiles() => Reflection.DrawNPCs(true);
-
-        public static void DrawSolidTiles()
-        {
-            if (Main.drawToScreen)
-                Reflection.DrawTiles(true);
-            else
-                Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
-        }
-
-        public static void DrawHitTileAnimation() => Main.player[Main.myPlayer].hitTile.DrawFreshAnimations(Main.spriteBatch);
-
-        public static void DrawNPCsInfrontOfTiles() => Reflection.DrawNPCs(false);
-
-        public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
-
-        public static void SortDrawCacheWorm() => Reflection.SortDrawCashWorms();
-
-        public static void DrawProjsBehindNPCs() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheProjsBehindNPCs, false);
-
-        public static void DrawProjsBehindProjectiles() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, false);
-
-        public static void DrawProjectiles()
-        {
-            Main.spriteBatch.End();
-            Reflection.DrawProjectiles();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-        }
-
-        public static void DrawPlayers()
-        {
-            Main.spriteBatch.End();
-            Reflection.DrawPlayers();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-        }
-        public static void DrawNPCsOverPlayer() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsOverPlayers, false);
-
-        public static void DrawItems() =>Main.instance.DrawItems();
-
-        public static void DrawRain() => Reflection.DrawRain(); 
-
-        public static void DrawGore() => Reflection.DrawGore(); 
-
-        public static void DrawDust() { using (_sb.End()) { Reflection.DrawDust(); } }
-
-        public static void DrawForegroundWater()
-        {
-            if (Main.drawToScreen)
-                Reflection.DrawWaters(false, -1, true);
-            else
-                Main.spriteBatch.Draw(Main.waterTarget, Main.sceneWaterPos - Main.screenPosition, Color.White);
-        }
-
-        public static void DrawWires()
-        {
-            if (WiresUI.Settings.DrawWires)
-                Reflection.DrawWires();
-        }
-
-        public static void DrawProjsOverWireUI() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverWiresUI, false);
-
-        public static void DrawInfernoRings() => Main.instance.DrawInfernoRings();
-
-        public static void DrawMoonlordDeathFront() => MoonlordDeathDrama.DrawWhite(Main.spriteBatch);
-
-        public static void DrawScreenObstructions() => ScreenObstruction.Draw(Main.spriteBatch);
-
-        public static void DrawChatOverPlayerHeads()
-        {
-            if (Main.hideUI) return;
-            for (int m = 0; m < 255; m++)
-            {
-                if (Main.player[m].active && Main.player[m].chatOverhead.timeLeft > 0 && !Main.player[m].dead)
-                {
-                    Vector2 messageSize = Main.player[m].chatOverhead.messageSize;
-                    Vector2 vector5;
-                    vector5.X = Main.player[m].position.X + (float)(Main.player[m].width / 2) - messageSize.X / 2f;
-                    vector5.Y = Main.player[m].position.Y - messageSize.Y - 2f;
-                    vector5.Y += Main.player[m].gfxOffY;
-                    vector5 = vector5.Floor();
-                    if (Main.player[Main.myPlayer].gravDir == -1f)
-                    {
-                        vector5.Y -= Main.screenPosition.Y;
-                        vector5.Y = Main.screenPosition.Y + (float)Main.screenHeight - vector5.Y;
-                    }
-                    int num66 = 0;
-                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, Main.fontMouseText, Main.player[m].chatOverhead.snippets, vector5 - Main.screenPosition, 0f, Vector2.Zero, Vector2.One, out num66, -1f, 2f);
-                }
-            }
-        }
-
-        public static void DrawCombatText()
-        {
-            if (Main.hideUI) return;
-            float scale = 1f;
-            for (int n = 0; n < 100; n++)
-            {
-                if (Main.combatText[n].active)
-                {
-                    int num68 = 0;
-                    if (Main.combatText[n].crit)
-                    {
-                        num68 = 1;
-                    }
-                    Vector2 vector6 = Main.fontCombatText[num68].MeasureString(Main.combatText[n].text);
-                    Vector2 origin = new Vector2(vector6.X * 0.5f, vector6.Y * 0.5f);
-                    float num69 = 1f;
-                    float num70 = (float)Main.combatText[n].color.R;
-                    float num71 = (float)Main.combatText[n].color.G;
-                    float num72 = (float)Main.combatText[n].color.B;
-                    float num73 = (float)Main.combatText[n].color.A;
-                    num70 *= num69 * Main.combatText[n].alpha * 0.3f;
-                    num72 *= num69 * Main.combatText[n].alpha * 0.3f;
-                    num71 *= num69 * Main.combatText[n].alpha * 0.3f;
-                    num73 *= num69 * Main.combatText[n].alpha;
-                    Microsoft.Xna.Framework.Color color9 = new Microsoft.Xna.Framework.Color((int)num70, (int)num71, (int)num72, (int)num73);
-                    for (int num74 = 0; num74 < 5; num74++)
-                    {
-                        float num75 = 0f;
-                        float num76 = 0f;
-                        if (num74 == 0)
-                        {
-                            num75 -= scale;
-                        }
-                        else if (num74 == 1)
-                        {
-                            num75 += scale;
-                        }
-                        else if (num74 == 2)
-                        {
-                            num76 -= scale;
-                        }
-                        else if (num74 == 3)
-                        {
-                            num76 += scale;
-                        }
-                        else
-                        {
-                            num70 = (float)Main.combatText[n].color.R * num69 * Main.combatText[n].alpha;
-                            num72 = (float)Main.combatText[n].color.B * num69 * Main.combatText[n].alpha;
-                            num71 = (float)Main.combatText[n].color.G * num69 * Main.combatText[n].alpha;
-                            num73 = (float)Main.combatText[n].color.A * num69 * Main.combatText[n].alpha;
-                            color9 = new Microsoft.Xna.Framework.Color((int)num70, (int)num71, (int)num72, (int)num73);
-                        }
-                        if (Main.player[Main.myPlayer].gravDir == -1f)
-                        {
-                            float num77 = Main.combatText[n].position.Y - Main.screenPosition.Y;
-                            num77 = (float)Main.screenHeight - num77;
-                            Main.spriteBatch.DrawString(Main.fontCombatText[num68], Main.combatText[n].text, new Vector2(Main.combatText[n].position.X - Main.screenPosition.X + num75 + origin.X, num77 + num76 + origin.Y), color9, Main.combatText[n].rotation, origin, scale, SpriteEffects.None, 0f);
-                        }
-                        else
-                        {
-                            Main.spriteBatch.DrawString(Main.fontCombatText[num68], Main.combatText[n].text, new Vector2(Main.combatText[n].position.X - Main.screenPosition.X + num75 + origin.X, Main.combatText[n].position.Y - Main.screenPosition.Y + num76 + origin.Y), color9, Main.combatText[n].rotation, origin, scale, SpriteEffects.None, 0f);
-                        }
-                    }
-                }
-            }
-        }
-
-        public static void DrawItemText()
-        {
-            if (Main.hideUI) return;
-            var scale = 1f;
-            for (int num78 = 0; num78 < 20; num78++)
-            {
-                if (Main.itemText[num78].active)
-                {
-                    string text = Main.itemText[num78].name;
-                    if (Main.itemText[num78].stack > 1)
-                    {
-                        text = string.Concat(new object[]
-                            {
-                                        text,
-                                        " (",
-                                        Main.itemText[num78].stack,
-                                        ")"
-                            });
-                    }
-                    Vector2 vector7 = Main.fontMouseText.MeasureString(text);
-                    Vector2 origin2 = new Vector2(vector7.X * 0.5f, vector7.Y * 0.5f);
-                    float num79 = 1f;
-                    float num80 = (float)Main.itemText[num78].color.R;
-                    float num81 = (float)Main.itemText[num78].color.G;
-                    float num82 = (float)Main.itemText[num78].color.B;
-                    float num83 = (float)Main.itemText[num78].color.A;
-                    num80 *= num79 * Main.itemText[num78].alpha * 0.3f;
-                    num82 *= num79 * Main.itemText[num78].alpha * 0.3f;
-                    num81 *= num79 * Main.itemText[num78].alpha * 0.3f;
-                    num83 *= num79 * Main.itemText[num78].alpha;
-                    Microsoft.Xna.Framework.Color color10 = new Microsoft.Xna.Framework.Color((int)num80, (int)num81, (int)num82, (int)num83);
-                    for (int num84 = 0; num84 < 5; num84++)
-                    {
-                        float num85 = 0f;
-                        float num86 = 0f;
-                        if (num84 == 0)
-                        {
-                            num85 -= scale * 2f;
-                        }
-                        else if (num84 == 1)
-                        {
-                            num85 += scale * 2f;
-                        }
-                        else if (num84 == 2)
-                        {
-                            num86 -= scale * 2f;
-                        }
-                        else if (num84 == 3)
-                        {
-                            num86 += scale * 2f;
-                        }
-                        else
-                        {
-                            num80 = (float)Main.itemText[num78].color.R * num79 * Main.itemText[num78].alpha;
-                            num82 = (float)Main.itemText[num78].color.B * num79 * Main.itemText[num78].alpha;
-                            num81 = (float)Main.itemText[num78].color.G * num79 * Main.itemText[num78].alpha;
-                            num83 = (float)Main.itemText[num78].color.A * num79 * Main.itemText[num78].alpha;
-                            color10 = new Microsoft.Xna.Framework.Color((int)num80, (int)num81, (int)num82, (int)num83);
-                        }
-                        if (num84 < 4)
-                        {
-                            num83 = (float)Main.itemText[num78].color.A * num79 * Main.itemText[num78].alpha;
-                            color10 = new Microsoft.Xna.Framework.Color(0, 0, 0, (int)num83);
-                        }
-                        float num87 = Main.itemText[num78].position.Y - Main.screenPosition.Y + num86;
-                        if (Main.player[Main.myPlayer].gravDir == -1f)
-                        {
-                            num87 = (float)Main.screenHeight - num87;
-                        }
-                        Main.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(Main.itemText[num78].position.X - Main.screenPosition.X + num85 + origin2.X, num87 + origin2.Y), color10, Main.itemText[num78].rotation, origin2, scale, SpriteEffects.None, 0f);
-                    }
-                }
-            }
-        }
-
-        public static void PostDrawTiles()
-        {
-            using (_sb.End())
-                WorldHooks.PostDrawTiles();
         }
     }
 
-    class SB : IDisposable
+    public static void DoLighting()
     {
-        private SpriteBatch _sb;
-        bool _open = false;
-
-        public SB(SpriteBatch spriteBatch) { _sb = spriteBatch; }
-
-        public SB Begin(Matrix? transform = null)
+        var firstTileX = (int) Math.Floor((double) (Main.screenPosition.X / 16f)) - 1;
+        var lastTileX = (int) Math.Floor((double) ((Main.screenPosition.X + (float) Main.screenWidth) / 16f)) + 2;
+        var firstTileY = (int) Math.Floor((double) (Main.screenPosition.Y / 16f)) - 1;
+        var lastTileY = (int) Math.Floor((double) ((Main.screenPosition.Y + (float) Main.screenHeight) / 16f)) + 2;
+        if (!Main.drawSkip)
         {
-            _open = true;
-            if (transform == null)
-                transform = Matrix.Identity;
-            _sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, transform.Value);
-            return this;
+            Lighting.LightTiles(firstTileX, lastTileX, firstTileY, lastTileY);
         }
-        public SB End()
+    }
+
+    public static void DrawBackgroundWater()
+    {
+        if (Main.drawToScreen)
+            Reflection.DrawWaters(true);
+        else
         {
-            _open = false;
-            _sb.End();
-            return this;
+            Main.spriteBatch.Draw(Main.instance.backWaterTarget, Main.sceneBackgroundPos - Main.screenPosition,
+                Microsoft.Xna.Framework.Color.White);
+            TimeLogger.DetailedDrawTime(11);
         }
-        public void Dispose()
+    }
+
+    public static void DrawSceneBackground()
+    {
+        float x =
+            (Main.sceneBackgroundPos.X - Main.screenPosition.X + (float) Main.offScreenRange) * Main.caveParallax -
+            (float) Main.offScreenRange;
+        if (Main.drawToScreen)
         {
-            if (_open) _sb.End();
-            else _sb.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            Main.tileBatch.Begin();
+            Reflection.DrawBackground();
+            Main.tileBatch.End();
+        }
+        else
+            Main.spriteBatch.Draw(Main.instance.backgroundTarget,
+                new Vector2(x, Main.sceneBackgroundPos.Y - Main.screenPosition.Y), Color.White);
+    }
+
+    //public static void DrawSandstorm() => Sandstorm.DrawGrains(Main.spriteBatch);
+
+    public static void CacheDraws()
+    {
+        Reflection.CacheNPCDraws();
+        Reflection.CacheProjDraws();
+    }
+
+    public static void DrawMoonMoon()
+        => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsMoonMoon, true);
+
+    public static void DrawFirstFractals()
+        => Reflection.DrawCachedNPCs(Main.instance.DrawCacheFirstFractals, true);
+
+    public static void DrawBlack()
+    {
+        if (Main.drawToScreen)
+            Reflection.DrawBlack();
+        else
+            Main.spriteBatch.Draw(Main.instance.blackTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
+    }
+
+    public static void DrawWalls()
+    {
+        if (Main.drawToScreen)
+        {
+            Main.tileBatch.Begin();
+            Reflection.DrawWalls();
+            Main.tileBatch.End();
+        }
+        else
+            Main.spriteBatch.Draw(Main.instance.wallTarget, Main.sceneWallPos - Main.screenPosition, Color.White);
+    }
+
+    public static void DrawWallOfFlesh() => Reflection.DrawWoF();
+
+    public static void DrawGoreBehind()
+    {
+        if (Main.drawBackGore)
+            Reflection.DrawGoreBehind();
+    }
+
+    public static void DrawMoonLordDeath()
+    {
+        MoonlordDeathDrama.DrawPieces(Main.spriteBatch);
+        MoonlordDeathDrama.DrawExplosions(Main.spriteBatch);
+    }
+
+    public static void DrawNPCsBehindNonSoldTiles()
+        => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsBehindNonSolidTiles, true);
+
+    public static void DrawWallTilesNPC()
+        => Reflection.DrawWallsTilesNPCs();
+
+    public static void DrawNonSolidTiles()
+    {
+        if (Main.drawToScreen)
+        {
+            Main.instance.TilesRenderer.PreDrawTiles(false, false, true);
+            Reflection.DrawTiles(false);
+        }
+        else
+            Main.spriteBatch.Draw(Main.instance.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
+    }
+
+    public static void DrawWaterFalls()
+    {
+        Main.instance.waterfallManager.Draw(Main.spriteBatch);
+    }
+
+    public static void DrawProjsBehindNPCsAndTiles() =>
+        Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindNPCsAndTiles, false);
+
+    public static void DrawNPCsBehindTiles() => Reflection.DrawNPCs(true);
+
+    public static void DrawSolidTiles()
+    {
+        if (Main.drawToScreen)
+        {
+            Main.instance.TilesRenderer.PreDrawTiles(false, false, true);
+            Reflection.DrawTiles(true);
+        }
+        else
+            Main.spriteBatch.Draw(Main.instance.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
+    }
+
+    public static void DrawHitTileAnimation() =>
+        Main.player[Main.myPlayer].hitTile.DrawFreshAnimations(Main.spriteBatch);
+
+    public static void DrawTileEntities(bool solidLayer)
+    {
+    }
+
+    public static void DrawNPCsInfrontOfTiles() => Reflection.DrawNPCs(false);
+
+    public static void DrawProjsOverPlayers() => Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverPlayers, false);
+
+    public static void DrawNPCProjectiles() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCProjectiles, false);
+
+    public static void SortDrawCacheWorm() => Reflection.SortDrawCashWorms();
+
+    public static void DrawProjsBehindNPCs() =>
+        Reflection.DrawCachedNPCs(Main.instance.DrawCacheProjsBehindNPCs, false);
+
+    public static void DrawProjsBehindProjectiles() =>
+        Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsBehindProjectiles, false);
+
+    public static void DrawProjectiles()
+    {
+        Main.spriteBatch.End();
+        Reflection.DrawProjectiles();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+    }
+
+    public static void DrawPlayersBehindNPCs()
+    {
+        Main.spriteBatch.End();
+        Reflection.DrawPlayersBehindNPCs();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+    }
+
+    public static void DrawPlayersAfterProjs()
+    {
+        Main.spriteBatch.End();
+        Reflection.DrawPlayersAfterProj();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState,
+            DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+    }
+
+    public static void DrawNPCsOverPlayer() => Reflection.DrawCachedNPCs(Main.instance.DrawCacheNPCsOverPlayers, false);
+
+    public static void DrawItems() => Main.instance.DrawItems();
+
+    public static void DrawRain() => Reflection.DrawRain();
+
+    public static void DrawGore() => Reflection.DrawGore();
+
+    public static void DrawDust()
+    {
+        Main.spriteBatch.End();
+        Reflection.DrawDust();
+        var sampler = Main.drawToScreen ? SamplerState.LinearClamp : SamplerState.PointClamp;
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, sampler, DepthStencilState.None,
+            RasterizerState.CullCounterClockwise, null, Main.Transform);
+    }
+
+    public static void DrawForegroundWater()
+    {
+        if (Main.drawToScreen)
+            Reflection.DrawWaters(false);
+        else
+            Main.spriteBatch.Draw(Main.waterTarget, Main.sceneWaterPos - Main.screenPosition, Color.White);
+    }
+
+    public static void DrawWires()
+    {
+        if (WiresUI.Settings.DrawWires)
+            Reflection.DrawWires();
+    }
+
+    public static void DrawProjsOverWireUI() =>
+        Reflection.DrawCachedProjs(Main.instance.DrawCacheProjsOverWiresUI, false);
+
+    public static void DrawInfernoRings() => Main.instance.DrawInfernoRings();
+
+    public static void DrawMoonlordDeathFront() => MoonlordDeathDrama.DrawWhite(Main.spriteBatch);
+
+    public static void DrawScreenObstructions() => ScreenObstruction.Draw(Main.spriteBatch);
+
+    public static void DrawChatOverPlayerHeads()
+    {
+        if (Main.hideUI) return;
+        Reflection.DrawPlayerChatBubbles();
+    }
+
+    public static void DrawCombatText()
+    {
+        if (Main.hideUI) return;
+        float targetScale = CombatText.TargetScale;
+        var combatText = Main.combatText;
+        var spriteBatch = Main.spriteBatch;
+        for (int l = 0; l < 100; l++)
+        {
+            if (!combatText[l].active)
+                continue;
+
+            int num10 = 0;
+            if (combatText[l].crit)
+                num10 = 1;
+
+            Vector2 vector2 = FontAssets.CombatText[num10].Value.MeasureString(combatText[l].text);
+            Vector2 origin = new Vector2(vector2.X * 0.5f, vector2.Y * 0.5f);
+            float num11 = combatText[l].scale / targetScale;
+            float num12 = (int) combatText[l].color.R;
+            float num13 = (int) combatText[l].color.G;
+            float num14 = (int) combatText[l].color.B;
+            float num15 = (int) combatText[l].color.A;
+            num12 *= num11 * combatText[l].alpha * 0.3f;
+            num14 *= num11 * combatText[l].alpha * 0.3f;
+            num13 *= num11 * combatText[l].alpha * 0.3f;
+            num15 *= num11 * combatText[l].alpha;
+            Microsoft.Xna.Framework.Color color =
+                new Microsoft.Xna.Framework.Color((int) num12, (int) num13, (int) num14, (int) num15);
+            for (int m = 0; m < 5; m++)
+            {
+                float num16 = 0f;
+                float num17 = 0f;
+                switch (m)
+                {
+                    case 0:
+                        num16 -= targetScale;
+                        break;
+                    case 1:
+                        num16 += targetScale;
+                        break;
+                    case 2:
+                        num17 -= targetScale;
+                        break;
+                    case 3:
+                        num17 += targetScale;
+                        break;
+                    default:
+                        num12 = (float) (int) combatText[l].color.R * num11 * combatText[l].alpha;
+                        num14 = (float) (int) combatText[l].color.B * num11 * combatText[l].alpha;
+                        num13 = (float) (int) combatText[l].color.G * num11 * combatText[l].alpha;
+                        num15 = (float) (int) combatText[l].color.A * num11 * combatText[l].alpha;
+                        color = new Microsoft.Xna.Framework.Color((int) num12, (int) num13, (int) num14, (int) num15);
+                        break;
+                }
+
+                if (Main.player[Main.myPlayer].gravDir == -1f)
+                {
+                    float num18 = combatText[l].position.Y - Main.screenPosition.Y;
+                    num18 = (float) Main.screenHeight - num18;
+                    spriteBatch.DrawString(FontAssets.CombatText[num10].Value, combatText[l].text,
+                        new Vector2(combatText[l].position.X - Main.screenPosition.X + num16 + origin.X,
+                            num18 + num17 + origin.Y), color, combatText[l].rotation, origin, combatText[l].scale,
+                        SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    spriteBatch.DrawString(FontAssets.CombatText[num10].Value, combatText[l].text,
+                        new Vector2(combatText[l].position.X - Main.screenPosition.X + num16 + origin.X,
+                            combatText[l].position.Y - Main.screenPosition.Y + num17 + origin.Y), color,
+                        combatText[l].rotation, origin, combatText[l].scale, SpriteEffects.None, 0f);
+                }
+            }
+        }
+    }
+
+    public static void DrawItemText()
+    {
+        if (Main.hideUI) return;
+        var scale = 1f;
+        for (int num78 = 0; num78 < 20; num78++)
+        {
+            if (Main.popupText[num78].active)
+            {
+                string text = Main.popupText[num78].name;
+                if (Main.popupText[num78].stack > 1)
+                {
+                    text = string.Concat(new object[]
+                        {
+                                        text,
+                                        " (",
+                                        Main.popupText[num78].stack,
+                                        ")"
+                        });
+                }
+                Vector2 vector7 = ((DynamicSpriteFont)FontAssets.MouseText).MeasureString(text);
+                Vector2 origin2 = new Vector2(vector7.X * 0.5f, vector7.Y * 0.5f);
+                float num79 = 1f;
+                float num80 = (float)Main.popupText[num78].color.R;
+                float num81 = (float)Main.popupText[num78].color.G;
+                float num82 = (float)Main.popupText[num78].color.B;
+                float num83 = (float)Main.popupText[num78].color.A;
+                num80 *= num79 * Main.popupText[num78].alpha * 0.3f;
+                num82 *= num79 * Main.popupText[num78].alpha * 0.3f;
+                num81 *= num79 * Main.popupText[num78].alpha * 0.3f;
+                num83 *= num79 * Main.popupText[num78].alpha;
+                Microsoft.Xna.Framework.Color color10 = new Microsoft.Xna.Framework.Color((int)num80, (int)num81, (int)num82, (int)num83);
+                for (int num84 = 0; num84 < 5; num84++)
+                {
+                    float num85 = 0f;
+                    float num86 = 0f;
+                    if (num84 == 0)
+                    {
+                        num85 -= scale * 2f;
+                    }
+                    else if (num84 == 1)
+                    {
+                        num85 += scale * 2f;
+                    }
+                    else if (num84 == 2)
+                    {
+                        num86 -= scale * 2f;
+                    }
+                    else if (num84 == 3)
+                    {
+                        num86 += scale * 2f;
+                    }
+                    else
+                    {
+                        num80 = (float)Main.popupText[num78].color.R * num79 * Main.popupText[num78].alpha;
+                        num82 = (float)Main.popupText[num78].color.B * num79 * Main.popupText[num78].alpha;
+                        num81 = (float)Main.popupText[num78].color.G * num79 * Main.popupText[num78].alpha;
+                        num83 = (float)Main.popupText[num78].color.A * num79 * Main.popupText[num78].alpha;
+                        color10 = new Microsoft.Xna.Framework.Color((int)num80, (int)num81, (int)num82, (int)num83);
+                    }
+                    if (num84 < 4)
+                    {
+                        num83 = (float)Main.popupText[num78].color.A * num79 * Main.popupText[num78].alpha;
+                        color10 = new Microsoft.Xna.Framework.Color(0, 0, 0, (int)num83);
+                    }
+                    float num87 = Main.popupText[num78].position.Y - Main.screenPosition.Y + num86;
+                    if (Main.player[Main.myPlayer].gravDir == -1f)
+                    {
+                        num87 = (float)Main.screenHeight - num87;
+                    }
+                    Main.spriteBatch.DrawString((DynamicSpriteFont)FontAssets.MouseText, text, new Vector2(Main.popupText[num78].position.X - Main.screenPosition.X + num85 + origin2.X, num87 + origin2.Y), color10, Main.popupText[num78].rotation, origin2, scale, SpriteEffects.None, 0f);
+                }
+            }
         }
     }
 }

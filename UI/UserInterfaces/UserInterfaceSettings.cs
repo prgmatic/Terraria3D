@@ -1,23 +1,22 @@
 ﻿using Terraria.UI;
 
-namespace Terraria3D
+namespace Terraria3D;
+
+public class UserInterfaceSettings : GenericUserInterface
 {
-	public class UserInterfaceSettings : GenericUserInterface
+	private UISettingsWindow _settingsWindow;
+
+	public UserInterfaceSettings(string layerName) : base (layerName)
 	{
-		private UISettingsWindow _settingsWindow;
+		Visible = false;
+		_settingsWindow = new UISettingsWindow("Settings");
+		State.Append(_settingsWindow);
+	}
 
-		public UserInterfaceSettings(string layerName) : base (layerName)
-		{
-			Visible = false;
-			_settingsWindow = new UISettingsWindow("Settings");
-			State.Append(_settingsWindow);
-		}
-
-		public override void Dispose()
-		{
-			base.Dispose();
-			_settingsWindow?.Dispose();
-			_settingsWindow = null;
-		}
+	public override void Dispose()
+	{
+		base.Dispose();
+		_settingsWindow?.Dispose();
+		_settingsWindow = null;
 	}
 }

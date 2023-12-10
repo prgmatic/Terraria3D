@@ -1,24 +1,23 @@
-﻿namespace Terraria3D
+﻿namespace Terraria3D;
+
+public class LayerManager
 {
-    public class LayerManager
+    public Layer3D[] Layers => _layers;
+    private Layer3D[] _layers;
+
+    public LayerManager()
     {
-        public Layer3D[] Layers => _layers;
-        private Layer3D[] _layers;
+        Rebuild();
+    }
 
-        public LayerManager()
-        {
-            Rebuild();
-        }
+    public void Rebuild()
+    {
+        LayerBuilder.PopulateLayers(ref _layers);
+    }
 
-        public void Rebuild()
-        {
-            LayerBuilder.PopulateLayers(ref _layers);
-        }
-
-        public void Dispose()
-        {
-            foreach (var layer in _layers)
-                layer?.Dispose();
-        }
+    public void Dispose()
+    {
+        foreach (var layer in _layers)
+            layer?.Dispose();
     }
 }
